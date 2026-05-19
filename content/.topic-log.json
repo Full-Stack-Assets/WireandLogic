@@ -188,6 +188,13 @@
       "url": "https://www.nbcnews.com/tech/tech-news/former-google-ceo-booed-graduation-speech-ai-rcna345585",
       "publishedAt": "2026-05-18T15:35:49.650Z",
       "signature": "312d3bd5def1557f"
+    },
+    {
+      "slug": "llm-advancements",
+      "title": "The last six months in LLMs in five minutes",
+      "url": "https://simonwillison.net/2026/May/19/5-minute-llms/",
+      "publishedAt": "2026-05-19T15:25:53.186Z",
+      "signature": "7410ebf21739fa2e"
     }
   ]
 }
