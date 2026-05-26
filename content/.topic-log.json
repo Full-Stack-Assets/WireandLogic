@@ -237,6 +237,13 @@
       "url": "https://techcrunch.com/2026/05/21/six-search-engines-worth-trying-now-that-google-isnt-really-google-anymore/",
       "publishedAt": "2026-05-25T14:56:52.495Z",
       "signature": "30a508d7d5381582"
+    },
+    {
+      "slug": "github-actions-down-again",
+      "title": "GitHub Actions down again today",
+      "url": "https://www.githubstatus.com/?today",
+      "publishedAt": "2026-05-26T15:33:04.389Z",
+      "signature": "53e30903bbc3ba59"
     }
   ]
 }
