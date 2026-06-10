@@ -2,7 +2,7 @@ import { listPosts } from '@/lib/posts';
 import type { MetadataRoute } from 'next';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://wireandlogic.dev';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://wireandlogic.com';
   const posts = await listPosts();
 
   const postEntries: MetadataRoute.Sitemap = posts.map((p) => ({
