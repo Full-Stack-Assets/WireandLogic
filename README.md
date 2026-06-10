@@ -1,4 +1,4 @@
-# The Dispatch
+# Wire and Logic
 
 A self-hosted, zero-cost trend blog. One scheduled function runs daily, picks the highest-signal story from six sources, researches it, writes a structured MDX post, and commits it to GitHub. The Next.js site auto-deploys.
 

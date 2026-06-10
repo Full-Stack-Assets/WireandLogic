@@ -6,8 +6,8 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    default: 'The Dispatch',
-    template: '%s — The Dispatch',
+    default: 'Wire and Logic',
+    template: '%s — Wire and Logic',
   },
   description: 'A daily trend brief for builders, synthesized from across the web.',
 };
@@ -32,7 +32,7 @@ function Header() {
       <div className="mx-auto flex max-w-6xl items-end justify-between px-6 py-6">
         <Link href="/" className="group">
           <div className="font-display text-3xl font-black tracking-tight leading-none">
-            The <span className="text-accent">Dispatch</span>
+            Wire and <span className="text-accent">Logic</span>
           </div>
           <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-muted">
             Daily · Synthesized · Opinionated
@@ -60,7 +60,7 @@ function Footer() {
       <div className="mx-auto max-w-6xl px-6 py-10 text-sm text-muted">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <span className="font-display text-base font-semibold text-ink">The Dispatch</span>
+            <span className="font-display text-base font-semibold text-ink">Wire and Logic</span>
             {' '}— one post a day, generated from what's trending.
           </div>
           <div className="text-xs uppercase tracking-widest">

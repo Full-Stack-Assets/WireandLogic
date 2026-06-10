@@ -162,7 +162,7 @@ export default async function StatsPage() {
           href="/"
           className="inline-flex items-center gap-2 font-display font-semibold text-accent hover:gap-3 transition-all"
         >
-          ← Back to The Dispatch
+          ← Back to Wire and Logic
         </Link>
       </div>
     </div>
