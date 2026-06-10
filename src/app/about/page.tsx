@@ -12,7 +12,7 @@ export default function AboutPage() {
 
       <div className="prose-editorial">
         <p>
-          <strong>The Dispatch</strong> is an experiment in what happens when you point a small,
+          <strong>Wire and Logic</strong> is an experiment in what happens when you point a small,
           opinionated pipeline at the firehose of tech news and let it write one post a day.
         </p>
 
