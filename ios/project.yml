@@ -24,6 +24,10 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: dev.dispatch.Dispatch
+        # Module name must differ from the system "Dispatch" (libdispatch) module
+        # that Foundation imports, otherwise: "circular dependency between
+        # modules 'Dispatch' and 'Foundation'".
+        PRODUCT_MODULE_NAME: TheDispatch
         GENERATE_INFOPLIST_FILE: YES
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
