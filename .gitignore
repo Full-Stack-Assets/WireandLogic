@@ -9,3 +9,4 @@ admin
 *.log
 .vercel
 .wrangler
+tsconfig.tsbuildinfo
