@@ -30,6 +30,11 @@ struct Post: Codable, Identifiable, Hashable {
 
     var id: String { slug }
 
+    /// Canonical web URL for this post — used by the share sheet.
+    var url: URL? {
+        URL(string: "\(SiteConfig.baseURL)/blog/\(slug)")
+    }
+
     /// Parsed publish date (ISO‑8601, fractional seconds tolerated).
     var publishedDate: Date? {
         Post.isoFractional.date(from: date) ?? Post.isoPlain.date(from: date)

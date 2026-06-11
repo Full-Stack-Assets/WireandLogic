@@ -59,6 +59,29 @@ struct HeroImage: View {
     }
 }
 
+/// Selectable category pill used in the home filter bar.
+struct FilterChip: View {
+    let label: String
+    let isSelected: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Text(label.uppercased())
+                .font(Theme.body(11, weight: .bold))
+                .tracking(1.5)
+                .foregroundStyle(isSelected ? Theme.paper : Theme.ink.opacity(0.75))
+                .padding(.horizontal, 12)
+                .padding(.vertical, 7)
+                .background(isSelected ? Theme.accent : .clear)
+                .overlay(
+                    Rectangle().stroke(isSelected ? Theme.accent : Theme.ink.opacity(0.3), lineWidth: 1)
+                )
+        }
+        .buttonStyle(.plain)
+    }
+}
+
 /// Uppercase meta line: "Jun 6 · 4 min read".
 struct MetaLine: View {
     let post: Post

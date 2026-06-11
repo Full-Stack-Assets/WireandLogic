@@ -12,9 +12,14 @@ in the Simulator with no backend or API keys.
 ### Features
 
 - **Editorial feed** — masthead, lead story, and a scrolling card list.
+- **Category filter** — a chip bar filters the feed by category (tap to toggle).
 - **Article reader** — hero image, formatted body, numbered sources, tags.
 - **Search** — pull-down search bar filters by title, description, category,
   or tag, with a live result count and empty state.
+- **Share** — each article has a share button (`ShareLink`) that shares its
+  canonical web URL (set `SiteConfig.baseURL`).
+- **About** — an info button opens an About screen mirroring the website's
+  `/about`, explaining the daily pipeline.
 - **Fraunces** — the site's display serif is bundled (OFL) and registered at
   launch, so the app's headings match the web typography exactly. It falls back
   to the system serif if the font is ever unavailable.
@@ -83,9 +88,9 @@ ios/
     ├── Models/Post.swift          # mirrors PostFrontmatter
     ├── Services/PostStore.swift   # bundled + optional remote loading
     ├── Theme/Theme.swift          # palette + typography
-    ├── Support/Fonts.swift        # registers bundled Fraunces at launch
+    ├── Support/                   # Fonts registration, SiteConfig
     ├── Markdown/                  # tiny block-level Markdown renderer
-    ├── Views/                     # HomeView (+ search), PostDetailView, components
+    ├── Views/                     # HomeView (search + filter), PostDetailView, AboutView, components
     ├── Assets.xcassets/           # AccentColor, AppIcon
     └── Resources/
         ├── posts.json             # exported content snapshot

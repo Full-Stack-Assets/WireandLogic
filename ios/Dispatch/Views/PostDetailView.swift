@@ -37,6 +37,20 @@ struct PostDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(Theme.paper, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
+        .toolbar {
+            if let url = post.url {
+                ToolbarItem(placement: .topBarTrailing) {
+                    ShareLink(
+                        item: url,
+                        subject: Text(post.title),
+                        message: Text(post.description)
+                    ) {
+                        Image(systemName: "square.and.arrow.up")
+                    }
+                    .tint(Theme.accent)
+                }
+            }
+        }
         .tint(Theme.accent)
     }
 

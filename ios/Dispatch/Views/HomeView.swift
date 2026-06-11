@@ -3,9 +3,27 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject private var store: PostStore
     @State private var searchText = ""
+    @State private var selectedCategory: String?
+    @State private var showAbout = false
 
     private var isSearching: Bool {
         !searchText.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+
+    /// Distinct categories in publish order, de-duplicated and sorted.
+    private var categories: [String] {
+        var seen = Set<String>()
+        var out: [String] = []
+        for category in store.posts.map(\.category) where !seen.contains(category) {
+            seen.insert(category)
+            out.append(category)
+        }
+        return out.sorted()
+    }
+
+    private var categoryFiltered: [Post] {
+        guard let selectedCategory else { return store.posts }
+        return store.posts.filter { $0.category == selectedCategory }
     }
 
     /// Filter by title, description, category, or any tag (case-insensitive).
@@ -30,12 +48,18 @@ struct HomeView: View {
                         if isSearching {
                             searchResults
                         } else {
-                            Masthead().padding(.bottom, 28)
+                            Masthead().padding(.bottom, 20)
                             if store.posts.isEmpty {
                                 EmptyState(isLoading: store.isLoading, message: store.errorMessage)
                                     .padding(.top, 60)
                             } else {
-                                feed
+                                categoryBar
+                                if let selectedCategory {
+                                    SectionRule(label: selectedCategory).padding(.bottom, 24)
+                                    cardList(categoryFiltered)
+                                } else {
+                                    feed
+                                }
                             }
                         }
                     }
@@ -50,6 +74,12 @@ struct HomeView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button { showAbout = true } label: {
+                        Image(systemName: "info.circle")
+                    }
+                    .tint(Theme.accent)
+                }
                 ToolbarItem(placement: .principal) {
                     HStack(spacing: 4) {
                         Text("The").font(Theme.display(18, weight: .black)).foregroundStyle(Theme.ink)
@@ -64,7 +94,27 @@ struct HomeView: View {
             .textInputAutocapitalization(.never)
         }
         .tint(Theme.accent)
+        .sheet(isPresented: $showAbout) { AboutView() }
         .task { await store.load() }
+    }
+
+    // MARK: - Category filter bar
+
+    private var categoryBar: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) {
+                FilterChip(label: "All", isSelected: selectedCategory == nil) {
+                    selectedCategory = nil
+                }
+                ForEach(categories, id: \.self) { category in
+                    FilterChip(label: category, isSelected: selectedCategory == category) {
+                        selectedCategory = (selectedCategory == category) ? nil : category
+                    }
+                }
+            }
+            .padding(.bottom, 4)
+        }
+        .padding(.bottom, 24)
     }
 
     // MARK: - Normal feed (lead story + cards)
