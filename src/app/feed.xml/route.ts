@@ -4,7 +4,7 @@ export const revalidate = 300;
 
 export async function GET() {
   const posts = await listPosts();
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://wireandlogic.dev';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://wireandlogic.com';
 
   const items = posts
     .slice(0, 20)
