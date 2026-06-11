@@ -9,6 +9,17 @@ with hero, body, sources, and tags.
 It is **read-only** and ships with a bundled snapshot of the posts, so it runs
 in the Simulator with no backend or API keys.
 
+### Features
+
+- **Editorial feed** — masthead, lead story, and a scrolling card list.
+- **Article reader** — hero image, formatted body, numbered sources, tags.
+- **Search** — pull-down search bar filters by title, description, category,
+  or tag, with a live result count and empty state.
+- **Fraunces** — the site's display serif is bundled (OFL) and registered at
+  launch, so the app's headings match the web typography exactly. It falls back
+  to the system serif if the font is ever unavailable.
+- **App icon** — an on-brand editorial mark.
+
 ## Run it
 
 ```bash
@@ -72,8 +83,17 @@ ios/
     ├── Models/Post.swift          # mirrors PostFrontmatter
     ├── Services/PostStore.swift   # bundled + optional remote loading
     ├── Theme/Theme.swift          # palette + typography
+    ├── Support/Fonts.swift        # registers bundled Fraunces at launch
     ├── Markdown/                  # tiny block-level Markdown renderer
-    ├── Views/                     # HomeView, PostDetailView, components
+    ├── Views/                     # HomeView (+ search), PostDetailView, components
     ├── Assets.xcassets/           # AccentColor, AppIcon
-    └── Resources/posts.json       # exported content snapshot
+    └── Resources/
+        ├── posts.json             # exported content snapshot
+        └── Fonts/                 # Fraunces.ttf (OFL) + license
 ```
+
+> **Fonts:** `Fraunces.ttf` is the variable font from
+> [Google Fonts](https://github.com/google/fonts/tree/main/ofl/fraunces),
+> licensed under the SIL Open Font License (see `Resources/Fonts/OFL.txt`).
+> It's registered at runtime via `CTFontManagerRegisterFontsForURL`, so no
+> `UIAppFonts` Info.plist entry is required.

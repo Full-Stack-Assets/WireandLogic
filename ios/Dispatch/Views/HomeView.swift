@@ -2,6 +2,23 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject private var store: PostStore
+    @State private var searchText = ""
+
+    private var isSearching: Bool {
+        !searchText.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+
+    /// Filter by title, description, category, or any tag (case-insensitive).
+    private var filteredPosts: [Post] {
+        let query = searchText.trimmingCharacters(in: .whitespaces).lowercased()
+        guard !query.isEmpty else { return store.posts }
+        return store.posts.filter { post in
+            post.title.lowercased().contains(query)
+                || post.description.lowercased().contains(query)
+                || post.category.lowercased().contains(query)
+                || post.tags.contains { $0.lowercased().contains(query) }
+        }
+    }
 
     var body: some View {
         NavigationStack {
@@ -10,14 +27,16 @@ struct HomeView: View {
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 0) {
-                        Masthead()
-                            .padding(.bottom, 28)
-
-                        if store.posts.isEmpty {
-                            EmptyState(isLoading: store.isLoading, message: store.errorMessage)
-                                .padding(.top, 60)
+                        if isSearching {
+                            searchResults
                         } else {
-                            content
+                            Masthead().padding(.bottom, 28)
+                            if store.posts.isEmpty {
+                                EmptyState(isLoading: store.isLoading, message: store.errorMessage)
+                                    .padding(.top, 60)
+                            } else {
+                                feed
+                            }
                         }
                     }
                     .padding(.horizontal, 22)
@@ -40,13 +59,18 @@ struct HomeView: View {
             }
             .toolbarBackground(Theme.paper, for: .navigationBar)
             .toolbarBackground(.visible, for: .navigationBar)
+            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search dispatches")
+            .autocorrectionDisabled()
+            .textInputAutocapitalization(.never)
         }
         .tint(Theme.accent)
         .task { await store.load() }
     }
 
+    // MARK: - Normal feed (lead story + cards)
+
     @ViewBuilder
-    private var content: some View {
+    private var feed: some View {
         let posts = store.posts
         if let lead = posts.first {
             NavigationLink(value: lead) { LeadStory(post: lead) }
@@ -58,11 +82,46 @@ struct HomeView: View {
                 .padding(.top, 40)
                 .padding(.bottom, 24)
 
-            VStack(spacing: 32) {
-                ForEach(posts.dropFirst()) { post in
-                    NavigationLink(value: post) { PostCard(post: post) }
-                        .buttonStyle(.plain)
-                }
+            cardList(Array(posts.dropFirst()))
+        }
+    }
+
+    // MARK: - Search results
+
+    @ViewBuilder
+    private var searchResults: some View {
+        let results = filteredPosts
+        HStack {
+            Text("\(results.count) RESULT\(results.count == 1 ? "" : "S")")
+                .font(Theme.body(11, weight: .semibold))
+                .tracking(2)
+                .foregroundStyle(Theme.muted)
+            Spacer()
+        }
+        .padding(.top, 12)
+        .padding(.bottom, 20)
+
+        if results.isEmpty {
+            VStack(spacing: 8) {
+                Text("No dispatches found")
+                    .font(Theme.display(22, weight: .bold))
+                    .foregroundStyle(Theme.ink)
+                Text("Nothing matches “\(searchText)”.")
+                    .font(Theme.body(14))
+                    .foregroundStyle(Theme.muted)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.top, 60)
+        } else {
+            cardList(results)
+        }
+    }
+
+    private func cardList(_ posts: [Post]) -> some View {
+        VStack(spacing: 32) {
+            ForEach(posts) { post in
+                NavigationLink(value: post) { PostCard(post: post) }
+                    .buttonStyle(.plain)
             }
         }
     }
@@ -155,6 +214,7 @@ private struct PostCard: View {
                 .fixedSize(horizontal: false, vertical: true)
             MetaLine(post: post)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
