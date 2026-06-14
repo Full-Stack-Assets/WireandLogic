@@ -4,12 +4,57 @@ import type { ResearchBundle, GeneratedPost } from './types';
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const GROQ_MODEL = 'llama-3.3-70b-versatile';
 
-const PostSchema = z.object({
-  title: z.string().min(20).max(120),
-  description: z.string().min(60).max(200),
-  slug: z.string().regex(/^[a-z0-9-]+$/),
-  category: z.string(),
-  tags: z.array(z.string()).min(2).max(6),
+/** How many times to ask the model before giving up on a structurally valid post. */
+const MAX_GENERATION_ATTEMPTS = 3;
+
+/**
+ * Collapse whitespace and truncate to at most `max` chars at a word boundary,
+ * appending an ellipsis. Used as a schema transform so an over-long field is
+ * healed in place instead of throwing — the LLM reliably overshoots length
+ * caps, and one overshoot must never kill the run after research has succeeded.
+ */
+export function clampMeta(s: string, max = 200): string {
+  const t = s.trim().replace(/\s+/g, ' ');
+  if (t.length <= max) return t;
+  const cut = t.slice(0, max - 1);
+  const sp = cut.lastIndexOf(' ');
+  return (sp > 0 ? cut.slice(0, sp) : cut).trimEnd() + '…';
+}
+
+/** Coerce any string into a kebab-case slug matching /^[a-z0-9-]+$/. */
+export function slugify(s: string): string {
+  return s
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60)
+    .replace(/-+$/g, '');
+}
+
+/** Lowercase, trim, drop blanks/duplicates, and cap at 6. */
+export function normalizeTags(tags: string[]): string[] {
+  const seen = new Set<string>();
+  return tags
+    .map((t) => t.trim().toLowerCase())
+    .filter((t) => t.length > 0 && !seen.has(t) && (seen.add(t), true))
+    .slice(0, 6);
+}
+
+// Self-healing contract. Length/shape overshoots that can be safely coerced are
+// repaired by transforms (so a too-long description or a messy slug never throws
+// — note `.max()` would fire *before* a transform, so it's deliberately gone).
+// Constraints that can't be met without inventing content (a too-short body, or
+// fewer than two real tags) still fail and drive a retry rather than be faked.
+export const PostSchema = z.object({
+  title: z.string().min(20).transform((s) => clampMeta(s, 120)),
+  description: z.string().min(1).transform((s) => clampMeta(s)),
+  slug: z.string().transform(slugify).pipe(z.string().regex(/^[a-z0-9-]+$/)),
+  category: z.string().transform((s) => s.trim().toLowerCase()),
+  tags: z
+    .array(z.string())
+    .transform(normalizeTags)
+    .pipe(z.array(z.string()).min(2).max(6)),
   body: z.string().min(800),
 });
 
@@ -18,7 +63,7 @@ const SYSTEM_PROMPT = `You are a senior tech writer producing a single blog post
 Your output MUST be a valid JSON object with exactly these fields — nothing else, no prose, no code fences:
 {
   "title": string,                // 60-100 chars, specific and concrete, no clickbait
-  "description": string,          // 140-180 chars, SEO meta description
+  "description": string,          // SEO meta description, 1-2 sentences, at most 150 chars
   "slug": string,                 // kebab-case, <= 60 chars
   "category": string,             // one of: "news", "tools", "engineering", "ai", "security", "opinion"
   "tags": string[],               // 2-6 lowercase tags
@@ -64,6 +109,7 @@ BODY STRUCTURE (mandatory, in this order):
    Exactly 3 questions, each a real question a reader would ask.
 
 HARD RULES:
+- Write the SEO meta description as 1-2 sentences, at most 150 characters. Do not exceed 150 characters.
 - Never invent quotes or attribute statements to people.
 - Never invent specific numbers. If you cite a number, it must appear in the research.
 - Do not paraphrase any single source closely — synthesize across sources.
@@ -76,8 +122,51 @@ export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
   const key = process.env.GROQ_API_KEY;
   if (!key) throw new Error('GROQ_API_KEY not set');
 
-  const userPrompt = buildUserPrompt(bundle);
+  const baseUserPrompt = buildUserPrompt(bundle);
+  let lastError = '';
 
+  // PostSchema heals the clampable overshoots on its own. Retry only covers the
+  // genuinely unrepairable misses (too-short body, too-few tags, malformed JSON)
+  // and transient Groq errors, feeding the exact reason back so the model can
+  // correct itself. Only fail loudly after exhausting attempts.
+  for (let attempt = 1; attempt <= MAX_GENERATION_ATTEMPTS; attempt++) {
+    const userPrompt =
+      attempt === 1
+        ? baseUserPrompt
+        : `${baseUserPrompt}\n\nYour previous response was rejected: ${lastError}\nReturn a corrected JSON object that satisfies every constraint exactly.`;
+
+    let content: string;
+    try {
+      content = await callGroq(key, userPrompt);
+    } catch (err) {
+      // Rate limit / 5xx / network blip — worth another attempt.
+      lastError = err instanceof Error ? err.message : String(err);
+      continue;
+    }
+
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(content);
+    } catch {
+      lastError = 'response was not valid JSON';
+      continue;
+    }
+
+    const result = PostSchema.safeParse(parsed);
+    if (result.success) {
+      return finalize(result.data, bundle);
+    }
+    lastError = result.error.issues
+      .map((i) => `${i.path.join('.') || 'root'} — ${i.message}`)
+      .join('; ');
+  }
+
+  throw new Error(
+    `Groq output failed validation after ${MAX_GENERATION_ATTEMPTS} attempts: ${lastError}`
+  );
+}
+
+async function callGroq(key: string, userPrompt: string): Promise<string> {
   const res = await fetch(GROQ_URL, {
     method: 'POST',
     headers: {
@@ -102,10 +191,10 @@ export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
   }
 
   const json = (await res.json()) as { choices: Array<{ message: { content: string } }> };
-  const raw = json.choices[0]?.message?.content ?? '';
-  const parsed = JSON.parse(raw);
-  const validated = PostSchema.parse(parsed);
+  return json.choices[0]?.message?.content ?? '';
+}
 
+function finalize(validated: z.infer<typeof PostSchema>, bundle: ResearchBundle): GeneratedPost {
   const sources = [
     { title: bundle.winner.title, url: bundle.winner.url },
     ...bundle.articles.map((a) => ({ title: a.title, url: a.url })),
