@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import type { Metadata } from 'next';
-import { loadPost, listSlugs } from '@/lib/posts';
+import { loadPost, listSlugs, listPosts, relatedPosts } from '@/lib/posts';
 import { mdxComponents } from '@/components/mdx';
 import { articleJsonLd, faqJsonLd } from '@/lib/structured-data';
 
@@ -40,6 +40,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
   const article = articleJsonLd(post);
   const faq = faqJsonLd(post);
+  const related = relatedPosts(post, await listPosts());
 
   return (
     <article className="mx-auto max-w-3xl px-6 py-12 sm:py-20">
@@ -126,6 +127,34 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             </Link>
           ))}
         </div>
+      )}
+
+      {/* Keep reading — internal links to related posts */}
+      {related.length > 0 && (
+        <section className="mt-16 border-t-2 border-ink pt-8">
+          <div className="mb-6 font-display text-sm font-bold uppercase tracking-[0.3em] text-muted">
+            Keep reading
+          </div>
+          <ul className="space-y-6">
+            {related.map((p) => (
+              <li key={p.slug}>
+                <Link href={`/blog/${p.slug}`} className="group block">
+                  <div className="flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-muted">
+                    <span className="text-accent">{p.frontmatter.category}</span>
+                    <span>·</span>
+                    <span>{p.readingTimeMin} min read</span>
+                  </div>
+                  <div className="mt-1 font-display text-xl font-bold leading-snug group-hover:text-accent transition-colors">
+                    {p.frontmatter.title}
+                  </div>
+                  <p className="mt-1 text-sm leading-relaxed text-ink/70 line-clamp-2">
+                    {p.frontmatter.description}
+                  </p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
       )}
 
       {/* Back link */}

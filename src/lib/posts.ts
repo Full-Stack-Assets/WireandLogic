@@ -61,3 +61,29 @@ export async function listSlugs(): Promise<string[]> {
     return [];
   }
 }
+
+/**
+ * Rank other posts by relevance to `current` for in-article internal linking:
+ * shared tags first, then same category, then recency. Always returns up to
+ * `limit` posts (falling back to recent ones) so the "keep reading" block is
+ * never empty when other posts exist.
+ */
+export function relatedPosts(current: Post, all: Post[], limit = 3): Post[] {
+  const currentTags = new Set((current.frontmatter.tags ?? []).map((t) => t.toLowerCase()));
+
+  return all
+    .filter((p) => p.slug !== current.slug)
+    .map((p) => ({
+      post: p,
+      shared: (p.frontmatter.tags ?? []).filter((t) => currentTags.has(t.toLowerCase())).length,
+      sameCategory: p.frontmatter.category === current.frontmatter.category ? 1 : 0,
+    }))
+    .sort(
+      (a, b) =>
+        b.shared - a.shared ||
+        b.sameCategory - a.sameCategory ||
+        b.post.frontmatter.date.localeCompare(a.post.frontmatter.date)
+    )
+    .slice(0, limit)
+    .map((x) => x.post);
+}
