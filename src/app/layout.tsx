@@ -2,20 +2,43 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, websiteJsonLd } from '@/lib/structured-data';
 import './globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Wire and Logic',
+    default: SITE_NAME,
     template: '%s — Wire and Logic',
   },
-  description: 'An hourly trend brief for builders, synthesized from across the web.',
+  description: SITE_DESCRIPTION,
+  alternates: {
+    canonical: '/',
+    types: { 'application/rss+xml': `${SITE_URL}/feed.xml` },
+  },
+  openGraph: {
+    type: 'website',
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className="relative">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()).replace(/</g, '\\u003c') }}
+        />
         <Header />
         <main className="relative z-10">{children}</main>
         <Footer />
