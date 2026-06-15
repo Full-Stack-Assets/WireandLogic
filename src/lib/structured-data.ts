@@ -1,6 +1,6 @@
 import type { Post } from './posts';
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://wireandlogic.com';
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://wireandlogic.com';
 export const SITE_NAME = 'Wire and Logic';
 export const SITE_DESCRIPTION =
   'An hourly trend brief for builders, synthesized from across the web.';
