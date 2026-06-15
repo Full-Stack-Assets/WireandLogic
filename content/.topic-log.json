@@ -447,6 +447,13 @@
       "url": "https://mrmarket.lol/what-the-fuck-happened-to-nerds/",
       "publishedAt": "2026-06-15T18:45:30.413Z",
       "signature": "2082f80ddbd950bd"
+    },
+    {
+      "slug": "hetzner-price-adjustment",
+      "title": "Hetzner Price Adjustment",
+      "url": "https://docs.hetzner.com/general/infrastructure-and-availability/price-adjustment/#cloud-servers",
+      "publishedAt": "2026-06-15T21:49:11.700Z",
+      "signature": "e996a513c733ae79"
     }
   ]
 }
