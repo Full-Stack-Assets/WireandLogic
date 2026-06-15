@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "generate": "tsx scripts/run-local.ts",
-    "seed": "tsx scripts/seed.ts"
+    "seed": "tsx scripts/seed.ts",
+    "digest": "tsx scripts/newsletter-digest.ts"
   },
   "dependencies": {
     "@octokit/rest": "^21.0.2",

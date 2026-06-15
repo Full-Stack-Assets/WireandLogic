@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, websiteJsonLd } from '@/lib/structured-data';
+import { SubscribeForm } from '@/components/SubscribeForm';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -81,6 +82,13 @@ function Footer() {
   return (
     <footer className="relative z-10 mt-32 border-t border-ink/20">
       <div className="mx-auto max-w-6xl px-6 py-10 text-sm text-muted">
+        <div className="mb-8 flex flex-col gap-4 border-b border-ink/15 pb-8 sm:flex-row sm:items-center sm:justify-between">
+          <div className="max-w-md">
+            <div className="font-display text-base font-semibold text-ink">Get the weekly dispatch</div>
+            <p className="mt-1">The week’s highest-signal stories, synthesized. No spam.</p>
+          </div>
+          <SubscribeForm />
+        </div>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <span className="font-display text-base font-semibold text-ink">Wire and Logic</span>
