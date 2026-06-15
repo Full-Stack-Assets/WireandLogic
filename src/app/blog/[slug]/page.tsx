@@ -4,6 +4,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import type { Metadata } from 'next';
 import { loadPost, listSlugs } from '@/lib/posts';
 import { mdxComponents } from '@/components/mdx';
+import { articleJsonLd, faqJsonLd } from '@/lib/structured-data';
 
 export const revalidate = 300;
 
@@ -37,8 +38,23 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
   });
 
+  const article = articleJsonLd(post);
+  const faq = faqJsonLd(post);
+
   return (
     <article className="mx-auto max-w-3xl px-6 py-12 sm:py-20">
+      {/* Structured data — escape `<` so post content can't break out of the script */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(article).replace(/</g, '\\u003c') }}
+      />
+      {faq && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faq).replace(/</g, '\\u003c') }}
+        />
+      )}
+
       {/* Article header */}
       <header className="mb-12">
         <div className="mb-4 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-muted">
