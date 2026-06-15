@@ -426,6 +426,13 @@
       "url": "https://www.verysane.ai/p/did-anthropic-ask-for-this",
       "publishedAt": "2026-06-15T02:51:58.461Z",
       "signature": "26f302004220ab25"
+    },
+    {
+      "slug": "hacker-news-june-2026",
+      "title": "Ask HN: What are you working on? (June 2026)",
+      "url": "https://news.ycombinator.com/item?id=48528779",
+      "publishedAt": "2026-06-15T06:32:51.357Z",
+      "signature": "cdec5d22f757bedc"
     }
   ]
 }
