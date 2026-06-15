@@ -6,6 +6,7 @@ type Status = 'idle' | 'loading' | 'ok' | 'error';
 
 export function SubscribeForm() {
   const [email, setEmail] = useState('');
+  const [company, setCompany] = useState(''); // honeypot — must stay empty for humans
   const [status, setStatus] = useState<Status>('idle');
   const [message, setMessage] = useState('');
 
@@ -17,7 +18,7 @@ export function SubscribeForm() {
       const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, company }),
       });
       const data = await res.json().catch(() => ({}));
       if (res.ok) {
@@ -41,6 +42,17 @@ export function SubscribeForm() {
   return (
     <div className="w-full max-w-sm">
       <form onSubmit={onSubmit} className="flex flex-col gap-2 sm:flex-row">
+        {/* Honeypot — hidden from humans, off the tab order; bots fill it. */}
+        <input
+          type="text"
+          name="company"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+          className="absolute left-[-9999px] h-0 w-0 opacity-0"
+        />
         <input
           type="email"
           required

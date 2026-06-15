@@ -10,7 +10,11 @@ import { listPosts } from '../src/lib/posts';
 import { buildDigest } from '../src/lib/newsletter/digest';
 import { sendDigest, newsletterConfigured } from '../src/lib/newsletter';
 
-const WINDOW_DAYS = Number(process.env.NEWSLETTER_WINDOW_DAYS ?? 7);
+// Parse defensively: an unset GitHub secret arrives as "" (not undefined), and
+// Number("") is 0 — which would make the window 0 days and silently send nothing.
+// Number("abc") is NaN. Fall back to 7 unless we got a positive finite number.
+const parsedWindow = Number(process.env.NEWSLETTER_WINDOW_DAYS);
+const WINDOW_DAYS = Number.isFinite(parsedWindow) && parsedWindow > 0 ? parsedWindow : 7;
 
 async function main() {
   if (!newsletterConfigured()) {
