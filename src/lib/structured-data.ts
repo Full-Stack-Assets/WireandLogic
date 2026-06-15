@@ -1,6 +1,14 @@
 import type { Post } from './posts';
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://wireandlogic.com';
+// Fall back to the production URL when the env var is unset OR an empty string.
+// `??` alone is unsafe here: an unset GitHub Actions secret is passed through as
+// "" (not undefined), which would blank out SITE_URL and break every link in the
+// digest emails and syndicated posts.
+const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+export const SITE_URL =
+  configuredSiteUrl && configuredSiteUrl.length > 0
+    ? configuredSiteUrl
+    : 'https://wireandlogic.com';
 export const SITE_NAME = 'Wire and Logic';
 export const SITE_DESCRIPTION =
   'An hourly trend brief for builders, synthesized from across the web.';
