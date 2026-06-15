@@ -4,7 +4,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import type { Metadata } from 'next';
 import { loadPost, listSlugs, listPosts, relatedPosts } from '@/lib/posts';
 import { mdxComponents } from '@/components/mdx';
-import { articleJsonLd, faqJsonLd } from '@/lib/structured-data';
+import { articleJsonLd, faqJsonLd, breadcrumbJsonLd, SITE_URL, SITE_NAME } from '@/lib/structured-data';
 
 export const revalidate = 300;
 
@@ -17,13 +17,31 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const post = await loadPost(slug);
   if (!post) return { title: 'Not found' };
+
+  const { title, description, hero, date, category, tags } = post.frontmatter;
+  const url = `${SITE_URL}/blog/${slug}`;
+  const images = hero?.url ? [hero.url] : [];
+
   return {
-    title: post.frontmatter.title,
-    description: post.frontmatter.description,
+    title,
+    description,
+    alternates: { canonical: url },
     openGraph: {
-      title: post.frontmatter.title,
-      description: post.frontmatter.description,
-      images: post.frontmatter.hero?.url ? [post.frontmatter.hero.url] : [],
+      type: 'article',
+      url,
+      title,
+      description,
+      images,
+      publishedTime: new Date(date).toISOString(),
+      authors: [SITE_NAME],
+      section: category,
+      tags,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images,
     },
   };
 }
@@ -40,6 +58,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
   const article = articleJsonLd(post);
   const faq = faqJsonLd(post);
+  const breadcrumb = breadcrumbJsonLd(post);
   const related = relatedPosts(post, await listPosts());
 
   return (
@@ -55,6 +74,10 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faq).replace(/</g, '\\u003c') }}
         />
       )}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb).replace(/</g, '\\u003c') }}
+      />
 
       {/* Article header */}
       <header className="mb-12">

@@ -1,7 +1,9 @@
 import type { Post } from './posts';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://wireandlogic.com';
-const SITE_NAME = 'Wire and Logic';
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://wireandlogic.com';
+export const SITE_NAME = 'Wire and Logic';
+export const SITE_DESCRIPTION =
+  'An hourly trend brief for builders, synthesized from across the web.';
 
 /**
  * JSON-LD for a single post. BlogPosting (an Article subtype) keeps every post
@@ -49,6 +51,36 @@ export function faqJsonLd(post: Post): Record<string, unknown> | null {
       name: f.question,
       acceptedAnswer: { '@type': 'Answer', text: f.answer },
     })),
+  };
+}
+
+/**
+ * Site-level JSON-LD (WebSite + the Organization that publishes it). Rendered
+ * once site-wide so search/answer engines can resolve "Wire and Logic" as an
+ * entity rather than re-deriving it per page.
+ */
+export function websiteJsonLd(): Record<string, unknown> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE_NAME,
+    url: SITE_URL,
+    description: SITE_DESCRIPTION,
+    publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+  };
+}
+
+/** Breadcrumb trail (Home › Category › Post) for a post, for breadcrumb rich results. */
+export function breadcrumbJsonLd(post: Post): Record<string, unknown> {
+  const { category, title } = post.frontmatter;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL },
+      { '@type': 'ListItem', position: 2, name: category, item: `${SITE_URL}/categories/${category}` },
+      { '@type': 'ListItem', position: 3, name: title, item: `${SITE_URL}/blog/${post.slug}` },
+    ],
   };
 }
 
