@@ -10,9 +10,11 @@
 import 'dotenv/config';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import matter from 'gray-matter';
 import { runPipeline } from '../src/lib/orchestrator/pipeline';
 import type { TopicLog } from '../src/lib/orchestrator/types';
 import { signature } from '../src/lib/orchestrator/score';
+import { syndicate } from '../src/lib/syndicate';
 
 const LOG_PATH = path.join(process.cwd(), 'content', '.topic-log.json');
 const POSTS_DIR = path.join(process.cwd(), 'content', 'posts');
@@ -72,6 +74,25 @@ async function main() {
       ],
     });
     console.log(`✓ Updated topic log`);
+  }
+
+  // Best-effort syndication to whichever platforms are configured. Never fatal —
+  // a missing token or flaky API must not fail the run or block the commit.
+  try {
+    const { data, content } = matter(result.mdx);
+    const results = await syndicate({
+      slug: result.slug,
+      title: String(data.title ?? ''),
+      description: String(data.description ?? ''),
+      body: content,
+      tags: Array.isArray(data.tags) ? (data.tags as string[]) : [],
+    });
+    console.log(`✓ Syndication — ${results.map((r) => `${r.platform}:${r.status}`).join('  ')}`);
+    for (const r of results) {
+      if (r.status === 'error') console.warn(`  ${r.platform} error: ${r.reason}`);
+    }
+  } catch (err) {
+    console.warn('Syndication step failed (non-fatal):', err instanceof Error ? err.message : err);
   }
 }
 
