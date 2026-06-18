@@ -559,6 +559,13 @@
       "url": "https://www.bluewin.ch/en/news/switzerland/parliament-lifts-ban-on-new-nuclear-power-plants-3257535.html",
       "publishedAt": "2026-06-18T19:32:20.733Z",
       "signature": "79d2966cf28e43f6"
+    },
+    {
+      "slug": "ubiquiti-enterprise-nas",
+      "title": "Ubiquiti: Enterprise NAS, Built on ZFS",
+      "url": "https://blog.ui.com/article/introducing-enterprise-nas",
+      "publishedAt": "2026-06-18T21:26:04.060Z",
+      "signature": "0e7af70181b56567"
     }
   ]
 }
