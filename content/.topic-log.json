@@ -664,6 +664,13 @@
       "url": "https://european.social",
       "publishedAt": "2026-06-20T18:19:29.646Z",
       "signature": "75d586d34cc0668e"
+    },
+    {
+      "slug": "bun-shared-memory-threads",
+      "title": "Bun has an open PR adding shared-memory threads to JavaScriptCore",
+      "url": "https://github.com/oven-sh/WebKit/pull/249",
+      "publishedAt": "2026-06-20T20:21:39.939Z",
+      "signature": "e1b832c15ce73f2d"
     }
   ]
 }
