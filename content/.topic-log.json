@@ -699,6 +699,13 @@
       "url": "https://www.sciencedaily.com/releases/2026/06/260614012006.htm",
       "publishedAt": "2026-06-21T10:36:42.958Z",
       "signature": "395615cdc4d488b0"
+    },
+    {
+      "slug": "google-hits-50-ipv6",
+      "title": "Google Hits 50% IPv6",
+      "url": "https://blog.apnic.net/2026/04/28/google-hits-50-ipv6/",
+      "publishedAt": "2026-06-21T13:12:56.835Z",
+      "signature": "4960d8337cc0cc83"
     }
   ]
 }
