@@ -32,8 +32,16 @@ export async function listPosts(): Promise<Post[]> {
   const posts = await Promise.all(
     files.filter((f) => f.endsWith('.mdx')).map((f) => loadPost(f.replace(/\.mdx$/, '')))
   );
+  const now = Date.now();
   return posts
     .filter((p): p is Post => p !== null)
+    // Scheduled publishing: a post dated in the future stays hidden from every
+    // listing (home, categories, tags, feed, sitemap) until its time arrives.
+    // An unparseable date is treated as published so it can never hide a post.
+    .filter((p) => {
+      const t = new Date(p.frontmatter.date).getTime();
+      return Number.isNaN(t) || t <= now;
+    })
     .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date));
 }
 

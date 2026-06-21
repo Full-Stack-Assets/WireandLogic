@@ -2,15 +2,17 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import type { Metadata } from 'next';
-import { loadPost, listSlugs, listPosts, relatedPosts } from '@/lib/posts';
+import { loadPost, listPosts, relatedPosts } from '@/lib/posts';
 import { mdxComponents } from '@/components/mdx';
 import { articleJsonLd, faqJsonLd, breadcrumbJsonLd, SITE_URL, SITE_NAME } from '@/lib/structured-data';
 
 export const revalidate = 300;
 
 export async function generateStaticParams() {
-  const slugs = await listSlugs();
-  return slugs.map((slug) => ({ slug }));
+  // Only pre-render published posts; a future-dated (scheduled) post is rendered
+  // on demand once its time has passed.
+  const posts = await listPosts();
+  return posts.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -50,6 +52,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const post = await loadPost(slug);
   if (!post) notFound();
+
+  // Scheduled posts are not published (even by direct URL) until their date.
+  if (new Date(post.frontmatter.date).getTime() > Date.now()) notFound();
 
   const { frontmatter, body, readingTimeMin } = post;
   const date = new Date(frontmatter.date).toLocaleDateString('en-US', {
