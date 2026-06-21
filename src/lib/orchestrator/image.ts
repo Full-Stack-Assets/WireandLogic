@@ -32,9 +32,10 @@ interface OpenverseResponse {
  * Any failure degrades to a keyless source, then to no image.
  */
 export async function pickImage(post: GeneratedPost): Promise<Hero> {
-  // Typed assignment (not a cast) so a typo'd provider in site.config.ts is a
-  // compile error rather than a runtime surprise.
-  const provider: ImageProvider = siteConfig.imageProvider;
+  // The `as const` config gives imageProvider a literal type; assert to the
+  // union so the branches below type-check. This still catches a bad provider
+  // string at compile time (asserting a non-member literal is a TS error).
+  const provider = siteConfig.imageProvider as ImageProvider;
   if (provider === 'none') return emptyHero();
 
   const query = buildQuery(post);
