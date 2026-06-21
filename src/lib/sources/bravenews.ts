@@ -1,4 +1,5 @@
 import type { RawItem } from '../orchestrator/types';
+import { siteConfig } from '@/site.config';
 
 interface BraveNewsResult {
   url: string;
@@ -9,13 +10,7 @@ interface BraveNewsResult {
   meta_url?: { hostname?: string };
 }
 
-const BRAVE_QUERIES = [
-  'new programming language release',
-  'developer tools launch',
-  'AI framework release',
-  'open source project',
-  'software security vulnerability',
-];
+const BRAVE_QUERIES = siteConfig.sources.braveQueries;
 
 export async function fetchBraveNews(): Promise<RawItem[]> {
   const key = process.env.BRAVE_API_KEY;

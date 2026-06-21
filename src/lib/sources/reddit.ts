@@ -1,13 +1,7 @@
 import type { RawItem } from '../orchestrator/types';
+import { siteConfig } from '@/site.config';
 
-const SUBREDDITS = [
-  'programming',
-  'webdev',
-  'technology',
-  'devops',
-  'javascript',
-  'MachineLearning',
-];
+const SUBREDDITS = siteConfig.sources.subreddits;
 
 /**
  * Reddit requires OAuth2 "application only" auth for server-side requests.

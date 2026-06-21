@@ -1,13 +1,8 @@
 import Parser from 'rss-parser';
 import type { RawItem } from '../orchestrator/types';
+import { siteConfig } from '@/site.config';
 
-const DEFAULT_FEEDS = [
-  'https://feeds.arstechnica.com/arstechnica/technology-lab',
-  'https://www.theverge.com/rss/index.xml',
-  'https://techcrunch.com/feed/',
-  'https://github.blog/feed/',
-  'https://stackoverflow.blog/feed/',
-];
+const DEFAULT_FEEDS = siteConfig.sources.rssFeeds;
 
 const parser = new Parser({ timeout: 10_000 });
 
