@@ -1,6 +1,6 @@
 # Wire and Logic
 
-A self-hosted, zero-cost trend blog. A scheduled job runs every hour, picks the highest-signal story from six sources, researches it, writes a structured MDX post, and commits it to GitHub. The Next.js site auto-deploys.
+A self-hosted, zero-cost trend blog. A scheduled job runs every hour, picks the highest-signal story from seven sources, researches it, writes a structured MDX post, and commits it to GitHub. The Next.js site auto-deploys.
 
 **Stack:** Next.js 15 · TinaCMS · Groq (free tier) · Brave Search · Pexels · GitHub Contents API · Vercel/Cloudflare.
 
@@ -142,7 +142,7 @@ From `src/lib/orchestrator/score.ts`:
 score = 0.5·popularity + 0.2·engagement + 0.3·recency
 ```
 
-- **popularity** — log-scaled upvotes, normalized per-source, then weighted by source (HN=1.0, Reddit=0.85, DEV=0.75, Brave=0.9, RSS=0.7, YT=0.6)
+- **popularity** — log-scaled upvotes, normalized per-source, then weighted by source (HN=1.0, Reddit=0.85, Brave=0.9, Google Trends=0.8, DEV=0.75, RSS=0.7, YT=0.6). Google Trends maps each trending search's approximate traffic to the "upvotes" axis and is filtered to tech/AI/business terms so the blog stays on-niche.
 - **engagement** — comments-to-upvotes ratio (capped at 1.0)
 - **recency** — exponential decay with a **24h half-life**
 
