@@ -706,6 +706,13 @@
       "url": "https://blog.apnic.net/2026/04/28/google-hits-50-ipv6/",
       "publishedAt": "2026-06-21T13:12:56.835Z",
       "signature": "4960d8337cc0cc83"
+    },
+    {
+      "slug": "anthropic-id-verification",
+      "title": "Anthropic to Require ID Verification for Certain Capabilities Starting July 8",
+      "url": "https://old.reddit.com/r/ClaudeAI/comments/1ubm53n/official_anthropic_to_require_identity/",
+      "publishedAt": "2026-06-21T16:00:09.032Z",
+      "signature": "d794ff6a279bab72"
     }
   ]
 }
