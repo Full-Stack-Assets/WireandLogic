@@ -720,6 +720,13 @@
       "url": "https://kevinak.se/blog/who-actually-owns-your-atproto-identity-hint-its-probably-not-you",
       "publishedAt": "2026-06-21T17:48:52.825Z",
       "signature": "e47521eb156ca375"
+    },
+    {
+      "slug": "prefer-duplication-over-wrong-abstraction",
+      "title": "Prefer duplication over the wrong abstraction (2016)",
+      "url": "https://sandimetz.com/blog/2016/1/20/the-wrong-abstraction",
+      "publishedAt": "2026-06-21T19:53:33.820Z",
+      "signature": "bd5bc4e519de7d26"
     }
   ]
 }
