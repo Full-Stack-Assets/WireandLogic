@@ -734,6 +734,13 @@
       "url": "https://support.claude.com/en/articles/14328960-identity-verification-on-claude",
       "publishedAt": "2026-06-21T21:13:32.072Z",
       "signature": "0168d21e4be9dc78"
+    },
+    {
+      "slug": "who-controls-your-atproto-identity",
+      "title": "Who owns your ATProto identity?",
+      "url": "https://kevinak.se/blog/who-actually-owns-your-atproto-identity-hint-its-probably-not-you",
+      "publishedAt": "2026-06-21T21:21:50.882Z",
+      "signature": "b02a17bff3f81c8d"
     }
   ]
 }
