@@ -52,6 +52,8 @@ jobs:
           # Hooks). When set, a production redeploy is triggered after each new
           # post is pushed. Unset = skipped (relies on Vercel's git auto-deploy).
           VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+          # The deploy hook targets production; only fire it when pushing here.
+          PRODUCTION_BRANCH: main
         run: |
           git config user.name "trendblog-bot"
           git config user.email "bot@trendblog.dev"
@@ -81,13 +83,15 @@ jobs:
               echo "Pushed on attempt ${attempt}."
               # Trigger a Vercel production redeploy for the new post. Non-fatal:
               # the commit is already pushed, so a hook hiccup must not fail the run.
-              if [ -n "${VERCEL_DEPLOY_HOOK_URL}" ]; then
+              if [ -n "${VERCEL_DEPLOY_HOOK_URL}" ] && [ "${branch}" = "${PRODUCTION_BRANCH}" ]; then
                 echo "Triggering Vercel deploy hook…"
                 if curl -fsS -m 30 --retry 3 -X POST "${VERCEL_DEPLOY_HOOK_URL}" >/dev/null; then
                   echo "Vercel redeploy triggered."
                 else
                   echo "Vercel deploy hook call failed (non-fatal)." >&2
                 fi
+              elif [ -n "${VERCEL_DEPLOY_HOOK_URL}" ]; then
+                echo "Skipping deploy hook — '${branch}' is not the production branch (${PRODUCTION_BRANCH})."
               else
                 echo "VERCEL_DEPLOY_HOOK_URL not set; relying on Vercel git auto-deploy."
               fi
