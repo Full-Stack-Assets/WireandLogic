@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-
-const CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
+import { ADSENSE_CLIENT as CLIENT } from '@/lib/ads';
 
 /**
  * A single AdSense ad unit. Renders nothing unless both the publisher client id

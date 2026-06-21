@@ -6,9 +6,8 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, websiteJsonLd } from '@/lib/structured-data';
 import { SubscribeForm } from '@/components/SubscribeForm';
 import { AdSlot } from '@/components/AdSlot';
+import { ADSENSE_CLIENT, ADSENSE_SLOT_FOOTER } from '@/lib/ads';
 import './globals.css';
-
-const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -34,6 +33,8 @@ export const metadata: Metadata = {
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
   },
+  // Static AdSense site-verification tag in <head> — crawlable without JS.
+  other: { 'google-adsense-account': ADSENSE_CLIENT },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -94,7 +95,7 @@ function Footer() {
   return (
     <footer className="relative z-10 mt-32 border-t border-ink/20">
       <div className="mx-auto max-w-6xl px-6 py-10 text-sm text-muted">
-        <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_FOOTER} format="auto" className="mb-8 block" />
+        <AdSlot slot={ADSENSE_SLOT_FOOTER} format="auto" className="mb-8 block" />
         <div className="mb-8 flex flex-col gap-4 border-b border-ink/15 pb-8 sm:flex-row sm:items-center sm:justify-between">
           <div className="max-w-md">
             <div className="font-display text-base font-semibold text-ink">Get the weekly dispatch</div>

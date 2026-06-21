@@ -1,9 +1,11 @@
 // Serves /ads.txt, required by ad networks to authorize sellers. The line is
 // derived from the configured AdSense publisher id; returns 404 until set.
+import { ADSENSE_CLIENT } from '@/lib/ads';
+
 export const dynamic = 'force-dynamic';
 
 export function GET() {
-  const client = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
+  const client = ADSENSE_CLIENT;
   if (!client) {
     return new Response('Not found', { status: 404 });
   }
