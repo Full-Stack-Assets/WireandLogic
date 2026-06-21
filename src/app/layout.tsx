@@ -1,10 +1,14 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, websiteJsonLd } from '@/lib/structured-data';
 import { SubscribeForm } from '@/components/SubscribeForm';
+import { AdSlot } from '@/components/AdSlot';
 import './globals.css';
+
+const ADSENSE_CLIENT = process.env.NEXT_PUBLIC_ADSENSE_CLIENT;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -36,6 +40,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="relative">
+        {ADSENSE_CLIENT && (
+          <Script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+        )}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()).replace(/</g, '\\u003c') }}
@@ -82,6 +94,7 @@ function Footer() {
   return (
     <footer className="relative z-10 mt-32 border-t border-ink/20">
       <div className="mx-auto max-w-6xl px-6 py-10 text-sm text-muted">
+        <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_FOOTER} format="auto" className="mb-8 block" />
         <div className="mb-8 flex flex-col gap-4 border-b border-ink/15 pb-8 sm:flex-row sm:items-center sm:justify-between">
           <div className="max-w-md">
             <div className="font-display text-base font-semibold text-ink">Get the weekly dispatch</div>
@@ -98,6 +111,14 @@ function Footer() {
             © {new Date().getFullYear()} — No humans were harmed in the making of this blog.
           </div>
         </div>
+        <p className="mt-6 max-w-3xl text-xs leading-relaxed text-muted/80">
+          Editorial standards: Wire and Logic&rsquo;s articles are researched and drafted with
+          AI and published under human editorial oversight. A human operator curates the
+          publication, is accountable for what appears here, and reviews and corrects content;
+          every post cites its sources. Spotted a mistake?{' '}
+          <Link href="/about" className="underline hover:text-accent">Read how this works</Link> —
+          corrections are welcome.
+        </p>
       </div>
     </footer>
   );
