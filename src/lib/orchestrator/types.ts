@@ -1,6 +1,6 @@
 export interface RawItem {
   id: string;
-  source: 'reddit' | 'hackernews' | 'devto' | 'rss' | 'youtube' | 'bravenews';
+  source: 'reddit' | 'hackernews' | 'devto' | 'rss' | 'youtube' | 'bravenews' | 'googletrends';
   title: string;
   url: string;
   author?: string;

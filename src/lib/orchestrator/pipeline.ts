@@ -4,6 +4,7 @@ import { fetchDevTo } from '../sources/devto';
 import { fetchRss } from '../sources/rss';
 import { fetchYouTube } from '../sources/youtube';
 import { fetchBraveNews } from '../sources/bravenews';
+import { fetchGoogleTrends } from '../sources/googletrends';
 import { score, dedupe, pickWinner, signature } from './score';
 import { research } from './research';
 import { generate } from './generate';
@@ -39,15 +40,16 @@ export async function runPipeline(opts: PipelineOptions = {}): Promise<PipelineR
   try {
     // ── 1. Gather ─────────────────────────────────────────────────
     const doneGather = t('gather');
-    const [reddit, hn, devto, rss, yt, brave] = await Promise.all([
+    const [reddit, hn, devto, rss, yt, brave, trends] = await Promise.all([
       fetchReddit().catch((e) => { console.warn('reddit', e); return [] as RawItem[]; }),
       fetchHackerNews().catch((e) => { console.warn('hn', e); return [] as RawItem[]; }),
       fetchDevTo().catch((e) => { console.warn('devto', e); return [] as RawItem[]; }),
       fetchRss().catch((e) => { console.warn('rss', e); return [] as RawItem[]; }),
       fetchYouTube().catch((e) => { console.warn('yt', e); return [] as RawItem[]; }),
       fetchBraveNews().catch((e) => { console.warn('brave', e); return [] as RawItem[]; }),
+      fetchGoogleTrends().catch((e) => { console.warn('googletrends', e); return [] as RawItem[]; }),
     ]);
-    const allItems = [...reddit, ...hn, ...devto, ...rss, ...yt, ...brave];
+    const allItems = [...reddit, ...hn, ...devto, ...rss, ...yt, ...brave, ...trends];
     doneGather();
 
     if (allItems.length === 0) {
