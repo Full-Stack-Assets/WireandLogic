@@ -32,7 +32,9 @@ interface OpenverseResponse {
  * Any failure degrades to a keyless source, then to no image.
  */
 export async function pickImage(post: GeneratedPost): Promise<Hero> {
-  const provider = siteConfig.imageProvider as ImageProvider;
+  // Typed assignment (not a cast) so a typo'd provider in site.config.ts is a
+  // compile error rather than a runtime surprise.
+  const provider: ImageProvider = siteConfig.imageProvider;
   if (provider === 'none') return emptyHero();
 
   const query = buildQuery(post);
@@ -92,7 +94,7 @@ async function openverse(post: GeneratedPost, query: string): Promise<Hero | nul
   url.searchParams.set('page_size', '15');
 
   const res = await fetch(url, {
-    headers: { 'user-agent': 'WireAndLogicBot/1.0 (+https://wireandlogic.com)' },
+    headers: { 'user-agent': `${siteConfig.name.replace(/\s+/g, '')}/1.0 (+${siteConfig.url})` },
   });
   if (!res.ok) return null;
   const json = (await res.json()) as OpenverseResponse;
