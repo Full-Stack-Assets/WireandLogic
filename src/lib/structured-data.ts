@@ -1,17 +1,15 @@
 import type { Post } from './posts';
+import { siteConfig } from '@/site.config';
 
-// Fall back to the production URL when the env var is unset OR an empty string.
+// Fall back to the configured URL when the env var is unset OR an empty string.
 // `??` alone is unsafe here: an unset GitHub Actions secret is passed through as
 // "" (not undefined), which would blank out SITE_URL and break every link in the
 // digest emails and syndicated posts.
 const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
 export const SITE_URL =
-  configuredSiteUrl && configuredSiteUrl.length > 0
-    ? configuredSiteUrl
-    : 'https://wireandlogic.com';
-export const SITE_NAME = 'Wire and Logic';
-export const SITE_DESCRIPTION =
-  'An hourly trend brief for builders, synthesized from across the web.';
+  configuredSiteUrl && configuredSiteUrl.length > 0 ? configuredSiteUrl : siteConfig.url;
+export const SITE_NAME = siteConfig.name;
+export const SITE_DESCRIPTION = siteConfig.description;
 
 /**
  * JSON-LD for a single post. BlogPosting (an Article subtype) keeps every post

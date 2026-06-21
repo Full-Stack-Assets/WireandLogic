@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import type { ResearchBundle, GeneratedPost } from './types';
+import { siteConfig } from '@/site.config';
 
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 const GROQ_MODEL = 'llama-3.3-70b-versatile';
@@ -58,14 +59,14 @@ export const PostSchema = z.object({
   body: z.string().min(800),
 });
 
-const SYSTEM_PROMPT = `You are a senior tech writer producing a single blog post in MDX format for a developer audience.
+const SYSTEM_PROMPT = `You are a senior writer producing a single blog post in MDX format for ${siteConfig.audience}.
 
 Your output MUST be a valid JSON object with exactly these fields — nothing else, no prose, no code fences:
 {
   "title": string,                // 60-100 chars, specific and concrete, no clickbait
   "description": string,          // SEO meta description, 1-2 sentences, at most 150 chars
   "slug": string,                 // kebab-case, <= 60 chars
-  "category": string,             // one of: "news", "tools", "engineering", "ai", "security", "opinion"
+  "category": string,             // one of: ${siteConfig.categories.map((c) => `"${c}"`).join(', ')}
   "tags": string[],               // 2-6 lowercase tags
   "body": string                  // MDX body (see structural rules below)
 }

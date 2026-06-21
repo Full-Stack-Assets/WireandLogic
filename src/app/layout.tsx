@@ -7,13 +7,19 @@ import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, websiteJsonLd } from '@/lib/stru
 import { SubscribeForm } from '@/components/SubscribeForm';
 import { AdSlot } from '@/components/AdSlot';
 import { ADSENSE_CLIENT, ADSENSE_SLOT_FOOTER } from '@/lib/ads';
+import { siteConfig } from '@/site.config';
 import './globals.css';
+
+/** Short categories (AI, DIY) read better uppercased; longer ones title-cased. */
+function navLabel(c: string): string {
+  return c.length <= 3 ? c.toUpperCase() : c[0].toUpperCase() + c.slice(1);
+}
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: SITE_NAME,
-    template: '%s — Wire and Logic',
+    template: `%s — ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   alternates: {
@@ -64,22 +70,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 
 function Header() {
+  const words = siteConfig.name.split(' ');
+  const brandLast = words.pop();
+  const brandLead = words.join(' ');
   return (
     <header className="relative z-20 border-b border-ink/20">
       <div className="mx-auto flex max-w-6xl items-end justify-between px-6 py-6">
         <Link href="/" className="group">
           <div className="font-display text-3xl font-black tracking-tight leading-none">
-            Wire and <span className="text-accent">Logic</span>
+            {brandLead ? `${brandLead} ` : ''}<span className="text-accent">{brandLast}</span>
           </div>
           <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-muted">
-            Hourly · Synthesized · Opinionated
+            {siteConfig.tagline}
           </div>
         </Link>
         <nav className="hidden sm:flex items-center gap-6 text-sm font-medium">
           <Link href="/" className="hover:text-accent transition-colors">Latest</Link>
-          <Link href="/categories/engineering" className="hover:text-accent transition-colors">Engineering</Link>
-          <Link href="/categories/ai" className="hover:text-accent transition-colors">AI</Link>
-          <Link href="/categories/tools" className="hover:text-accent transition-colors">Tools</Link>
+          {siteConfig.navCategories.map((c) => (
+            <Link key={c} href={`/categories/${c}`} className="hover:text-accent transition-colors">{navLabel(c)}</Link>
+          ))}
           <Link href="/about" className="hover:text-accent transition-colors">About</Link>
           <Link href="/stats" className="hover:text-accent transition-colors">Stats</Link>
           <a href="/feed.xml" className="hover:text-accent transition-colors" title="RSS Feed">
@@ -105,15 +114,15 @@ function Footer() {
         </div>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <span className="font-display text-base font-semibold text-ink">Wire and Logic</span>
-            {' '}— a new post every hour, generated from what's trending.
+            <span className="font-display text-base font-semibold text-ink">{siteConfig.name}</span>
+            {' '}— {siteConfig.footerNote}
           </div>
           <div className="text-xs uppercase tracking-widest">
             © {new Date().getFullYear()} — No humans were harmed in the making of this blog.
           </div>
         </div>
         <p className="mt-6 max-w-3xl text-xs leading-relaxed text-muted/80">
-          Editorial standards: Wire and Logic&rsquo;s articles are researched and drafted with
+          Editorial standards: {siteConfig.name}&rsquo;s articles are researched and drafted with
           AI and published under human editorial oversight. A human operator curates the
           publication, is accountable for what appears here, and reviews and corrects content;
           every post cites its sources. Spotted a mistake?{' '}
