@@ -6,6 +6,7 @@ import { loadPost, listPosts, relatedPosts } from '@/lib/posts';
 import { mdxComponents } from '@/components/mdx';
 import { articleJsonLd, faqJsonLd, breadcrumbJsonLd, SITE_URL, SITE_NAME } from '@/lib/structured-data';
 import { AdSlot } from '@/components/AdSlot';
+import { ADSENSE_SLOT_IN_ARTICLE } from '@/lib/ads';
 
 export const revalidate = 300;
 
@@ -130,7 +131,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
       {/* In-article ad (renders only when AdSense is configured) */}
       <AdSlot
-        slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_IN_ARTICLE}
+        slot={ADSENSE_SLOT_IN_ARTICLE}
         format="fluid"
         layout="in-article"
         className="my-12 block text-center"
