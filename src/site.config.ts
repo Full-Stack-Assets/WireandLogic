@@ -47,6 +47,28 @@ export const siteConfig = {
   // ── Ads (optional) ────────────────────────────────────────────
   // AdSense publisher id (ca-pub-...). Leave '' to keep the site ad-free.
   adsenseClient: 'ca-pub-4655488107179825',
+
+  // ── Engine: the writer LLM (any OpenAI-compatible chat endpoint) ──
+  // Swap providers by changing these three lines. `apiKeyEnv` names the env var
+  // holding the key, so different sites can use different providers/quotas.
+  llm: {
+    // Google Gemini free tier (~1,500 requests/day), OpenAI-compatible endpoint.
+    // The key (set as the GEMINI_API_KEY secret) is sent as a Bearer token.
+    endpoint: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
+    model: 'gemini-flash-latest',
+    apiKeyEnv: 'GEMINI_API_KEY',
+    // Groq (fast, free; 12K tokens/min):
+    //   endpoint: 'https://api.groq.com/openai/v1/chat/completions',
+    //   model: 'llama-3.3-70b-versatile',  apiKeyEnv: 'GROQ_API_KEY'
+    // OpenRouter (one key, many free models):
+    //   endpoint: 'https://openrouter.ai/api/v1/chat/completions',
+    //   model: 'meta-llama/llama-3.3-70b-instruct:free',  apiKeyEnv: 'OPENROUTER_API_KEY'
+  },
+
+  // ── Engine: hero images ───────────────────────────────────────
+  // 'pexels' (needs PEXELS_API_KEY), 'openverse' (keyless), or 'none'.
+  imageProvider: 'pexels',
 } as const;
 
 export type SiteConfig = typeof siteConfig;
+export type ImageProvider = 'pexels' | 'openverse' | 'none';

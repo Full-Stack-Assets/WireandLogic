@@ -2,8 +2,10 @@ name: Hourly Post Generation
 
 on:
   schedule:
-    # Top of every hour (UTC). GitHub may delay scheduled runs under load,
-    # so the actual tick can drift a few minutes past the hour.
+    # Hourly. GitHub may delay scheduled runs under load, so the actual tick can
+    # drift a few minutes past the time. When running several sites that share an
+    # LLM key/quota, give each a DIFFERENT minute so they don't all hit the API
+    # at once (e.g. site 1 '0 * * * *', site 2 '12 * * * *', site 3 '24 …').
     - cron: '0 * * * *'
   workflow_dispatch: # manual trigger button in GitHub UI
 
@@ -33,7 +35,10 @@ jobs:
 
       - name: Run pipeline
         env:
+          # LLM key — name must match `llm.apiKeyEnv` in src/site.config.ts.
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           BRAVE_API_KEY: ${{ secrets.BRAVE_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
