@@ -22,6 +22,10 @@ This is the only file you must edit. Set:
 - **Sources** — the `subreddits`, `rssFeeds`, and `braveQueries` the pipeline
   pulls from. Pick ones that match the niche; this is what the site writes about.
 - **Ads** — `adsenseClient` (your own `ca-pub-…`), or `''` to stay ad-free.
+- **Engine (optional)** — `llm` (the writer's OpenAI-compatible endpoint, model,
+  and which env var holds its key — swap to Gemini/OpenRouter via the commented
+  examples) and `imageProvider` (`'pexels'` needs a key, `'openverse'` is
+  keyless, `'none'` for no images).
 
 Nothing else needs editing for a basic site.
 
@@ -37,9 +41,13 @@ Nothing else needs editing for a basic site.
 For the hourly generator to run, add under **Settings → Secrets and variables →
 Actions**:
 
-- `GROQ_API_KEY` — required (the writer model).
+- **The LLM key** — required. Its name must match `llm.apiKeyEnv` in
+  `site.config.ts` (`GROQ_API_KEY` by default; `GEMINI_API_KEY` or
+  `OPENROUTER_API_KEY` if you switch providers). Google Gemini's free tier
+  (~1,500 requests/day) comfortably covers several sites on one key.
 - `BRAVE_API_KEY`, `PEXELS_API_KEY`, `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET`
-  — optional; any unset source is skipped.
+  — optional; any unset source is skipped (Brave/Reddit can be dropped entirely,
+  and `imageProvider: 'openverse'` needs no image key).
 - Optional integrations: `VERCEL_DEPLOY_HOOK_URL` (force a redeploy per post),
   `BLUESKY_*` / `MASTODON_*` / `DEVTO_API_KEY` (syndication), `BUTTONDOWN_API_KEY`
   (newsletter). All inert until set.
@@ -55,8 +63,10 @@ Generation" → **Run workflow**. The site auto-deploys on each commit.
 ## Notes
 
 - **AdSense is per-site:** each site needs its own approval and `ca-pub-…`.
-- **Shared API keys:** you can reuse one Groq/Brave/Pexels key across sites, but
-  several sites running hourly will press free-tier rate limits — consider paid
-  tiers or staggering each site's cron.
+- **Shared keys + rate limits:** you can reuse one LLM/image key across sites. To
+  avoid free-tier rate limits, **give each site a different cron minute** so they
+  don't hit the API simultaneously (edit the `cron` in
+  `.github/workflows/generate.yml` — e.g. `0`, `12`, `24`, `36`, `48 * * * *`),
+  and/or point each site at a different LLM provider via `llm` in `site.config.ts`.
 - **Scheduled posts:** future-date a post's `date` frontmatter and it stays
   hidden until then (built-in).

@@ -2,8 +2,9 @@ import { z } from 'zod';
 import type { ResearchBundle, GeneratedPost } from './types';
 import { siteConfig } from '@/site.config';
 
-const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const GROQ_MODEL = 'llama-3.3-70b-versatile';
+const LLM_URL = siteConfig.llm.endpoint;
+const LLM_MODEL = siteConfig.llm.model;
+const LLM_KEY_ENV = siteConfig.llm.apiKeyEnv;
 
 /** How many times to ask the model before giving up on a structurally valid post. */
 const MAX_GENERATION_ATTEMPTS = 3;
@@ -120,8 +121,8 @@ HARD RULES:
 - Do not wrap the JSON in markdown code fences.`;
 
 export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
-  const key = process.env.GROQ_API_KEY;
-  if (!key) throw new Error('GROQ_API_KEY not set');
+  const key = process.env[LLM_KEY_ENV];
+  if (!key) throw new Error(`${LLM_KEY_ENV} not set`);
 
   const baseUserPrompt = buildUserPrompt(bundle);
   let lastError = '';
@@ -138,7 +139,7 @@ export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
 
     let content: string;
     try {
-      content = await callGroq(key, userPrompt);
+      content = await callLlm(key, userPrompt);
     } catch (err) {
       // Rate limit / 5xx / network blip — worth another attempt.
       lastError = err instanceof Error ? err.message : String(err);
@@ -167,15 +168,15 @@ export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
   );
 }
 
-async function callGroq(key: string, userPrompt: string): Promise<string> {
-  const res = await fetch(GROQ_URL, {
+async function callLlm(key: string, userPrompt: string): Promise<string> {
+  const res = await fetch(LLM_URL, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
       authorization: `Bearer ${key}`,
     },
     body: JSON.stringify({
-      model: GROQ_MODEL,
+      model: LLM_MODEL,
       temperature: 0.5,
       max_tokens: 4096,
       response_format: { type: 'json_object' },
@@ -188,7 +189,7 @@ async function callGroq(key: string, userPrompt: string): Promise<string> {
 
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(`Groq API error ${res.status}: ${text.slice(0, 500)}`);
+    throw new Error(`LLM API error ${res.status}: ${text.slice(0, 500)}`);
   }
 
   const json = (await res.json()) as { choices: Array<{ message: { content: string } }> };
