@@ -21,7 +21,21 @@ export function serialize(post: GeneratedPost): string {
   };
 
   const yaml = toYaml(fm);
-  return `---\n${yaml}---\n\n${post.body.trim()}\n`;
+  return `---\n${yaml}---\n\n${sanitizeBody(post.body).trim()}\n`;
+}
+
+/**
+ * Make the LLM-written MDX body safe to prerender. The model occasionally emits
+ * unescaped double quotes inside a <Question q="..."> attribute (e.g. q="the
+ * "limited" plan"), which breaks MDX parsing and fails the whole build. Replace
+ * the inner double quotes with single quotes so the attribute stays well-formed.
+ */
+export function sanitizeBody(body: string): string {
+  return body.replace(
+    /(<Question\s+q=")([^\n]*?)(">)/g,
+    (_match, open: string, question: string, close: string) =>
+      `${open}${question.replace(/"/g, "'")}${close}`
+  );
 }
 
 function toYaml(obj: unknown, indent = 0): string {
