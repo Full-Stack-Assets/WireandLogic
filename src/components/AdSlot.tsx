@@ -4,9 +4,10 @@ import { useEffect, useRef } from 'react';
 import { ADSENSE_CLIENT as CLIENT } from '@/lib/ads';
 
 /**
- * A single AdSense ad unit. Renders nothing unless both the publisher client id
- * (NEXT_PUBLIC_ADSENSE_CLIENT) and a slot id are configured, so the site is
- * ad-free and unaffected until AdSense is set up.
+ * A single AdSense ad unit. The publisher id is configured by default (see
+ * src/lib/ads.ts), so this renders nothing unless a `slot` id is also set — the
+ * manual in-article and footer slots stay empty until their ad-unit ids are
+ * provided (Auto Ads still works from the site-wide script regardless).
  */
 export function AdSlot({
   slot,
