@@ -7,7 +7,12 @@ const LLM_MODEL = siteConfig.llm.model;
 const LLM_KEY_ENV = siteConfig.llm.apiKeyEnv;
 
 /** How many times to ask the model before giving up on a structurally valid post. */
-const MAX_GENERATION_ATTEMPTS = 3;
+const MAX_GENERATION_ATTEMPTS = 5;
+
+/** Pause helper for backing off between retries. */
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 /**
  * Collapse whitespace and truncate to at most `max` chars at a word boundary,
@@ -129,7 +134,7 @@ export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
 
   // PostSchema heals the clampable overshoots on its own. Retry only covers the
   // genuinely unrepairable misses (too-short body, too-few tags, malformed JSON)
-  // and transient Groq errors, feeding the exact reason back so the model can
+  // and transient LLM errors, feeding the exact reason back so the model can
   // correct itself. Only fail loudly after exhausting attempts.
   for (let attempt = 1; attempt <= MAX_GENERATION_ATTEMPTS; attempt++) {
     const userPrompt =
@@ -141,8 +146,14 @@ export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
     try {
       content = await callLlm(key, userPrompt);
     } catch (err) {
-      // Rate limit / 5xx / network blip — worth another attempt.
+      // Rate limit / 5xx (e.g. Gemini 503 "model overloaded") / network blip —
+      // worth another attempt. Back off with exponential delay (2s, 4s, 8s, 16s,
+      // capped at 30s) so we ride out short capacity spikes instead of burning
+      // every attempt in a couple of seconds.
       lastError = err instanceof Error ? err.message : String(err);
+      if (attempt < MAX_GENERATION_ATTEMPTS) {
+        await sleep(Math.min(30_000, 1000 * 2 ** attempt));
+      }
       continue;
     }
 
@@ -164,7 +175,7 @@ export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
   }
 
   throw new Error(
-    `Groq output failed validation after ${MAX_GENERATION_ATTEMPTS} attempts: ${lastError}`
+    `LLM output failed validation after ${MAX_GENERATION_ATTEMPTS} attempts: ${lastError}`
   );
 }
 
