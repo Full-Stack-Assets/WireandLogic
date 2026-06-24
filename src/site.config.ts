@@ -55,10 +55,11 @@ export const siteConfig = {
     // Google Gemini free tier (~1,500 requests/day), OpenAI-compatible endpoint.
     // The key (set as the GEMINI_API_KEY secret) is sent as a Bearer token.
     endpoint: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
-    // Pinned to a GA model. The `gemini-flash-latest` alias was returning
-    // 503 "model is overloaded" under free-tier load; gemini-2.0-flash has
-    // steadier capacity.
-    model: 'gemini-2.0-flash',
+    // Pinned to a stable GA model. The `gemini-flash-latest` alias was
+    // returning 503 "model is overloaded" (it points at the newest, busiest
+    // model), and gemini-2.0-flash was shut down on 2026-06-01. gemini-2.5-flash
+    // is GA with steadier free-tier capacity.
+    model: 'gemini-2.5-flash',
     apiKeyEnv: 'GEMINI_API_KEY',
     // Groq (fast, free; 12K tokens/min):
     //   endpoint: 'https://api.groq.com/openai/v1/chat/completions',
