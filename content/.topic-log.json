@@ -860,6 +860,13 @@
       "url": "https://github.com/deepseek-ai/DeepSpec/blob/main/DSpark_paper.pdf",
       "publishedAt": "2026-06-27T18:12:45.615Z",
       "signature": "7dd64160253e721c"
+    },
+    {
+      "slug": "anonymous-github-user-drops-undisclosed-0-days-poc",
+      "title": "Anonymous GitHub account mass-dropping undisclosed 0-days",
+      "url": "https://github.com/bikini/exploitarium",
+      "publishedAt": "2026-06-27T20:16:09.698Z",
+      "signature": "c9bc0a1612f78acc"
     }
   ]
 }
