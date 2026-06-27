@@ -853,6 +853,13 @@
       "url": "https://www.semafor.com/article/06/27/2026/us-releases-powerful-anthropic-model-mythos-to-some-us-companies",
       "publishedAt": "2026-06-27T07:27:48.820Z",
       "signature": "f8d086a2b6ca0715"
+    },
+    {
+      "slug": "speculative-decoding-llm-inference-acceleration",
+      "title": "DSpark: Speculative decoding accelerates LLM inference [pdf]",
+      "url": "https://github.com/deepseek-ai/DeepSpec/blob/main/DSpark_paper.pdf",
+      "publishedAt": "2026-06-27T18:12:45.615Z",
+      "signature": "7dd64160253e721c"
     }
   ]
 }
