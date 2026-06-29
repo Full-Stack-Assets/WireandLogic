@@ -951,6 +951,13 @@
       "url": "https://english.elpais.com/education/2026-06-28/ai-fraud-at-brown-university-academic-integrity-is-at-risk.html",
       "publishedAt": "2026-06-29T00:16:51.412Z",
       "signature": "1f8ab3b538d8f4b0"
+    },
+    {
+      "slug": "glm-52-beats-claude-cyber-vulnerability-detection",
+      "title": "GLM 5.2 beats Claude in our benchmarks",
+      "url": "https://semgrep.dev/blog/2026/we-have-mythos-at-home-glm-52-beats-claude-in-our-cyber-benchmarks/",
+      "publishedAt": "2026-06-29T03:58:38.687Z",
+      "signature": "6b96b785e7676667"
     }
   ]
 }
