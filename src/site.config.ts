@@ -60,6 +60,10 @@ export const siteConfig = {
     // model), and gemini-2.0-flash was shut down on 2026-06-01. gemini-2.5-flash
     // is GA with steadier free-tier capacity.
     model: 'gemini-2.5-flash',
+    // Fallback used when the primary keeps returning 503 "overloaded": a lighter
+    // GA model with much more free-tier capacity, so transient spikes on the
+    // primary don't fail the run.
+    fallbackModel: 'gemini-2.5-flash-lite',
     apiKeyEnv: 'GEMINI_API_KEY',
     // Groq (fast, free; 12K tokens/min):
     //   endpoint: 'https://api.groq.com/openai/v1/chat/completions',
