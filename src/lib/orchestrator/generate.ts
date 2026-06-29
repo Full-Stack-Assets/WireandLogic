@@ -4,10 +4,18 @@ import { siteConfig } from '@/site.config';
 
 const LLM_URL = siteConfig.llm.endpoint;
 const LLM_MODEL = siteConfig.llm.model;
+const LLM_FALLBACK_MODEL = siteConfig.llm.fallbackModel;
 const LLM_KEY_ENV = siteConfig.llm.apiKeyEnv;
 
 /** How many times to ask the model before giving up on a structurally valid post. */
 const MAX_GENERATION_ATTEMPTS = 5;
+
+/**
+ * After this many failed attempts on the primary model, switch to the lighter
+ * fallback model — it has far more free-tier capacity, so a sustained 503
+ * "overloaded" spike on the primary doesn't fail the whole run.
+ */
+const FALLBACK_AFTER_ATTEMPT = 3;
 
 /** Pause helper for backing off between retries. */
 function sleep(ms: number): Promise<void> {
@@ -142,9 +150,14 @@ export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
         ? baseUserPrompt
         : `${baseUserPrompt}\n\nYour previous response was rejected: ${lastError}\nReturn a corrected JSON object that satisfies every constraint exactly.`;
 
+    // Once the primary model has failed a few times (typically a sustained
+    // 503 spike), fall back to the lighter, higher-capacity model.
+    const model =
+      attempt > FALLBACK_AFTER_ATTEMPT && LLM_FALLBACK_MODEL ? LLM_FALLBACK_MODEL : LLM_MODEL;
+
     let content: string;
     try {
-      content = await callLlm(key, userPrompt);
+      content = await callLlm(key, userPrompt, model);
     } catch (err) {
       // Rate limit / 5xx (e.g. Gemini 503 "model overloaded") / network blip —
       // worth another attempt. Back off with exponential delay (2s, 4s, 8s, 16s,
@@ -179,7 +192,7 @@ export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
   );
 }
 
-async function callLlm(key: string, userPrompt: string): Promise<string> {
+async function callLlm(key: string, userPrompt: string, model: string): Promise<string> {
   const res = await fetch(LLM_URL, {
     method: 'POST',
     headers: {
@@ -187,7 +200,7 @@ async function callLlm(key: string, userPrompt: string): Promise<string> {
       authorization: `Bearer ${key}`,
     },
     body: JSON.stringify({
-      model: LLM_MODEL,
+      model,
       temperature: 0.5,
       max_tokens: 4096,
       response_format: { type: 'json_object' },
