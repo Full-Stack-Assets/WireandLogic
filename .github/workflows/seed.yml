@@ -1,7 +1,9 @@
 name: Seed Posts
 
-# Manually-triggered bulk backfill that runs the pipeline repeatedly until
-# the requested number of unique posts are written and committed.
+# Bulk backfill: runs the pipeline repeatedly until N unique posts are written.
+# Trigger via Actions → Run workflow, or push `.github/seed-run` to main:
+#   count=30
+#   reimage=true
 on:
   workflow_dispatch:
     inputs:
@@ -10,6 +12,14 @@ on:
         type: number
         default: 30
         required: true
+      reimage:
+        description: 'Refresh hero images after seeding'
+        type: boolean
+        default: true
+  push:
+    branches: [main]
+    paths:
+      - '.github/seed-run'
 
 concurrency:
   group: seed-posts
@@ -22,6 +32,8 @@ jobs:
   seed:
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    outputs:
+      reimage: ${{ steps.config.outputs.reimage }}
 
     steps:
       - uses: actions/checkout@v4
@@ -30,6 +42,19 @@ jobs:
         with:
           node-version: '24'
           cache: npm
+
+      - name: Resolve seed config
+        id: config
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "count=${{ github.event.inputs.count }}" >> "$GITHUB_OUTPUT"
+            echo "reimage=${{ github.event.inputs.reimage }}" >> "$GITHUB_OUTPUT"
+          else
+            count=$(grep -E '^count=' .github/seed-run 2>/dev/null | head -1 | cut -d= -f2)
+            reimage=$(grep -E '^reimage=' .github/seed-run 2>/dev/null | head -1 | cut -d= -f2)
+            echo "count=${count:-30}" >> "$GITHUB_OUTPUT"
+            echo "reimage=${reimage:-true}" >> "$GITHUB_OUTPUT"
+          fi
 
       - run: npm ci
 
@@ -49,7 +74,7 @@ jobs:
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
-        run: npx tsx scripts/seed.ts --count "${{ github.event.inputs.count }}"
+        run: npx tsx scripts/seed.ts --count "${{ steps.config.outputs.count }}"
 
       - name: Commit and push
         env:
@@ -68,7 +93,7 @@ jobs:
             exit 0
           fi
 
-          git commit -m "seed: add ${{ github.event.inputs.count }} posts via bulk backfill"
+          git commit -m "seed: add ${{ steps.config.outputs.count }} posts via bulk backfill"
 
           branch="${GITHUB_REF_NAME:-main}"
           for attempt in 1 2 3 4 5; do
@@ -93,4 +118,52 @@ jobs:
           done
 
           echo "Failed to push after multiple attempts." >&2
+          exit 1
+
+  reimage:
+    needs: seed
+    if: needs.seed.outputs.reimage == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Sync latest main (includes seed commits)
+        run: git pull origin main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Re-image posts
+        env:
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+        run: npx tsx scripts/reimage.ts
+      - name: Commit and push
+        env:
+          VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
+          PRODUCTION_BRANCH: main
+        run: |
+          git config user.name "trendblog-bot"
+          git config user.email "bot@trendblog.dev"
+          git add content/posts
+          if git diff --cached --quiet; then
+            echo "No image changes to commit."
+            exit 0
+          fi
+          git commit -m "chore: refresh hero images after seed backfill"
+          branch="${GITHUB_REF_NAME:-main}"
+          for attempt in 1 2 3 4 5; do
+            if git push origin "HEAD:${branch}"; then
+              echo "Pushed on attempt ${attempt}."
+              if [ -n "${VERCEL_DEPLOY_HOOK_URL}" ] && [ "${branch}" = "${PRODUCTION_BRANCH}" ]; then
+                curl -fsS -m 30 --retry 3 -X POST "${VERCEL_DEPLOY_HOOK_URL}" >/dev/null || true
+              fi
+              exit 0
+            fi
+            git fetch origin "${branch}"
+            git rebase "origin/${branch}" || git rebase --abort || true
+          done
           exit 1
