@@ -1,0 +1,64 @@
+---
+title: "European Digital ID Wallets Integrate Google and Apple Safety Services, Raising Sovereignty Concerns"
+description: "European digital ID wallets are integrating Google and Apple's safety services, potentially creating vendor lock-in and undermining digital sovereignty. This raises concerns about public…"
+date: "2026-06-30T15:39:20.661Z"
+category: "opinion"
+tags: 
+  - "digital identity"
+  - "eu"
+  - "google play integrity"
+  - "apple attestation"
+  - "vendor lock-in"
+  - "public infrastructure"
+hero: 
+  url: "https://live.staticflickr.com/1727/40638849710_7002f0a015_b.jpg"
+  alt: "A Vision for European Cultural Heritage 2025, May 2018, Varna, Bulgaria"
+  credit: "Sebastiaan ter Burg"
+  creditUrl: "https://www.flickr.com/photos/31013861@N00/40638849710"
+sources: 
+  - title: "European digital ID wallets rely on safety services of Google and Apple"
+    url: "https://waag.org/en/article/european-digital-id-wallets-are-gift-google-and-apple/"
+  - title: "Waag | European digital ID wallets are a gift to Google and Apple"
+    url: "https://waag.org/en/article/european-digital-id-wallets-are-gift-google-and-apple/"
+---
+
+European governments are advancing digital identity wallet initiatives, intending to streamline access to public services and online age verification for citizens. However, a critical issue has emerged: these wallets are being built upon proprietary safety services from tech giants like Google and Apple, specifically Google Play Integrity API and Apple’s Managed Device Attestation. This integration, while intended to ensure app integrity, risks embedding private corporate control into essential public infrastructure and undermining the EU's stated goals of digital sovereignty and open interoperability. It raises significant questions about vendor lock-in and the future accessibility of crucial government services.
+
+<Callout type="takeaway">By embedding Google and Apple's proprietary safety services into digital ID wallets, European governments are inadvertently cementing the market dominance of these tech giants and compromising digital sovereignty.</Callout>
+
+## What happened
+European member states are developing digital identity wallets, designed to provide citizens with secure access to government services and online age verification. Reports indicate that many of these wallet implementations, including those in the Netherlands and Italy, rely on "remote attestation" safety services such as Google Play Integrity API and Apple’s Managed Device Attestation. These services verify that an application is running on an untampered, genuine device, ostensibly to prevent fraud and abuse.
+
+The concern arises because Google's Play Integrity API, while offered as a free security tool, also reinforces Google's control over the Android ecosystem. It checks if an app runs on a Google-licensed Android device and if it was installed via the Google Play Store, effectively treating unlicensed Android alternatives as potential security risks. This mechanism can exclude users of de-Googled operating systems like e/OS and GrapheneOS from accessing critical public services via their digital ID wallets, despite the availability of more open alternatives like Android's Hardware Attestation API.
+
+## Why it matters
+This architectural choice carries significant implications for digital public infrastructure and European digital sovereignty. By integrating these proprietary services, governments risk creating a de facto monopoly where access to essential public services becomes contingent on adherence to private companies' platform policies. This directly contradicts the EU's stated ambition to foster open, inclusive, and interoperable digital systems and to challenge the dominance of big tech.
+
+The reliance on Google and Apple's attestation services transforms governments into enforcers of private platform policies, forcing citizens who prioritize privacy or technological autonomy to either compromise their choices or lose access to crucial identity services. This vendor lock-in undermines the principle that public infrastructure should be universally accessible and free from corporate gatekeepers, making alternative operating systems less viable for users if they cannot access fundamental government applications.
+
+<ProsCons>
+  <Pros>
+    <li>Enhances security for digital ID wallets by verifying device and app integrity.</li>
+    <li>Leverages established security infrastructure from major mobile platform providers.</li>
+    <li>May reduce fraud and abuse in critical public service applications.</li>
+  </Pros>
+  <Cons>
+    <li>Creates vendor lock-in with Google and Apple, undermining digital sovereignty.</li>
+    <li>Excludes users of de-Googled or alternative operating systems from accessing public services.</li>
+    <li>Contradicts EU goals of openness, interoperability, and breaking big tech monopolies.</li>
+    <li>Transforms public infrastructure into an enforcement mechanism for private platform policies.</li>
+    <li>Limits user choice and autonomy regarding mobile operating systems.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Developers and policymakers should critically evaluate the long-term implications of embedding proprietary platform services into public infrastructure. When designing systems for universal access, priority must be given to open standards and vendor-neutral solutions that ensure interoperability and prevent exclusionary practices. Exploring and adopting open-source alternatives, such as Android's native Hardware Attestation API instead of Google Play Integrity, can provide robust security without compromising public values or fostering private monopolies. The goal should be to build resilient, accessible digital public infrastructure that serves all citizens, regardless of their chosen device ecosystem, upholding principles of technological sovereignty and user autonomy.
+
+<Callout type="warning">Governments must avoid unintentionally cementing the market power of private tech companies by integrating their proprietary services into essential public digital infrastructure, as this risks compromising universal access and digital sovereignty.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="What are Google Play Integrity API and Apple’s Managed Device Attestation?">These are proprietary safety services used by Google and Apple to verify the integrity of a mobile device and the applications running on it. They ensure that an app is running on a "genuine certified" device and has not been tampered with, often checking if the device runs a licensed operating system and if the app was installed through official stores.</Question>
+  <Question q="How does this reliance impact users of alternative Android operating systems?">Users who choose de-Googled Android distributions like GrapheneOS or e/OS, which do not include Google's proprietary services, may find themselves unable to use European digital ID wallets that depend on Google Play Integrity API. This effectively forces them into Google's ecosystem if they wish to access critical public services.</Question>
+  <Question q="What is the alternative to using these proprietary safety services?">A more open alternative exists, such as Android's Hardware Attestation API, which provides hardware-based security checks without enforcing the ecosystem policies of specific platform providers. This allows for device integrity verification while maintaining interoperability and avoiding vendor lock-in.</Question>
+</FAQ>
