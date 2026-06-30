@@ -1,16 +1,7 @@
-import { siteConfig } from '@/site.config';
-
-/** Bare domain (no scheme / www) derived from the configured site URL. */
-const host = (() => {
-  try {
-    return new URL(siteConfig.url).host.replace(/^www\./, '');
-  } catch {
-    return 'example.com';
-  }
-})();
+import { SITE_HOST } from '@/lib/structured-data';
 
 /** Where sponsorship enquiries go. Set up this alias on your domain. */
-export const sponsorContactEmail = `sponsor@${host}`;
+export const sponsorContactEmail = `sponsor@${SITE_HOST}`;
 
 /**
  * Media-kit facts. Update the figures as the audience grows. Leave a `value` as

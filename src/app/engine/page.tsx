@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { siteConfig } from '@/site.config';
+import { SITE_HOST } from '@/lib/structured-data';
 
 export const metadata: Metadata = {
   title: 'The engine',
@@ -8,14 +9,7 @@ export const metadata: Metadata = {
     'Launch a self-running niche blog in a weekend. The hourly auto-blog engine that powers this site — yours to own, near-zero cost.',
 };
 
-const host = (() => {
-  try {
-    return new URL(siteConfig.url).host.replace(/^www\./, '');
-  } catch {
-    return 'example.com';
-  }
-})();
-const contact = `hello@${host}`;
+const contact = `hello@${SITE_HOST}`;
 
 const features = [
   { t: 'Hands-off', d: 'A scheduled job pulls trending stories, scores them, researches the winner, writes a structured post, and commits it — every hour.' },
