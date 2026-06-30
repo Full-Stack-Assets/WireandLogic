@@ -8,6 +8,14 @@ import { siteConfig } from '@/site.config';
 const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
 export const SITE_URL =
   configuredSiteUrl && configuredSiteUrl.length > 0 ? configuredSiteUrl : siteConfig.url;
+/** Bare hostname (no scheme, no port, no www) — e.g. for building contact emails. */
+export const SITE_HOST = (() => {
+  try {
+    return new URL(SITE_URL).hostname.replace(/^www\./, '');
+  } catch {
+    return 'example.com';
+  }
+})();
 export const SITE_NAME = siteConfig.name;
 export const SITE_DESCRIPTION = siteConfig.description;
 
