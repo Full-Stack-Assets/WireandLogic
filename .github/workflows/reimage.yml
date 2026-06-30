@@ -13,6 +13,10 @@ on:
         options:
           - all
           - missing
+  push:
+    branches: [main]
+    paths:
+      - '.github/reimage-run'
 
 permissions:
   contents: write
