@@ -6,6 +6,7 @@ import { loadPost, listPosts, relatedPosts } from '@/lib/posts';
 import { mdxComponents } from '@/components/mdx';
 import { articleJsonLd, faqJsonLd, breadcrumbJsonLd, SITE_URL, SITE_NAME } from '@/lib/structured-data';
 import { AdSlot } from '@/components/AdSlot';
+import { AffiliateBox } from '@/components/AffiliateBox';
 import { ADSENSE_SLOT_IN_ARTICLE } from '@/lib/ads';
 
 export const revalidate = 300;
@@ -136,6 +137,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         layout="in-article"
         className="my-12 block text-center"
       />
+
+      {/* Topic-matched affiliate recommendations (renders only when enabled) */}
+      <AffiliateBox category={frontmatter.category} tags={frontmatter.tags} />
 
       {/* Sources */}
       {frontmatter.sources?.length > 0 && (
