@@ -1056,6 +1056,13 @@
       "url": "https://twitter.com/AnthropicAI/status/2072106151890809341",
       "publishedAt": "2026-07-01T05:30:57.776Z",
       "signature": "74c6c06a0f404dbc"
+    },
+    {
+      "slug": "godot-engine-bans-ai-code-contributions-accountability",
+      "title": "Godot will no longer accept AI-authored code contributions",
+      "url": "https://www.pcgamer.com/gaming-industry/open-source-game-engine-godot-will-no-longer-accept-ai-authored-code-contributions-we-cant-trust-heavy-users-of-ai-to-understand-their-code-enough-to-fix-it/",
+      "publishedAt": "2026-07-01T10:03:44.890Z",
+      "signature": "02f635f262495a44"
     }
   ]
 }
