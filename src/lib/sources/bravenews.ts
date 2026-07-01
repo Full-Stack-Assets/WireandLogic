@@ -1,5 +1,6 @@
 import type { RawItem } from '../orchestrator/types';
 import { siteConfig } from '@/site.config';
+import { fetchWithTimeout } from '../fetch-timeout';
 
 interface BraveNewsResult {
   url: string;
@@ -28,9 +29,9 @@ export async function fetchBraveNews(): Promise<RawItem[]> {
       url.searchParams.set('count', '10');
       url.searchParams.set('freshness', 'pd'); // past day
 
-      const res = await fetch(url, {
+      const res = await fetchWithTimeout(url, {
         headers: { 'x-subscription-token': key, accept: 'application/json' },
-      });
+      }, 8000);
       if (!res.ok) continue;
 
       const json = (await res.json()) as { results?: BraveNewsResult[] };

@@ -18,7 +18,11 @@ export const SITE_DESCRIPTION = siteConfig.description;
  */
 export function articleJsonLd(post: Post): Record<string, unknown> {
   const url = `${SITE_URL}/blog/${post.slug}`;
-  const published = new Date(post.frontmatter.date).toISOString();
+  // Guard an unparseable/missing date: `.toISOString()` throws RangeError on an
+  // Invalid Date, which would crash the article render. Mirror listPosts(), which
+  // tolerates bad dates rather than failing.
+  const d = new Date(post.frontmatter.date);
+  const published = (Number.isNaN(d.getTime()) ? new Date() : d).toISOString();
 
   const schema: Record<string, unknown> = {
     '@context': 'https://schema.org',

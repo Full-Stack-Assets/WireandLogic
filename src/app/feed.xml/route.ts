@@ -1,10 +1,18 @@
 import { listPosts } from '@/lib/posts';
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '@/lib/structured-data';
 
 export const revalidate = 300;
 
+/** RFC-822 date for RSS; falls back to now on an unparseable frontmatter date
+ *  (listPosts keeps bad-date posts, so `Invalid Date` must never reach the feed). */
+function rssDate(date: string): string {
+  const d = new Date(date);
+  return (Number.isNaN(d.getTime()) ? new Date() : d).toUTCString();
+}
+
 export async function GET() {
   const posts = await listPosts();
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://wireandlogic.com';
+  const siteUrl = SITE_URL;
 
   const items = posts
     .slice(0, 20)
@@ -14,9 +22,9 @@ export async function GET() {
       <title><![CDATA[${p.frontmatter.title}]]></title>
       <link>${siteUrl}/blog/${p.slug}</link>
       <guid isPermaLink="true">${siteUrl}/blog/${p.slug}</guid>
-      <pubDate>${new Date(p.frontmatter.date).toUTCString()}</pubDate>
+      <pubDate>${rssDate(p.frontmatter.date)}</pubDate>
       <description><![CDATA[${p.frontmatter.description}]]></description>
-      <category>${p.frontmatter.category}</category>
+      <category><![CDATA[${p.frontmatter.category}]]></category>
     </item>`
     )
     .join('');
@@ -24,9 +32,9 @@ export async function GET() {
   const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Wire and Logic</title>
+    <title><![CDATA[${SITE_NAME}]]></title>
     <link>${siteUrl}</link>
-    <description>An hourly trend brief for builders, synthesized from across the web.</description>
+    <description><![CDATA[${SITE_DESCRIPTION}]]></description>
     <language>en-us</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${siteUrl}/feed.xml" rel="self" type="application/rss+xml"/>

@@ -1,4 +1,5 @@
 import type { RawItem } from '../orchestrator/types';
+import { fetchWithTimeout } from '../fetch-timeout';
 
 interface DevToArticle {
   id: number;
@@ -13,9 +14,10 @@ interface DevToArticle {
 }
 
 export async function fetchDevTo(): Promise<RawItem[]> {
-  const res = await fetch(
+  const res = await fetchWithTimeout(
     'https://dev.to/api/articles?per_page=50&top=1',
-    { headers: { accept: 'application/json' } }
+    { headers: { accept: 'application/json' } },
+    8000,
   );
   if (!res.ok) return [];
 

@@ -1,6 +1,7 @@
 import { defineConfig } from 'tinacms';
+import { siteConfig } from '../src/site.config';
 
-// Tina v2 config. Run `pnpm dev` to start the editor at /admin/index.html.
+// Tina v2 config. Run `npm run dev` to start the editor at /admin/index.html.
 // For self-hosted mode (no Tina Cloud), leave clientId/token blank and Tina
 // will use the local filesystem directly.
 const isCloudEnabled = !!(process.env.NEXT_PUBLIC_TINA_CLIENT_ID && process.env.TINA_TOKEN);
@@ -45,14 +46,12 @@ export default defineConfig({
             label: 'Category',
             type: 'string',
             required: true,
-            options: [
-              { value: 'news', label: 'News' },
-              { value: 'tools', label: 'Tools' },
-              { value: 'engineering', label: 'Engineering' },
-              { value: 'ai', label: 'AI' },
-              { value: 'security', label: 'Security' },
-              { value: 'opinion', label: 'Opinion' },
-            ],
+            // Derived from siteConfig.categories so the editor dropdown, the
+            // writer prompt, and the schema stay in sync (one source of truth).
+            options: siteConfig.categories.map((c) => ({
+              value: c,
+              label: c.length <= 3 ? c.toUpperCase() : c[0].toUpperCase() + c.slice(1),
+            })),
           },
           { name: 'tags', label: 'Tags', type: 'string', list: true },
           {

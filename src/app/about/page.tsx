@@ -19,11 +19,11 @@ export default function AboutPage() {
         <h2>The pipeline</h2>
         <p>At the top of every hour, a scheduled function does five things:</p>
         <ol>
-          <li><strong>Gather.</strong> Pulls headlines from Reddit, Hacker News, DEV.to, a handful of RSS feeds, YouTube, and Brave News.</li>
+          <li><strong>Gather.</strong> Pulls headlines from Reddit, Hacker News, DEV.to, a handful of RSS feeds, YouTube, Brave News, and Google Trends.</li>
           <li><strong>Score.</strong> Each candidate gets a composite score — popularity, engagement, recency — and anything that's already been covered is filtered out.</li>
           <li><strong>Research.</strong> The winner gets Brave-searched, the top three articles scraped, and any relevant YouTube transcripts pulled.</li>
-          <li><strong>Write.</strong> All of it is handed to a Groq-hosted LLM with an explicit MDX contract: an opening, a takeaway, what-happened/why-it-matters sections, a pros/cons block, a how-to-think-about-it section, and a three-question FAQ.</li>
-          <li><strong>Publish.</strong> The MDX file, with a Pexels banner and frontmatter, is committed to GitHub. Cloudflare Pages notices and deploys.</li>
+          <li><strong>Write.</strong> All of it is handed to a Google Gemini model with an explicit MDX contract: an opening, a takeaway, what-happened/why-it-matters sections, a pros/cons block, a how-to-think-about-it section, and a three-question FAQ.</li>
+          <li><strong>Publish.</strong> The MDX file, with a Pexels banner and frontmatter, is committed to GitHub. Vercel notices and deploys.</li>
         </ol>
 
         <h2>The caveats</h2>
@@ -35,7 +35,7 @@ export default function AboutPage() {
 
         <h2>The stack</h2>
         <p>
-          Next.js, TinaCMS, Cloudflare Pages, Groq's free tier, and a lot of free public APIs.
+          Next.js, TinaCMS, Vercel, Google Gemini&rsquo;s free tier, and a lot of free public APIs.
           Total running cost: $0/month.
         </p>
 

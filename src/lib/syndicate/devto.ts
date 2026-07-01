@@ -1,4 +1,6 @@
 import type { AdapterResult, SyndicationPost } from './types';
+import { SITE_NAME } from '../structured-data';
+import { fetchWithTimeout } from '../fetch-timeout';
 
 /**
  * Cross-post to DEV.to with a canonical URL pointing back to the original, so
@@ -16,12 +18,16 @@ export async function crossPostToDevTo(
   const key = process.env.DEVTO_API_KEY;
   if (!key) return { skipped: true };
 
+  // Use the lead paragraph, but fall back to the description if the body opens
+  // straight into a heading/MDX component (so we never emit raw component markup).
+  const lead = extractLead(post.body);
+  const intro = lead && !lead.trimStart().startsWith('<') ? lead : post.description;
   const bodyMarkdown =
-    `${extractLead(post.body)}\n\n` +
-    `*Originally published on [Wire and Logic](${canonicalUrl}). ` +
+    `${intro}\n\n` +
+    `*Originally published on [${SITE_NAME}](${canonicalUrl}). ` +
     `[Read the full post →](${canonicalUrl})*`;
 
-  const res = await fetch('https://dev.to/api/articles', {
+  const res = await fetchWithTimeout('https://dev.to/api/articles', {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'api-key': key },
     body: JSON.stringify({

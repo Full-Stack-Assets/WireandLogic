@@ -1,4 +1,5 @@
 import type { RawItem } from '../orchestrator/types';
+import { fetchWithTimeout } from '../fetch-timeout';
 
 interface HNHit {
   objectID: string;
@@ -16,8 +17,10 @@ export async function fetchHackerNews(): Promise<RawItem[]> {
   // Filter to stories from the last 48 hours with >20 points.
   // Uses search_by_date for recency ordering + a created_at_i floor.
   const cutoff = Math.floor((Date.now() - 48 * 3600 * 1000) / 1000);
-  const res = await fetch(
-    `https://hn.algolia.com/api/v1/search_by_date?tags=story&numericFilters=points>20,created_at_i>${cutoff}&hitsPerPage=50`
+  const res = await fetchWithTimeout(
+    `https://hn.algolia.com/api/v1/search_by_date?tags=story&numericFilters=points>20,created_at_i>${cutoff}&hitsPerPage=50`,
+    {},
+    8000,
   );
   if (!res.ok) return [];
 

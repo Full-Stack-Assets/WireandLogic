@@ -1,4 +1,5 @@
 import type { AdapterResult } from './types';
+import { fetchWithTimeout } from '../fetch-timeout';
 
 /**
  * Post a status to Mastodon. Skips unless MASTODON_INSTANCE_URL (e.g.
@@ -10,7 +11,7 @@ export async function postToMastodon(text: string): Promise<AdapterResult> {
   const token = process.env.MASTODON_ACCESS_TOKEN;
   if (!instance || !token) return { skipped: true };
 
-  const res = await fetch(`${instance}/api/v1/statuses`, {
+  const res = await fetchWithTimeout(`${instance}/api/v1/statuses`, {
     method: 'POST',
     headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
     body: JSON.stringify({ status: text, visibility: 'public' }),

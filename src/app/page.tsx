@@ -132,7 +132,7 @@ function EmptyState() {
     <div className="border-2 border-dashed border-ink/25 py-24 text-center">
       <div className="font-display text-3xl font-bold">Nothing published yet.</div>
       <p className="mt-3 text-muted">
-        Run <code className="rounded bg-ink/10 px-2 py-0.5 text-sm">pnpm generate</code> or wait for the next cron tick.
+        Run <code className="rounded bg-ink/10 px-2 py-0.5 text-sm">npm run generate</code> or wait for the next cron tick.
       </p>
     </div>
   );

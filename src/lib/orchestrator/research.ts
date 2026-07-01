@@ -126,7 +126,10 @@ export async function research(
   }
   for (const it of allItems) {
     if (it.source !== 'youtube') continue;
-    if (!it.title.toLowerCase().split(/\s+/).some((w) => query.toLowerCase().includes(w))) continue;
+    // Require a meaningful shared word (len>3): includes('') is always true and
+    // 1-3 char tokens match spuriously, pulling in unrelated videos.
+    const q = query.toLowerCase();
+    if (!it.title.toLowerCase().split(/\s+/).some((w) => w.length > 3 && q.includes(w))) continue;
     const id = extractVideoId(it.url);
     if (id) videoIds.add(id);
     if (videoIds.size >= 2) break;

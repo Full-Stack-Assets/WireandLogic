@@ -117,7 +117,7 @@ export default async function StatsPage() {
           <p className="mt-4 text-muted">
             No topics logged yet. Run{' '}
             <code className="rounded bg-ink/10 px-2 py-0.5 text-sm">
-              pnpm generate
+              npm run generate
             </code>{' '}
             to populate.
           </p>

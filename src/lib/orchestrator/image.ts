@@ -1,5 +1,6 @@
 import type { GeneratedPost } from './types';
 import { siteConfig, type ImageProvider } from '@/site.config';
+import { fetchWithTimeout } from '../fetch-timeout';
 
 type Hero = GeneratedPost['heroImage'];
 
@@ -114,14 +115,16 @@ async function pexels(post: GeneratedPost, query: string): Promise<Hero | null> 
   url.searchParams.set('size', 'large');
   url.searchParams.set('per_page', '15');
 
-  const res = await fetch(url, { headers: { authorization: process.env.PEXELS_API_KEY as string } });
+  const res = await fetchWithTimeout(url, { headers: { authorization: process.env.PEXELS_API_KEY as string } }, 8000);
   if (!res.ok) return null;
   const json = (await res.json()) as PexelsResponse;
   if (!json.photos?.length) return null;
 
   const photo = json.photos[Math.abs(hashCode(post.slug)) % Math.min(5, json.photos.length)];
+  const src = photo?.src?.large2x;
+  if (!src) return null; // a result missing the size we want falls through to Openverse
   return {
-    url: photo.src.large2x,
+    url: src,
     alt: photo.alt || post.title,
     credit: photo.photographer,
     creditUrl: photo.photographer_url,
@@ -135,9 +138,9 @@ async function openverse(post: GeneratedPost, query: string): Promise<Hero | nul
   url.searchParams.set('aspect_ratio', 'wide');
   url.searchParams.set('page_size', '15');
 
-  const res = await fetch(url, {
+  const res = await fetchWithTimeout(url, {
     headers: { 'user-agent': `${siteConfig.name.replace(/\s+/g, '')}/1.0 (+${siteConfig.url})` },
-  });
+  }, 8000);
   if (!res.ok) return null;
   const json = (await res.json()) as OpenverseResponse;
   const results = json.results ?? [];

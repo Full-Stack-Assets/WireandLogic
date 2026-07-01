@@ -23,6 +23,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const post = await loadPost(slug);
   if (!post) return { title: 'Not found' };
 
+  // A future-dated (scheduled) post 404s in the body; keep its metadata out of
+  // search indexes too, so the two can't disagree.
+  if (new Date(post.frontmatter.date).getTime() > Date.now()) {
+    return { title: 'Not found', robots: { index: false, follow: false } };
+  }
+
   const { title, description, hero, date, category, tags } = post.frontmatter;
   const url = `${SITE_URL}/blog/${slug}`;
   const images = hero?.url ? [hero.url] : [];
