@@ -22,6 +22,12 @@ export interface Post {
 
 const POSTS_DIR = path.join(process.cwd(), 'content', 'posts');
 
+/** Parse a frontmatter date to epoch ms; unparseable dates sort oldest (0). */
+function toMs(date: string): number {
+  const t = new Date(date).getTime();
+  return Number.isNaN(t) ? 0 : t;
+}
+
 export async function listPosts(): Promise<Post[]> {
   let files: string[] = [];
   try {
@@ -42,7 +48,7 @@ export async function listPosts(): Promise<Post[]> {
       const t = new Date(p.frontmatter.date).getTime();
       return Number.isNaN(t) || t <= now;
     })
-    .sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date));
+    .sort((a, b) => toMs(b.frontmatter.date) - toMs(a.frontmatter.date));
 }
 
 export async function loadPost(slug: string): Promise<Post | null> {
@@ -90,7 +96,7 @@ export function relatedPosts(current: Post, all: Post[], limit = 3): Post[] {
       (a, b) =>
         b.shared - a.shared ||
         b.sameCategory - a.sameCategory ||
-        b.post.frontmatter.date.localeCompare(a.post.frontmatter.date)
+        toMs(b.post.frontmatter.date) - toMs(a.post.frontmatter.date)
     )
     .slice(0, limit)
     .map((x) => x.post);

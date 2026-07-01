@@ -1,5 +1,6 @@
 import type { RawItem } from '../orchestrator/types';
 import { siteConfig } from '@/site.config';
+import { fetchWithTimeout } from '../fetch-timeout';
 
 const SUBREDDITS = siteConfig.sources.subreddits;
 
@@ -22,7 +23,7 @@ async function getAccessToken(): Promise<string | null> {
     return cachedToken.token;
   }
 
-  const res = await fetch('https://www.reddit.com/api/v1/access_token', {
+  const res = await fetchWithTimeout('https://www.reddit.com/api/v1/access_token', {
     method: 'POST',
     headers: {
       'authorization': `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
@@ -30,7 +31,7 @@ async function getAccessToken(): Promise<string | null> {
       'user-agent': 'trendblog:v0.1.0 (by /u/trendblog)',
     },
     body: 'grant_type=client_credentials',
-  });
+  }, 8000);
 
   if (!res.ok) {
     console.warn(`[reddit] OAuth token request failed: ${res.status}`);
@@ -57,14 +58,15 @@ export async function fetchReddit(): Promise<RawItem[]> {
 
   for (const sub of SUBREDDITS) {
     try {
-      const res = await fetch(
+      const res = await fetchWithTimeout(
         `https://oauth.reddit.com/r/${sub}/top?t=day&limit=15`,
         {
           headers: {
             'authorization': `Bearer ${token}`,
             'user-agent': ua,
           },
-        }
+        },
+        8000,
       );
       if (!res.ok) {
         console.warn(`[reddit] r/${sub} returned ${res.status}`);

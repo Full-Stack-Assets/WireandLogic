@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import type { ResearchBundle, GeneratedPost } from './types';
 import { siteConfig } from '@/site.config';
+import { fetchWithTimeout } from '../fetch-timeout';
 
 const LLM_URL = siteConfig.llm.endpoint;
 const LLM_MODEL = siteConfig.llm.model;
@@ -193,31 +194,41 @@ export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
 }
 
 async function callLlm(key: string, userPrompt: string, model: string): Promise<string> {
-  const res = await fetch(LLM_URL, {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      authorization: `Bearer ${key}`,
+  const res = await fetchWithTimeout(
+    LLM_URL,
+    {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        authorization: `Bearer ${key}`,
+      },
+      body: JSON.stringify({
+        model,
+        temperature: 0.5,
+        max_tokens: 4096,
+        response_format: { type: 'json_object' },
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: userPrompt },
+        ],
+      }),
     },
-    body: JSON.stringify({
-      model,
-      temperature: 0.5,
-      max_tokens: 4096,
-      response_format: { type: 'json_object' },
-      messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user', content: userPrompt },
-      ],
-    }),
-  });
+    30_000,
+  );
 
   if (!res.ok) {
     const text = await res.text();
     throw new Error(`LLM API error ${res.status}: ${text.slice(0, 500)}`);
   }
 
-  const json = (await res.json()) as { choices: Array<{ message: { content: string } }> };
-  return json.choices[0]?.message?.content ?? '';
+  // Some providers return a 200 with an error-shaped body (no choices). Read it
+  // defensively and surface a descriptive error the retry loop can log.
+  const json = (await res.json()) as { choices?: Array<{ message?: { content?: string } }> };
+  const content = json.choices?.[0]?.message?.content;
+  if (content == null) {
+    throw new Error(`LLM response had no choices/content: ${JSON.stringify(json).slice(0, 300)}`);
+  }
+  return content;
 }
 
 function finalize(validated: z.infer<typeof PostSchema>, bundle: ResearchBundle): GeneratedPost {
