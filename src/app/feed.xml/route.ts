@@ -3,6 +3,13 @@ import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '@/lib/structured-data';
 
 export const revalidate = 300;
 
+/** RFC-822 date for RSS; falls back to now on an unparseable frontmatter date
+ *  (listPosts keeps bad-date posts, so `Invalid Date` must never reach the feed). */
+function rssDate(date: string): string {
+  const d = new Date(date);
+  return (Number.isNaN(d.getTime()) ? new Date() : d).toUTCString();
+}
+
 export async function GET() {
   const posts = await listPosts();
   const siteUrl = SITE_URL;
@@ -15,7 +22,7 @@ export async function GET() {
       <title><![CDATA[${p.frontmatter.title}]]></title>
       <link>${siteUrl}/blog/${p.slug}</link>
       <guid isPermaLink="true">${siteUrl}/blog/${p.slug}</guid>
-      <pubDate>${new Date(p.frontmatter.date).toUTCString()}</pubDate>
+      <pubDate>${rssDate(p.frontmatter.date)}</pubDate>
       <description><![CDATA[${p.frontmatter.description}]]></description>
       <category><![CDATA[${p.frontmatter.category}]]></category>
     </item>`
