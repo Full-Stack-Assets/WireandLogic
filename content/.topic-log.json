@@ -1042,6 +1042,13 @@
       "url": "https://unix.foo/posts/last-people-who-know-how-it-works/",
       "publishedAt": "2026-06-30T21:02:53.510Z",
       "signature": "bd5abd7804f7a630"
+    },
+    {
+      "slug": "claude-code-steganography-unauthorized-writes",
+      "title": "Claude Code is steganographically marking requests",
+      "url": "https://thereallo.dev/blog/claude-code-prompt-steganography",
+      "publishedAt": "2026-07-01T00:15:56.955Z",
+      "signature": "d44df0871ddf8821"
     }
   ]
 }
