@@ -1112,6 +1112,13 @@
       "url": "https://news.ubc.ca/2026/06/mrna-vaccines-are-safe-effective-and-full-of-promise/",
       "publishedAt": "2026-07-02T05:06:53.610Z",
       "signature": "2f90d5c17c1748b9"
+    },
+    {
+      "slug": "google-android-developer-verifier-malware-control",
+      "title": "A new Android malware from Google",
+      "url": "https://f-droid.org/2026/07/01/adv-malware.html",
+      "publishedAt": "2026-07-02T09:27:11.038Z",
+      "signature": "1a1bf283a051caa1"
     }
   ]
 }
