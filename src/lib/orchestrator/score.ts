@@ -37,7 +37,9 @@ export function score(items: RawItem[]): ScoredItem[] {
     const comm = it.comments ?? 0;
 
     const normalizedUp = Math.log1p(up) / Math.log1p(Math.max(1, maxUp[it.source] ?? 1));
-    const popularity = normalizedUp * SOURCE_WEIGHT[it.source];
+    // Fall back to a neutral weight so a newly-added source without a registered
+    // weight degrades gracefully instead of producing NaN (which sinks its items).
+    const popularity = normalizedUp * (SOURCE_WEIGHT[it.source] ?? 0.5);
 
     const engagement = up > 0 ? Math.min(1, comm / up) : comm > 5 ? 0.5 : 0;
 

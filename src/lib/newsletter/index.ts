@@ -8,7 +8,10 @@ export interface NewsletterResult {
 }
 
 function provider(): string {
-  return (process.env.NEWSLETTER_PROVIDER ?? 'buttondown').toLowerCase();
+  // Unset GitHub Actions secrets arrive as "" (not undefined), which `??` would
+  // let through — blanking the provider and silently disabling the newsletter.
+  const p = process.env.NEWSLETTER_PROVIDER?.trim();
+  return (p && p.length > 0 ? p : 'buttondown').toLowerCase();
 }
 
 /** Whether a provider is configured with the credentials it needs. */

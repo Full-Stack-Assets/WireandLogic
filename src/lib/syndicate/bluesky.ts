@@ -1,4 +1,5 @@
 import type { AdapterResult } from './types';
+import { fetchWithTimeout } from '../fetch-timeout';
 
 const BSKY_SERVICE = 'https://bsky.social';
 
@@ -11,7 +12,7 @@ export async function postToBluesky(text: string, link?: string): Promise<Adapte
   const password = process.env.BLUESKY_APP_PASSWORD;
   if (!handle || !password) return { skipped: true };
 
-  const auth = await fetch(`${BSKY_SERVICE}/xrpc/com.atproto.server.createSession`, {
+  const auth = await fetchWithTimeout(`${BSKY_SERVICE}/xrpc/com.atproto.server.createSession`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify({ identifier: handle, password }),
@@ -27,7 +28,7 @@ export async function postToBluesky(text: string, link?: string): Promise<Adapte
   const facets = link ? linkFacets(text, link) : undefined;
   if (facets) record.facets = facets;
 
-  const res = await fetch(`${BSKY_SERVICE}/xrpc/com.atproto.repo.createRecord`, {
+  const res = await fetchWithTimeout(`${BSKY_SERVICE}/xrpc/com.atproto.repo.createRecord`, {
     method: 'POST',
     headers: { 'content-type': 'application/json', authorization: `Bearer ${accessJwt}` },
     body: JSON.stringify({ repo: did, collection: 'app.bsky.feed.post', record }),

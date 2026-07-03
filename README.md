@@ -28,13 +28,13 @@ Each stage is its own module in `src/lib/orchestrator/` and can be tested indepe
 ### 1. Prereqs
 
 - Node 20+
-- `pnpm` (or npm/yarn — adjust commands accordingly)
+- `npm` (the repo ships `package-lock.json`; CI uses `npm ci`)
 - A GitHub repo to commit posts into (can be this same repo)
 
 ### 2. Install
 
 ```bash
-pnpm install
+npm install
 cp .env.example .env.local
 ```
 
@@ -56,16 +56,16 @@ Fill them into `.env.local` along with `GITHUB_OWNER` / `GITHUB_REPO` / `GITHUB_
 
 ```bash
 # Dry run — prints the generated post, doesn't write anything
-pnpm generate --dry
+npm run generate -- --dry
 
 # Real run — writes MDX to content/posts/ and updates content/.topic-log.json
-pnpm generate
+npm run generate
 
 # Start the dev server
-pnpm dev
+npm run dev
 ```
 
-Open http://localhost:3000. The seed post is visible out of the box; new posts show up as soon as `pnpm generate` writes them.
+Open http://localhost:3000. The seed post is visible out of the box; new posts show up as soon as `npm run generate` writes them.
 
 ---
 
@@ -93,7 +93,7 @@ Deploy the Next.js blog to Pages purely as the static host — it's free and fas
 
 ### Self-host
 
-`pnpm build && pnpm start` and point a reverse proxy at port 3000. The GitHub Action still drives generation; to trigger a run by hand, hit the route with `curl`:
+`npm run build && npm start` and point a reverse proxy at port 3000. The GitHub Action still drives generation; to trigger a run by hand, hit the route with `curl`:
 
 ```bash
 curl -H "Authorization: Bearer $CRON_SECRET" https://your-domain/api/cron/generate
@@ -106,7 +106,7 @@ curl -H "Authorization: Bearer $CRON_SECRET" https://your-domain/api/cron/genera
 The schema in `tina/config.ts` matches the frontmatter the pipeline emits. Start the editor with:
 
 ```bash
-pnpm dev   # Tina runs alongside Next via the `tinacms dev` wrapper
+npm run dev   # Tina runs alongside Next via the `tinacms dev` wrapper
 ```
 
 Then visit http://localhost:3000/admin/index.html. You can fix typos, tweak tags, or hand-write posts that follow the same structure.
@@ -152,7 +152,7 @@ Dedup uses a sorted-token fingerprint of the title, so "GPT-5 released today" an
 
 ## Troubleshooting
 
-**"no items from any source"** — all six sources failed. Usually a network blip; check logs. Try `pnpm generate --dry` after a minute.
+**"no items from any source"** — all seven sources failed. Usually a network blip; check logs. Try `npm run generate -- --dry` after a minute.
 
 **"all top candidates already covered"** — the scorer found winners, but every one has a signature that's already in the topic log. Either wait for new stories or delete recent entries from `content/.topic-log.json`.
 

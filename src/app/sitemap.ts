@@ -1,8 +1,11 @@
 import { listPosts } from '@/lib/posts';
+import { SITE_URL } from '@/lib/structured-data';
 import type { MetadataRoute } from 'next';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://wireandlogic.com';
+  // SITE_URL guards the empty-string env case; a bare env read here would emit
+  // host-less URLs and corrupt the sitemap when NEXT_PUBLIC_SITE_URL is unset.
+  const siteUrl = SITE_URL;
   const posts = await listPosts();
 
   const postEntries: MetadataRoute.Sitemap = posts.map((p) => ({

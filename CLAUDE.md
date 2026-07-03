@@ -74,11 +74,9 @@ npm run digest           # tsx scripts/newsletter-digest.ts — send the weekly 
 npx tsx scripts/smoke-test.ts   # hit every source fetcher against live APIs
 ```
 
-> **Gotcha:** `package.json` declares `"seed": "tsx scripts/seed.ts"`, but this
-> repo does **not** ship `scripts/seed.ts` (nor `scripts/seed-topics.ts`). So
-> `npm run seed` will fail here. The seed entrypoint exists only in some sibling
-> instances (e.g. AstroKobi). Don't rely on it; if you need backfill, either run
-> the live pipeline repeatedly or port `seed.ts` from a sibling.
+> **Backfill:** `scripts/seed.ts` ships and works (`npm run seed`); it's driven by
+> `.github/workflows/seed.yml`, with `scripts/reimage.ts` / `reimage.yml` to
+> re-fetch hero images. Use these to backfill or refresh content in bulk.
 
 `npm run build` goes through **`scripts/build.sh`**, which skips the TinaCMS
 cloud build when `NEXT_PUBLIC_TINA_CLIENT_ID` / `TINA_TOKEN` are unset
