@@ -22,7 +22,7 @@ const features = [
 const tiers = [
   {
     name: 'DIY template',
-    price: 'from $99',
+    price: 'from $129',
     cadence: 'one-time',
     blurb: 'The full repo plus setup docs. You configure, deploy, and own it.',
     features: ['Complete source + license', 'Step-by-step setup guide', 'Deploy to Vercel in an afternoon'],
@@ -30,7 +30,7 @@ const tiers = [
   },
   {
     name: 'Done-for-you',
-    price: 'from $499',
+    price: 'from $599',
     cadence: 'one-time',
     blurb: 'Tell us the niche; we stand up the whole site for you.',
     features: ['Niche config + sources tuned', 'Domain, secrets & deploy handled', 'Live and generating before handoff'],
@@ -38,7 +38,7 @@ const tiers = [
   },
   {
     name: 'Managed',
-    price: 'from $39',
+    price: 'from $59',
     cadence: 'per month',
     blurb: 'We host and run it. You just pick the niche and watch it publish.',
     features: ['Hosting + generation managed', 'Updates & monitoring included', 'Cancel anytime'],
