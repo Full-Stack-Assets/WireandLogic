@@ -70,6 +70,7 @@ export default function SponsorPage() {
             <div key={t.name} className="flex flex-col border border-ink/20 p-6">
               <div className="font-display text-lg font-bold">{t.name}</div>
               <div className="mt-1 text-sm font-semibold text-accent">{t.price}</div>
+              {t.note && <p className="mt-1 text-xs text-muted">{t.note}</p>}
               <p className="mt-3 text-sm leading-relaxed text-ink/70">{t.blurb}</p>
               <ul className="mt-4 space-y-2 text-sm text-ink/80">
                 {t.features.map((f) => (
