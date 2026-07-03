@@ -1,7 +1,5 @@
-import { SITE_HOST } from '@/lib/structured-data';
-
-/** Where sponsorship enquiries go. Set up this alias on your domain. */
-export const sponsorContactEmail = `sponsor@${SITE_HOST}`;
+/** Where sponsorship enquiries go. */
+export const sponsorContactEmail = 'Nicholas@fullstackassets.com';
 
 /**
  * Media-kit facts. Update the figures as the audience grows. Leave a `value` as

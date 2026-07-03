@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { siteConfig } from '@/site.config';
-import { SITE_HOST } from '@/lib/structured-data';
 
 export const metadata: Metadata = {
   title: 'The engine',
@@ -9,7 +8,7 @@ export const metadata: Metadata = {
     'Launch a self-running niche blog in a weekend. The hourly auto-blog engine that powers this site — yours to own, near-zero cost.',
 };
 
-const contact = `hello@${SITE_HOST}`;
+const contact = 'Nicholas@fullstackassets.com';
 
 const features = [
   { t: 'Hands-off', d: 'A scheduled job pulls trending stories, scores them, researches the winner, writes a structured post, and commits it — every hour.' },
