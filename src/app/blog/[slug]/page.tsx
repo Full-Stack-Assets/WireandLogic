@@ -7,6 +7,7 @@ import { mdxComponents } from '@/components/mdx';
 import { articleJsonLd, faqJsonLd, breadcrumbJsonLd, SITE_URL, SITE_NAME } from '@/lib/structured-data';
 import { AdSlot } from '@/components/AdSlot';
 import { AffiliateBox } from '@/components/AffiliateBox';
+import { SubscribeCTA } from '@/components/SubscribeCTA';
 import { ADSENSE_SLOT_IN_ARTICLE } from '@/lib/ads';
 
 export const revalidate = 300;
@@ -205,10 +206,13 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         </section>
       )}
 
+      {/* Newsletter call-to-action */}
+      <SubscribeCTA />
+
       {/* Back link */}
       <div className="mt-16 border-t border-ink/20 pt-8">
         <Link href="/" className="inline-flex items-center gap-2 font-display font-semibold text-accent hover:gap-3 transition-all">
-          ← Back to Wire and Logic
+          ← Back to {SITE_NAME}
         </Link>
       </div>
     </article>

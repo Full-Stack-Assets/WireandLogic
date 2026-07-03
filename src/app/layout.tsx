@@ -91,6 +91,7 @@ function Header() {
           ))}
           <Link href="/about" className="hover:text-accent transition-colors">About</Link>
           <Link href="/stats" className="hover:text-accent transition-colors">Stats</Link>
+          <Link href="/sponsor" className="hover:text-accent transition-colors">Sponsor</Link>
           <a href="/feed.xml" className="hover:text-accent transition-colors" title="RSS Feed">
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
           </a>
@@ -121,6 +122,12 @@ function Footer() {
             © {new Date().getFullYear()} — No humans were harmed in the making of this blog.
           </div>
         </div>
+        <nav className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-xs uppercase tracking-widest">
+          <Link href="/about" className="hover:text-accent transition-colors">About</Link>
+          <Link href="/sponsor" className="hover:text-accent transition-colors">Sponsor</Link>
+          <Link href="/engine" className="hover:text-accent transition-colors">Get the engine</Link>
+          <a href="/feed.xml" className="hover:text-accent transition-colors">RSS</a>
+        </nav>
         <p className="mt-6 max-w-3xl text-xs leading-relaxed text-muted/80">
           Editorial standards: {siteConfig.name}&rsquo;s articles are researched and drafted with
           AI and published under human editorial oversight. A human operator curates the
