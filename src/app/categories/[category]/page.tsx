@@ -1,8 +1,15 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { listPosts } from '@/lib/posts';
+import { paginate } from '@/lib/pagination';
+import { Pagination } from '@/components/Pagination';
 
 export const revalidate = 300;
+
+/** Posts per page for this listing. No hero images here, so a larger page size
+ *  than the home page is fine while still bounding an ever-growing category
+ *  (e.g. "engineering" already has 50+ posts and grows hourly). */
+const PAGE_SIZE = 40;
 
 export async function generateStaticParams() {
   const posts = await listPosts();
@@ -10,17 +17,26 @@ export async function generateStaticParams() {
   return cats.map((category) => ({ category }));
 }
 
-export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
+export default async function CategoryPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ category: string }>;
+  searchParams: Promise<{ page?: string }>;
+}) {
   const { category } = await params;
-  const posts = (await listPosts()).filter((p) => p.frontmatter.category === category);
-  if (posts.length === 0) notFound();
+  const { page } = await searchParams;
+  const all = (await listPosts()).filter((p) => p.frontmatter.category === category);
+  if (all.length === 0) notFound();
+
+  const { items: posts, currentPage, totalPages } = paginate(all, Number(page), PAGE_SIZE);
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-16">
       <div className="mb-12 border-b-2 border-ink pb-6">
         <div className="text-xs uppercase tracking-[0.3em] text-muted">Category</div>
         <h1 className="mt-2 font-display text-5xl font-black capitalize">{category}</h1>
-        <p className="mt-2 text-muted">{posts.length} {posts.length === 1 ? 'post' : 'posts'}</p>
+        <p className="mt-2 text-muted">{all.length} {all.length === 1 ? 'post' : 'posts'}</p>
       </div>
       <ul className="divide-y divide-ink/20">
         {posts.map((p) => (
@@ -38,6 +54,11 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
           </li>
         ))}
       </ul>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        hrefFor={(p) => (p === 1 ? `/categories/${category}` : `/categories/${category}?page=${p}`)}
+      />
     </div>
   );
 }

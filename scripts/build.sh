@@ -1,4 +1,9 @@
 #!/bin/bash
+set -e
+# `set -e` is load-bearing: without it, a failing `npx next build` (or
+# `tinacms build`) still falls through to the unconditional "✅ Build
+# completed successfully!" below with exit 0 — which is exactly what let a
+# broken hourly post (truncated MDX) silently pass as a successful deploy.
 
 # Build script that handles TinaCMS configuration gracefully
 # If TinaCMS credentials are not provided, we skip the TinaCMS cloud build

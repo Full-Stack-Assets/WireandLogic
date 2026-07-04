@@ -1,8 +1,12 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { listPosts } from '@/lib/posts';
+import { paginate } from '@/lib/pagination';
+import { Pagination } from '@/components/Pagination';
 
 export const revalidate = 300;
+
+const PAGE_SIZE = 40;
 
 export async function generateStaticParams() {
   const posts = await listPosts();
@@ -10,17 +14,26 @@ export async function generateStaticParams() {
   return tags.map((tag) => ({ tag }));
 }
 
-export default async function TagPage({ params }: { params: Promise<{ tag: string }> }) {
+export default async function TagPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ tag: string }>;
+  searchParams: Promise<{ page?: string }>;
+}) {
   const { tag } = await params;
-  const posts = (await listPosts()).filter((p) => p.frontmatter.tags?.includes(tag));
-  if (posts.length === 0) notFound();
+  const { page } = await searchParams;
+  const all = (await listPosts()).filter((p) => p.frontmatter.tags?.includes(tag));
+  if (all.length === 0) notFound();
+
+  const { items: posts, currentPage, totalPages } = paginate(all, Number(page), PAGE_SIZE);
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-16">
       <div className="mb-12 border-b-2 border-ink pb-6">
         <div className="text-xs uppercase tracking-[0.3em] text-muted">Tag</div>
         <h1 className="mt-2 font-display text-5xl font-black">#{tag}</h1>
-        <p className="mt-2 text-muted">{posts.length} {posts.length === 1 ? 'post' : 'posts'}</p>
+        <p className="mt-2 text-muted">{all.length} {all.length === 1 ? 'post' : 'posts'}</p>
       </div>
       <ul className="divide-y divide-ink/20">
         {posts.map((p) => (
@@ -34,6 +47,11 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
           </li>
         ))}
       </ul>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        hrefFor={(p) => (p === 1 ? `/tags/${tag}` : `/tags/${tag}?page=${p}`)}
+      />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import type { Metadata } from 'next';
 import { loadPost, listPosts, relatedPosts } from '@/lib/posts';
@@ -115,12 +116,21 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
       {/* Hero */}
       {frontmatter.hero?.url && (
         <figure className="mb-12 -mx-6 sm:mx-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={frontmatter.hero.url}
-            alt={frontmatter.hero.alt}
-            className="aspect-video w-full object-cover"
-          />
+          <div className="relative aspect-video w-full overflow-hidden">
+            {/* Hero URLs come from Pexels/Openverse (arbitrary source hosts for the
+                latter), so `unoptimized` skips Next's remote-pattern allowlist while
+                still giving us lazy-loading + a sized container (no layout shift).
+                This is the LCP candidate on this page, so mark it `priority`. */}
+            <Image
+              src={frontmatter.hero.url}
+              alt={frontmatter.hero.alt}
+              fill
+              priority
+              unoptimized
+              sizes="(min-width: 640px) 768px, 100vw"
+              className="object-cover"
+            />
+          </div>
           {frontmatter.hero.credit && (
             <figcaption className="mt-2 px-6 sm:px-0 text-xs text-muted">
               Photo:{' '}
