@@ -76,6 +76,23 @@ function findUnbalancedTag(body: string): string | null {
   return null;
 }
 
+/**
+ * The body schema, parameterized on the minimum character count. Shared so a
+ * one-off call (e.g. a long-form backfill) can enforce a stricter floor without
+ * duplicating the unbalanced-tag check.
+ */
+function bodySchema(minChars: number) {
+  return z.string().min(minChars).superRefine((b, ctx) => {
+    const tag = findUnbalancedTag(b);
+    if (tag) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `unbalanced <${tag}> tag — the body looks truncated/cut off mid-generation`,
+      });
+    }
+  });
+}
+
 // Self-healing contract. Length/shape overshoots that can be safely coerced are
 // repaired by transforms (so a too-long description or a messy slug never throws
 // — note `.max()` would fire *before* a transform, so it's deliberately gone).
@@ -91,15 +108,7 @@ export const PostSchema = z.object({
     .array(z.string())
     .transform(normalizeTags)
     .pipe(z.array(z.string()).min(2).max(6)),
-  body: z.string().min(800).superRefine((b, ctx) => {
-    const tag = findUnbalancedTag(b);
-    if (tag) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: `unbalanced <${tag}> tag — the body looks truncated/cut off mid-generation`,
-      });
-    }
-  }),
+  body: bodySchema(800),
 });
 
 const SYSTEM_PROMPT = `You are a senior writer producing a single blog post in MDX format for ${siteConfig.audience}.
@@ -162,11 +171,28 @@ HARD RULES:
 - American English.
 - Do not wrap the JSON in markdown code fences.`;
 
-export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
+export interface GenerateOptions {
+  /** Guidance embedded in the prompt: the approximate word count to aim for
+   *  (e.g. for a long-form/double-length feature). Omit for the standard body. */
+  targetWords?: number;
+  /** Runtime floor for the body's character count, overriding PostSchema's
+   *  default min(800) for this call only — lets a long-form batch enforce a
+   *  meaningfully longer body without changing the standard contract used by
+   *  the hourly pipeline and the regular seed runner. */
+  minBodyChars?: number;
+}
+
+export async function generate(
+  bundle: ResearchBundle,
+  opts: GenerateOptions = {}
+): Promise<GeneratedPost> {
   const key = process.env[LLM_KEY_ENV];
   if (!key) throw new Error(`${LLM_KEY_ENV} not set`);
 
-  const baseUserPrompt = buildUserPrompt(bundle);
+  const baseUserPrompt = buildUserPrompt(bundle, opts.targetWords);
+  const schema = opts.minBodyChars
+    ? PostSchema.extend({ body: bodySchema(opts.minBodyChars) })
+    : PostSchema;
   let lastError = '';
 
   // PostSchema heals the clampable overshoots on its own. Retry only covers the
@@ -207,7 +233,7 @@ export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
       continue;
     }
 
-    const result = PostSchema.safeParse(parsed);
+    const result = schema.safeParse(parsed);
     if (result.success) {
       return finalize(result.data, bundle);
     }
@@ -276,8 +302,12 @@ function finalize(validated: z.infer<typeof PostSchema>, bundle: ResearchBundle)
   };
 }
 
-function buildUserPrompt(bundle: ResearchBundle): string {
+function buildUserPrompt(bundle: ResearchBundle, targetWords?: number): string {
   const { winner, articles, transcripts, related } = bundle;
+
+  const lengthBlock = targetWords
+    ? `\n\n## Length requirement\nThis is a long-form, in-depth feature — write a substantially longer and more detailed body than usual. Target approximately ${targetWords} words total (roughly double the normal length): go deeper in "What happened" and "Why it matters", broaden the pros/cons with more items, and make "How to think about it" more thorough with concrete detail. Do not pad with repetition, filler, or invented content — every added sentence must be substantive and grounded in the research provided.`
+    : '';
 
   const articleBlock = articles
     .map(
@@ -309,6 +339,7 @@ ${a.content.slice(0, 4000)}`
 ${articleBlock}
 ${transcriptBlock}
 ${relatedBlock}
+${lengthBlock}
 
 Produce the JSON object now.`;
 }
