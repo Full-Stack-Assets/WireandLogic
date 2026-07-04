@@ -1238,6 +1238,13 @@
       "url": "https://github.com/anthropics/claude-code/issues/74066",
       "publishedAt": "2026-07-04T17:17:01.971Z",
       "signature": "a54ad3a1fbf2905e"
+    },
+    {
+      "slug": "limit-100k-satellites-preserve-astronomy-night-sky",
+      "title": "No more than 100 000 faint satellites should orbit Earth",
+      "url": "https://www.eso.org/public/news/eso2607/",
+      "publishedAt": "2026-07-04T19:26:23.633Z",
+      "signature": "76104dc6c53a8aed"
     }
   ]
 }
