@@ -1210,6 +1210,62 @@
       "url": "https://katamari64.se/posts/2026/odin-wikipedia/",
       "publishedAt": "2026-07-04T09:30:59.015Z",
       "signature": "891a710a8a5aeede"
+    },
+    {
+      "slug": "designing-effective-rest-apis",
+      "title": "What REST APIs are and how to design one well",
+      "url": "",
+      "publishedAt": "2026-04-18T12:00:00.000Z",
+      "signature": "b5cf87e68569e873"
+    },
+    {
+      "slug": "trunk-based-vs-gitflow-branching-strategy",
+      "title": "Git branching strategies: trunk-based development versus GitFlow",
+      "url": "",
+      "publishedAt": "2026-04-20T12:00:00.000Z",
+      "signature": "412119b76cf0f918"
+    },
+    {
+      "slug": "sql-vs-nosql-databases-tradeoffs",
+      "title": "Understanding databases: SQL versus NoSQL trade-offs",
+      "url": "",
+      "publishedAt": "2026-04-24T12:00:00.000Z",
+      "signature": "335812c7d6d80b7f"
+    },
+    {
+      "slug": "docker-containers-software-deployment",
+      "title": "What containers are and how Docker changed software deployment",
+      "url": "",
+      "publishedAt": "2026-04-26T12:00:00.000Z",
+      "signature": "61876710622eded7"
+    },
+    {
+      "slug": "kubernetes-container-orchestration",
+      "title": "How Kubernetes orchestrates containerized applications",
+      "url": "",
+      "publishedAt": "2026-04-29T12:00:00.000Z",
+      "signature": "a10bc9d3869e0ca3"
+    },
+    {
+      "slug": "what-is-a-cdn-and-how-it-speeds-up-the-web",
+      "title": "What a CDN is and how it speeds up the web",
+      "url": "",
+      "publishedAt": "2026-05-27T12:00:00.000Z",
+      "signature": "25416db779f62a42"
+    },
+    {
+      "slug": "observability-logs-metrics-traces",
+      "title": "What observability means and how logs, metrics, and traces differ",
+      "url": "",
+      "publishedAt": "2026-06-02T12:00:00.000Z",
+      "signature": "553eed38996b2d7d"
+    },
+    {
+      "slug": "machine-learning-explained",
+      "title": "What machine learning is and how models actually learn from data",
+      "url": "",
+      "publishedAt": "2026-06-09T12:00:00.000Z",
+      "signature": "94b3a15ac93968cb"
     }
   ]
 }
