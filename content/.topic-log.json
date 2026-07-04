@@ -1231,6 +1231,13 @@
       "url": "https://www.marginalia.nu/log/a_135_learn/",
       "publishedAt": "2026-07-04T15:15:24.389Z",
       "signature": "6bc15c9124f10af5"
+    },
+    {
+      "slug": "unpacking-potential-session-cache-leakage-llm-workspaces",
+      "title": "Potential session/cache leakage between workspace instances or consumer accounts",
+      "url": "https://github.com/anthropics/claude-code/issues/74066",
+      "publishedAt": "2026-07-04T17:17:01.971Z",
+      "signature": "a54ad3a1fbf2905e"
     }
   ]
 }
