@@ -57,11 +57,31 @@ export function normalizeTags(tags: string[]): string[] {
     .slice(0, 6);
 }
 
+/**
+ * Custom MDX components the prompt requires as open/close pairs. A response
+ * truncated mid-generation (e.g. cut off by `max_tokens`, or a dropped
+ * connection) reliably leaves one of these unbalanced — the model closes tags
+ * as it goes, so a mismatch is a strong, cheap signal of a cut-off body long
+ * before it's caught downstream by an MDX parse failure at build time.
+ */
+const BALANCED_TAGS = ['Callout', 'ProsCons', 'Pros', 'Cons', 'FAQ', 'Question'];
+
+/** Returns the first unbalanced tag name, or null if all pairs match. */
+function findUnbalancedTag(body: string): string | null {
+  for (const tag of BALANCED_TAGS) {
+    const opens = (body.match(new RegExp(`<${tag}(?=[\\s>])`, 'g')) ?? []).length;
+    const closes = (body.match(new RegExp(`</${tag}>`, 'g')) ?? []).length;
+    if (opens !== closes) return tag;
+  }
+  return null;
+}
+
 // Self-healing contract. Length/shape overshoots that can be safely coerced are
 // repaired by transforms (so a too-long description or a messy slug never throws
 // — note `.max()` would fire *before* a transform, so it's deliberately gone).
-// Constraints that can't be met without inventing content (a too-short body, or
-// fewer than two real tags) still fail and drive a retry rather than be faked.
+// Constraints that can't be met without inventing content (a too-short body,
+// fewer than two real tags, or a truncated/unbalanced body) still fail and
+// drive a retry rather than be faked or silently committed half-written.
 export const PostSchema = z.object({
   title: z.string().min(20).transform((s) => clampMeta(s, 120)),
   description: z.string().min(1).transform((s) => clampMeta(s)),
@@ -71,7 +91,15 @@ export const PostSchema = z.object({
     .array(z.string())
     .transform(normalizeTags)
     .pipe(z.array(z.string()).min(2).max(6)),
-  body: z.string().min(800),
+  body: z.string().min(800).superRefine((b, ctx) => {
+    const tag = findUnbalancedTag(b);
+    if (tag) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: `unbalanced <${tag}> tag — the body looks truncated/cut off mid-generation`,
+      });
+    }
+  }),
 });
 
 const SYSTEM_PROMPT = `You are a senior writer producing a single blog post in MDX format for ${siteConfig.audience}.
