@@ -1266,6 +1266,13 @@
       "url": "https://www.eso.org/public/news/eso2607/",
       "publishedAt": "2026-07-05T04:03:39.092Z",
       "signature": "0a5efeb4791a29dd"
+    },
+    {
+      "slug": "command-conquer-generals-native-port-macos-ios-ai",
+      "title": "Command and Conquer Generals natively ported to macOS, iPhone, iPad using Fable",
+      "url": "https://github.com/ammaarreshi/Generals-Mac-iOS-iPad/tree/main",
+      "publishedAt": "2026-07-05T07:39:11.879Z",
+      "signature": "c96be08082bbd1a6"
     }
   ]
 }
