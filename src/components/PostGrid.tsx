@@ -1,6 +1,22 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Post } from '@/lib/posts';
+import { AdSlot } from './AdSlot';
+import { ADSENSE_CLIENT, ADSENSE_SLOT_LISTING } from '@/lib/ads';
+
+/**
+ * Full-width ad row for listing grids (home + /page/N). Renders nothing at all
+ * (not even the wrapper, which would leave an empty grid row + gap) unless both
+ * the publisher id and the listing slot id are configured.
+ */
+export function ListingAd() {
+  if (!ADSENSE_CLIENT || !ADSENSE_SLOT_LISTING) return null;
+  return (
+    <div className="col-span-full">
+      <AdSlot slot={ADSENSE_SLOT_LISTING} format="auto" className="block" />
+    </div>
+  );
+}
 
 /**
  * Shared post-listing cards for the home page (page 1 and paginated /page/N).

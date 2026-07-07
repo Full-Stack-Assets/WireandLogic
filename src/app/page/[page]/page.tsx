@@ -2,7 +2,7 @@ import { notFound, redirect } from 'next/navigation';
 import type { Metadata } from 'next';
 import { listPosts } from '@/lib/posts';
 import { paginate, POSTS_PER_PAGE } from '@/lib/pagination';
-import { PostCard } from '@/components/PostGrid';
+import { PostCard, ListingAd } from '@/components/PostGrid';
 import { Pagination } from '@/components/Pagination';
 import { Masthead, SectionRule } from '@/components/Masthead';
 
@@ -50,7 +50,12 @@ export default async function PagedHomePage({ params }: { params: Promise<{ page
       <Masthead />
       <SectionRule label="More dispatches" />
       <div className="mt-8 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((p) => (
+        {items.slice(0, 6).map((p) => (
+          <PostCard key={p.slug} post={p} />
+        ))}
+        {/* Listing ad after the first two rows; renders nothing unless configured */}
+        <ListingAd />
+        {items.slice(6).map((p) => (
           <PostCard key={p.slug} post={p} />
         ))}
       </div>

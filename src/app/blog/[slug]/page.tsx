@@ -9,7 +9,12 @@ import { articleJsonLd, faqJsonLd, breadcrumbJsonLd, SITE_URL, SITE_NAME } from 
 import { AdSlot } from '@/components/AdSlot';
 import { AffiliateBox } from '@/components/AffiliateBox';
 import { SubscribeCTA } from '@/components/SubscribeCTA';
-import { ADSENSE_SLOT_IN_ARTICLE } from '@/lib/ads';
+import {
+  ADSENSE_SLOT_ARTICLE_TOP,
+  ADSENSE_SLOT_ARTICLE_MID,
+  ADSENSE_SLOT_IN_ARTICLE,
+} from '@/lib/ads';
+import { splitForInArticleAds } from '@/lib/article-ads';
 
 export const revalidate = 300;
 
@@ -142,12 +147,55 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         </figure>
       )}
 
-      {/* Body */}
-      <div className="prose-editorial">
-        <MDXRemote source={body} components={mdxComponents} />
-      </div>
+      {/* Body — split at section boundaries only when in-article ad units are
+          configured, so the zero-config render path is a single MDX pass.
+          Segments split at top-level `## ` headings (code-fence aware), which
+          the post contract guarantees are safe component boundaries. */}
+      {(() => {
+        const wantSplit = Boolean(ADSENSE_SLOT_ARTICLE_TOP || ADSENSE_SLOT_ARTICLE_MID);
+        const { intro, middle, outro } = wantSplit
+          ? splitForInArticleAds(body)
+          : { intro: body, middle: '', outro: '' };
+        return (
+          <>
+            {intro && (
+              <div className="prose-editorial">
+                <MDXRemote source={intro} components={mdxComponents} />
+              </div>
+            )}
+            {/* After the takeaway callout */}
+            {middle && (
+              <AdSlot
+                slot={ADSENSE_SLOT_ARTICLE_TOP}
+                format="fluid"
+                layout="in-article"
+                className="my-10 block text-center"
+              />
+            )}
+            {middle && (
+              <div className="prose-editorial">
+                <MDXRemote source={middle} components={mdxComponents} />
+              </div>
+            )}
+            {/* Mid-article, just before the FAQ */}
+            {outro && (
+              <AdSlot
+                slot={ADSENSE_SLOT_ARTICLE_MID}
+                format="fluid"
+                layout="in-article"
+                className="my-10 block text-center"
+              />
+            )}
+            {outro && (
+              <div className="prose-editorial">
+                <MDXRemote source={outro} components={mdxComponents} />
+              </div>
+            )}
+          </>
+        );
+      })()}
 
-      {/* In-article ad (renders only when AdSense is configured) */}
+      {/* End-of-article ad, after the FAQ (renders only when configured) */}
       <AdSlot
         slot={ADSENSE_SLOT_IN_ARTICLE}
         format="fluid"
