@@ -26,7 +26,7 @@ export default function AboutPage() {
         <p>At the top of every hour, a scheduled function does five things:</p>
         <ol>
           <li><strong>Gather.</strong> Pulls headlines from Reddit, Hacker News, DEV.to, a handful of RSS feeds, YouTube, Brave News, and Google Trends.</li>
-          <li><strong>Score.</strong> Each candidate gets a composite score — popularity, engagement, recency — and anything that's already been covered is filtered out.</li>
+          <li><strong>Score.</strong> Each candidate gets a composite score — popularity, engagement, recency — and anything that&rsquo;s already been covered is filtered out.</li>
           <li><strong>Research.</strong> The winner gets Brave-searched, the top three articles scraped, and any relevant YouTube transcripts pulled.</li>
           <li><strong>Write.</strong> All of it is handed to a Google Gemini model with an explicit MDX contract: an opening, a takeaway, what-happened/why-it-matters sections, a pros/cons block, a how-to-think-about-it section, and a three-question FAQ.</li>
           <li><strong>Publish.</strong> The MDX file, with a Pexels banner and frontmatter, is committed to GitHub. Vercel notices and deploys.</li>
@@ -36,7 +36,7 @@ export default function AboutPage() {
         <p>
           Automated writing has a quality floor, not a ceiling. The pipeline will occasionally pick
           a boring topic, miss nuance, or get a detail subtly wrong. Every post links every source
-          at the bottom — if something doesn't add up, go read the primaries.
+          at the bottom — if something doesn&rsquo;t add up, go read the primaries.
         </p>
 
         <h2>The stack</h2>
