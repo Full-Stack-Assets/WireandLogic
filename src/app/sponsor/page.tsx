@@ -2,10 +2,12 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { siteConfig } from '@/site.config';
 import { sponsorContactEmail, sponsorStats, sponsorTiers } from '@/lib/sponsor';
+import { SITE_URL } from '@/lib/structured-data';
 
 export const metadata: Metadata = {
   title: 'Sponsor',
   description: `Put your product in front of ${siteConfig.audience} on ${siteConfig.name}. Newsletter and on-site sponsorship.`,
+  alternates: { canonical: `${SITE_URL}/sponsor` },
 };
 
 export default function SponsorPage() {

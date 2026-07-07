@@ -1,11 +1,17 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { listPosts } from '@/lib/posts';
+import { SITE_NAME, SITE_URL } from '@/lib/structured-data';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import type { TopicLog } from '@/lib/orchestrator/types';
 
 export const revalidate = 300;
-export const metadata = { title: 'Stats' };
+export const metadata: Metadata = {
+  title: 'Stats',
+  description: `Publishing stats for ${SITE_NAME}: post counts, categories, and pipeline activity.`,
+  alternates: { canonical: `${SITE_URL}/stats` },
+};
 
 async function loadLog(): Promise<TopicLog> {
   try {

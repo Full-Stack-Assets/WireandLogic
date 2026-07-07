@@ -1,10 +1,29 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 import { listPosts } from '@/lib/posts';
 import { paginate } from '@/lib/pagination';
 import { Pagination } from '@/components/Pagination';
+import { SITE_NAME, SITE_URL } from '@/lib/structured-data';
 
 export const revalidate = 300;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ tag: string }>;
+}): Promise<Metadata> {
+  const { tag } = await params;
+  const description = `Everything ${SITE_NAME} has published about ${tag}.`;
+  const url = `${SITE_URL}/tags/${tag}`;
+  return {
+    title: `#${tag}`,
+    description,
+    // Paginated views (?page=N) canonicalize to the base listing.
+    alternates: { canonical: url },
+    openGraph: { title: `#${tag} — ${SITE_NAME}`, description, url },
+  };
+}
 
 const PAGE_SIZE = 40;
 

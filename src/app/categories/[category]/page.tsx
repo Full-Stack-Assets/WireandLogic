@@ -1,10 +1,30 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import type { Metadata } from 'next';
 import { listPosts } from '@/lib/posts';
 import { paginate } from '@/lib/pagination';
 import { Pagination } from '@/components/Pagination';
+import { SITE_NAME, SITE_URL } from '@/lib/structured-data';
 
 export const revalidate = 300;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ category: string }>;
+}): Promise<Metadata> {
+  const { category } = await params;
+  const label = category[0].toUpperCase() + category.slice(1);
+  const description = `The latest ${category} coverage from ${SITE_NAME}.`;
+  const url = `${SITE_URL}/categories/${category}`;
+  return {
+    title: label,
+    description,
+    // Paginated views (?page=N) canonicalize to the base listing.
+    alternates: { canonical: url },
+    openGraph: { title: `${label} — ${SITE_NAME}`, description, url },
+  };
+}
 
 /** Posts per page for this listing. No hero images here, so a larger page size
  *  than the home page is fine while still bounding an ever-growing category

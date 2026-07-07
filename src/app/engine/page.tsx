@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { siteConfig } from '@/site.config';
+import { SITE_URL } from '@/lib/structured-data';
 
 export const metadata: Metadata = {
   title: 'The engine',
   description:
     'Launch a self-running niche blog in a weekend. The hourly auto-blog engine that powers this site — yours to own, near-zero cost.',
+  alternates: { canonical: `${SITE_URL}/engine` },
 };
 
 const contact = 'Nicholas@fullstackassets.com';

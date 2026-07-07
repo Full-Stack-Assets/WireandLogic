@@ -1,6 +1,12 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
+import { SITE_NAME, SITE_URL } from '@/lib/structured-data';
 
-export const metadata = { title: 'About' };
+export const metadata: Metadata = {
+  title: 'About',
+  description: `How ${SITE_NAME} works: an automated editorial pipeline under human oversight.`,
+  alternates: { canonical: `${SITE_URL}/about` },
+};
 
 export default function AboutPage() {
   return (
