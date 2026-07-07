@@ -12,6 +12,12 @@ on:
   push:
     branches: [main]
 
+# Least-privilege default: this workflow only checks out, installs, and runs
+# typecheck/test/build — it never pushes, comments, or releases, so the
+# GITHUB_TOKEN needs no write access.
+permissions:
+  contents: read
+
 jobs:
   ci:
     runs-on: ubuntu-latest
