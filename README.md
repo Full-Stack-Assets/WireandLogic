@@ -180,6 +180,16 @@ Dedup uses a sorted-token fingerprint of the title, so "GPT-5 released today" an
 
 **Cloudflare Pages timeouts** — see Option B above. Pages Functions can't run this pipeline end-to-end.
 
+**`npm audit` noise** — run `npm audit fix` (never `--force`) after installing;
+it resolves everything that doesn't require a breaking upgrade. The advisories
+that remain are all in dev/build-time tooling or pinned transitive deps, not in
+the served site: `esbuild`/`vite`/`lodash`/`graphiql` (TinaCMS + tsx dev
+toolchain — local dev servers and codegen only), `postcss` (pinned inside
+`next`, fixed by the next Next.js upgrade), and `undici` (pinned inside
+`youtubei.js` — used only by the pipeline's transcript fetcher against YouTube
+itself; the fix is the breaking `youtubei.js@17` major, which needs its own
+verified upgrade pass).
+
 ---
 
 ## Extending
