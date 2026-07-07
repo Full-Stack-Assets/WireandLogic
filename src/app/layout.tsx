@@ -126,6 +126,7 @@ function Footer() {
           <Link href="/about" className="hover:text-accent transition-colors">About</Link>
           <Link href="/sponsor" className="hover:text-accent transition-colors">Sponsor</Link>
           <Link href="/engine" className="hover:text-accent transition-colors">Get the engine</Link>
+          <Link href="/resources" className="hover:text-accent transition-colors">Resources</Link>
           <a href="/feed.xml" className="hover:text-accent transition-colors">RSS</a>
         </nav>
         <p className="mt-6 max-w-3xl text-xs leading-relaxed text-muted/80">

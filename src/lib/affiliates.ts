@@ -15,6 +15,19 @@
  */
 export const AFFILIATES_ENABLED = process.env.NEXT_PUBLIC_AFFILIATES_ENABLED === '1';
 
+/**
+ * Amazon Associates tracking tag (e.g. `yoursite-20`). Empty-safe: unset (or
+ * the ""-valued secret CI passes through) disables every Amazon surface. Never
+ * ship a made-up tag — Amazon requires the one issued to your account.
+ */
+export const AMAZON_TAG = (process.env.NEXT_PUBLIC_AMAZON_TAG ?? '').trim();
+
+/** Tagged Amazon search link for a pick; null when no tag is configured. */
+export function amazonSearchUrl(query: string): string | null {
+  if (!AMAZON_TAG) return null;
+  return `https://www.amazon.com/s?k=${encodeURIComponent(query)}&tag=${encodeURIComponent(AMAZON_TAG)}`;
+}
+
 export const AFFILIATE_DISCLOSURE =
   'Some links above are affiliate links — if you sign up or buy through them we may earn a commission, at no extra cost to you.';
 
@@ -76,4 +89,77 @@ export function affiliatesFor(category: string, tags: string[] = [], limit = 3):
   const matched = AFFILIATE_PROGRAMS.filter((p) => p.match.some((m) => hay.includes(m)));
   const chosen = matched.length ? matched : AFFILIATE_PROGRAMS.filter((p) => DEFAULT_IDS.includes(p.id));
   return chosen.slice(0, limit);
+}
+
+/**
+ * The plain (untagged) homepage of a program — used on /resources when
+ * affiliates aren't enabled yet, so placeholder `YOUR_ID` links never render.
+ */
+export function plainUrl(p: AffiliateProgram): string {
+  try {
+    const u = new URL(p.url);
+    return `${u.origin}${u.pathname === '/' ? '' : u.pathname}` || p.url;
+  } catch {
+    return p.url;
+  }
+}
+
+/**
+ * Amazon Associates picks — dev books & hardware rendered as tagged Amazon
+ * search links (search links can't go stale like ASINs and still carry the
+ * tag). Shown only when AMAZON_TAG is set. Prune/re-niche this list per site.
+ */
+export interface AmazonPick {
+  id: string;
+  name: string;
+  blurb: string;
+  /** Amazon search query the link resolves to. */
+  query: string;
+  /** Show on posts whose category or any tag matches one of these (lowercase). */
+  match: string[];
+}
+
+export const AMAZON_PICKS: AmazonPick[] = [
+  {
+    id: 'designing-data-intensive',
+    name: 'Designing Data-Intensive Applications',
+    blurb: 'The systems-design book most engineers end up recommending.',
+    query: 'Designing Data-Intensive Applications Kleppmann',
+    match: ['engineering', 'ai', 'tools', 'news'],
+  },
+  {
+    id: 'pragmatic-programmer',
+    name: 'The Pragmatic Programmer (20th Anniversary)',
+    blurb: 'Timeless craft advice, still the best general-purpose dev book.',
+    query: 'Pragmatic Programmer 20th anniversary',
+    match: ['engineering', 'opinion', 'tools'],
+  },
+  {
+    id: 'mechanical-keyboard',
+    name: 'A proper mechanical keyboard',
+    blurb: 'The cheapest upgrade to every hour you spend typing.',
+    query: 'hot swappable mechanical keyboard',
+    match: ['tools', 'engineering', 'news'],
+  },
+  {
+    id: 'raspberry-pi-5',
+    name: 'Raspberry Pi 5 kit',
+    blurb: 'A tinker box for self-hosting, homelab, and hardware projects.',
+    query: 'Raspberry Pi 5 starter kit',
+    match: ['tools', 'engineering', 'security'],
+  },
+  {
+    id: 'security-engineering',
+    name: 'Security Engineering (Anderson)',
+    blurb: 'The reference text on building systems that survive adversaries.',
+    query: 'Security Engineering Ross Anderson third edition',
+    match: ['security', 'engineering'],
+  },
+];
+
+/** Pick up to `limit` Amazon picks for a post; empty when no tag is set. */
+export function amazonPicksFor(category: string, tags: string[] = [], limit = 2): AmazonPick[] {
+  if (!AMAZON_TAG) return [];
+  const hay = [category.toLowerCase(), ...tags.map((t) => t.toLowerCase())];
+  return AMAZON_PICKS.filter((p) => p.match.some((m) => hay.includes(m))).slice(0, limit);
 }

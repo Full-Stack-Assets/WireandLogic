@@ -101,6 +101,24 @@ curl -H "Authorization: Bearer $CRON_SECRET" https://your-domain/api/cron/genera
 
 ---
 
+## Monetization (all optional, all config-gated)
+
+Every surface below renders **nothing** until its config is filled in, so a
+fresh clone ships clean. Never commit real ids — set them as env vars.
+
+| Surface | Where it renders | What you fill in |
+|---|---|---|
+| **AdSense** | Script + `/ads.txt` site-wide; manual units after the takeaway callout, before the FAQ, after the body, in listing grids, and in the footer | `adsenseClient` in `src/site.config.ts` (or `NEXT_PUBLIC_ADSENSE_CLIENT`), plus one `NEXT_PUBLIC_ADSENSE_SLOT_*` per unit you create in AdSense → Ads → By ad unit (see `.env.example`) |
+| **Referral programs** | "Tools we recommend" box on every post + `/resources` | Edit `AFFILIATE_PROGRAMS` in `src/lib/affiliates.ts` (prune to programs you joined, replace each `YOUR_ID`), then set `NEXT_PUBLIC_AFFILIATES_ENABLED=1` |
+| **Amazon Associates** | Topic-matched "Books & gear" picks on posts + `/resources` | `NEXT_PUBLIC_AMAZON_TAG` (the tag Amazon issues you, e.g. `yoursite-20`); curate `AMAZON_PICKS` in `src/lib/affiliates.ts` |
+| **Newsletter** | Footer capture, end-of-post CTA, weekly digest workflow | `BUTTONDOWN_API_KEY` (see `.env.example`) |
+| **Sponsorship** | `/sponsor` page + rate card | Tiers/copy in `src/lib/sponsor.ts` |
+
+Affiliate links render with `rel="sponsored"` and an automatic FTC disclosure.
+Ad units lazy-initialize near the viewport so they don't hurt Core Web Vitals.
+
+---
+
 ## TinaCMS editor (optional)
 
 The schema in `tina/config.ts` matches the frontmatter the pipeline emits. Start the editor with:
