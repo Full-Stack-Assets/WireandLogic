@@ -67,6 +67,8 @@ npm run dev              # TinaCMS + `next dev` on :3000 (editor at /admin/index
 npm run build            # scripts/build.sh → optional tina build + `next build`
 npm start                # serve the production build
 npm run lint             # next lint (eslint)
+npm run typecheck        # tsc --noEmit
+npm test                 # vitest run — unit tests for the pure/critical logic
 
 npm run generate         # tsx scripts/run-local.ts — run the pipeline, WRITE mdx to disk (no commit)
 npm run generate -- --dry  # dry run: print the post, write nothing
@@ -84,9 +86,21 @@ cloud build when `NEXT_PUBLIC_TINA_CLIENT_ID` / `TINA_TOKEN` are unset
 with a bare `next build` — Vercel's `buildCommand` (`vercel.json`) calls
 `npm run build` on purpose.
 
-There is **no test runner** configured. `scripts/smoke-test.ts` is the closest
-thing to integration testing; verify changes via `npm run generate -- --dry`,
-`npm run lint`, and `npm run build`.
+**Vitest** covers the pure/high-risk logic (`src/**/*.test.ts`, colocated with
+the code they test): `PostSchema`'s self-healing transforms and its
+balanced-custom-tag check, `score.ts`'s scoring/dedupe/winner-picking,
+`pagination.ts`, `structured-data.ts`'s JSON-LD + FAQ extraction, and
+`serialize.ts`'s quote-sanitization. `.github/workflows/ci.yml` runs typecheck +
+tests + a full `next build` on every PR and push to `main` — this is the
+independent guard against the 2026-07-03 incident class (a malformed hourly
+post broke `next build`, and `scripts/build.sh` silently reported success
+anyway; that script now has `set -e`, but CI is a second, PR-time check that
+catches it before merge regardless).
+
+`scripts/smoke-test.ts` remains the closest thing to integration testing (it
+hits every source fetcher against live APIs); it isn't run in CI since it needs
+live secrets. Verify changes via `npm run generate -- --dry`, `npm run lint`,
+`npm test`, and `npm run build`.
 
 ## Architecture: the generation pipeline
 
@@ -236,7 +250,9 @@ override — note the empty-string guard, since unset CI secrets arrive as `""`)
 - **Adding a source:** create `src/lib/sources/<name>.ts` exporting
   `fetch<Name>(): Promise<RawItem[]>`, add it to the `Promise.all` in
   `pipeline.ts` (wrapped in `.catch(() => [])`), and add its weight in `score.ts`.
-- No DB, no tests-as-CI. Validate with `--dry` runs, `lint`, and `build`.
+- No DB. CI (`.github/workflows/ci.yml`) runs typecheck + `npm test` + `npm run
+  build` on every PR/push to `main`. Also validate locally with `--dry` runs
+  and `lint`.
 
 ## Git workflow for this environment
 
