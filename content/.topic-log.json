@@ -1378,6 +1378,13 @@
       "url": "https://github.com/MaximeRivest/Riddle",
       "publishedAt": "2026-07-07T05:00:26.982Z",
       "signature": "f054d3891548e8d0"
+    },
+    {
+      "slug": "glm-5-2-open-weight-ai-inference-margin-collapse",
+      "title": "GLM 5.2 and the coming AI margin collapse",
+      "url": "https://martinalderson.com/posts/the-upcoming-ai-margin-collapse-part-1-glm-5-2/",
+      "publishedAt": "2026-07-07T08:36:35.013Z",
+      "signature": "595c17753f5deda2"
     }
   ]
 }
