@@ -1371,6 +1371,13 @@
       "url": "https://stevekrouse.com/learn-to-code",
       "publishedAt": "2026-07-07T00:18:07.004Z",
       "signature": "43229b9544c4028e"
+    },
+    {
+      "slug": "remarkable-ai-diary-mod",
+      "title": "Fable turned reMarkable into Tom Riddle's diary from Harry Potter",
+      "url": "https://github.com/MaximeRivest/Riddle",
+      "publishedAt": "2026-07-07T05:00:26.982Z",
+      "signature": "f054d3891548e8d0"
     }
   ]
 }

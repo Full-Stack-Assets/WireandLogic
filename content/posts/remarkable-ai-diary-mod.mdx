@@ -1,0 +1,73 @@
+---
+title: "reMarkable Tablet Reimagined as Tom Riddle's Disappearing Ink Diary"
+description: "A developer mod transforms the reMarkable Paper Pro into an AI-powered diary, mimicking Tom Riddle's magical notebook with disappearing ink and animated responses."
+date: "2026-07-07T05:00:26.981Z"
+category: "tools"
+tags: 
+  - "ai"
+  - "remarkable"
+  - "developer tools"
+  - "llm"
+  - "hardware mod"
+hero: 
+  url: "https://live.staticflickr.com/6231/6252515920_ed744cc50e_b.jpg"
+  alt: "Nikon 180mm f/2.8 lens test (3x enlargement)"
+  credit: "s58y"
+  creditUrl: "https://www.flickr.com/photos/45032885@N04/6252515920"
+sources: 
+  - title: "Fable turned reMarkable into Tom Riddle's diary from Harry Potter"
+    url: "https://github.com/MaximeRivest/Riddle"
+  - title: "GitHub - MaximeRivest/riddle: The diary of Tom Riddle for the reMarkable Paper Pro — write with your pen, the page drinks your ink and answers in a flowing hand"
+    url: "https://github.com/MaximeRivest/Riddle"
+  - title: "Fable turned reMarkable into Tom Riddle's diary from Harry Potter | Hacker News"
+    url: "https://news.ycombinator.com/item?id=48811591"
+  - title: "This reMarkable Paper Pro mod turns the E-Ink tablet into Tom Riddle's diary from Harry Potter"
+    url: "https://www.androidauthority.com/remarkable-paper-pro-tom-riddles-diary-disappearing-ink-3684286/"
+  - title: "Maxime Rivest 🧙‍♂️🦙🐧 (@MaximeRivest) on X"
+    url: "https://x.com/MaximeRivest/status/2073544461473169432"
+---
+
+A new open-source project has transformed the reMarkable Paper Pro into an AI-powered replica of Tom Riddle's diary from the Harry Potter series. This innovative mod allows users to write on the e-ink display with a stylus, have their text vanish, and then receive an AI-generated response that appears in animated, flowing handwriting. The goal is to create an immersive, screen-glow-free interaction that feels like writing in a physical notebook, eschewing traditional chat interfaces for a more magical experience.
+
+<Callout type="takeaway">This project brings a touch of fantasy to e-ink tablets by integrating AI for a unique, ephemeral writing and response experience.</Callout>
+
+## What happened
+A developer named Maxime Rivest created a mod called 'riddle' for the reMarkable Paper Pro. This mod replaces the tablet's standard interface with a system that captures handwritten input, sends it to a vision-enabled LLM for processing, and then displays the AI's reply in animated handwriting that also fades away. The setup requires the tablet to be in developer mode and uses a launcher to run the custom application, which takes over the display engine.
+
+The system supports various OpenAI-compatible APIs, allowing it to connect to services like OpenAI, OpenRouter, and Groq, or even local LLM servers. The interaction is designed to be seamless: write, pause, watch your ink disappear, and then see the AI's response materialize on the screen. The entire process, from writing to the first ink of the response, takes approximately one second, with the animation beginning before the AI has fully generated its reply.
+
+## Why it matters
+This project represents a fascinating intersection of hardware modification, AI, and creative user experience design. It demonstrates how e-ink devices, often perceived as purely for reading or note-taking, can be repurposed for novel AI interactions that prioritize a tactile and ephemeral feel over constant digital presence. For developers and builders, it showcases the potential for deep system-level modifications to create unique applications, pushing the boundaries of what consumer electronics can do.
+
+<ProsCons>
+     <Pros>
+       <li>Offers a unique, immersive AI interaction without a traditional screen interface.</li>
+       <li>Mimics the magical 'disappearing ink' effect of Tom Riddle's diary.</li>
+       <li>Supports various OpenAI-compatible LLMs, offering flexibility in backend choice.</li>
+       <li>Provides a tangible, pen-on-paper feel with animated handwriting responses.</li>
+     </Pros>
+     <Cons>
+       <li>Requires significant device modification (developer mode, root access, custom launcher).</li>
+       <li>Currently only officially supported on the reMarkable Paper Pro (specific OS versions).</li>
+       <li>Installation process can be complex and carries inherent risks of bricking the device.</li>
+       <li>Potential for future OS updates to break compatibility.</li>
+     </Cons>
+   </ProsCons>
+
+## How to think about it
+Consider this project as a proof-of-concept for ephemeral AI interfaces on specialized hardware. It highlights the value of removing digital clutter – no keyboards, no chat bubbles, just the core input and output. When approaching similar projects, focus on the user experience first: what is the desired interaction, and how can the hardware and software be bent to achieve that feeling? Think about the lifecycle of the content – if it's meant to disappear, how does that affect the user's perception and engagement?
+
+<Callout type="warning">This modification requires deep system access and carries a risk of rendering the device unusable if not performed correctly. Users should ensure they have a reliable backup and SSH access before proceeding, and understand that it is not officially supported by the hardware manufacturer.</Callout>
+
+## FAQ
+   <FAQ>
+     <Question q="What hardware is required for this mod?">
+       This mod specifically requires the reMarkable Paper Pro model. It also necessitates enabling developer mode on the device and installing a custom launcher to run the 'riddle' application.
+     </Question>
+     <Question q="How does the AI response appear and disappear?">
+       The AI's response is generated by a vision-enabled LLM and then streamed back to the tablet. It is displayed using an animated handwriting effect that writes itself onto the e-ink display, and this response also fades away after a period, mimicking the diary's magical properties.
+     </Question>
+     <Question q="Can I use any AI model with this mod?">
+       The mod supports any OpenAI-compatible API endpoint. This includes services like OpenAI, OpenRouter, and Groq, as well as local LLM servers that can process image input and provide chat completions in the expected format.
+     </Question>
+   </FAQ>
