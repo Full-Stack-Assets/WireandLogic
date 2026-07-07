@@ -9,8 +9,11 @@ export default defineConfig({
     include: ['src/**/*.test.ts'],
   },
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
+    // Order matters: Vite checks aliases in array order and takes the first
+    // match, so the more specific `@/content` entry must come before `@`.
+    alias: [
+      { find: '@/content', replacement: path.resolve(__dirname, './content') },
+      { find: '@', replacement: path.resolve(__dirname, './src') },
+    ],
   },
 });
