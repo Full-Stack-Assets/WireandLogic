@@ -188,7 +188,7 @@ export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
     try {
       content = await callLlm(key, userPrompt, model);
     } catch (err) {
-      // Rate limit / 5xx (e.g. Gemini 503 "model overloaded") / network blip —
+      // Rate limit / 5xx (e.g. a 503 "model overloaded") / network blip —
       // worth another attempt. Back off with exponential delay (2s, 4s, 8s, 16s,
       // capped at 30s) so we ride out short capacity spikes instead of burning
       // every attempt in a couple of seconds.

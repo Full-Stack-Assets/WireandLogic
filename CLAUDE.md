@@ -52,10 +52,11 @@ scraper UA in `src/lib/orchestrator/research.ts`
   `content/posts/`. There is **no database**. The "topic log"
   (`content/.topic-log.json`) is the only piece of mutable state.
 - **Zod** validates the LLM's JSON output.
-- **LLM writer**: OpenAI-compatible endpoint; default **Google Gemini**. The
-  model is currently pinned to `gemini-2.5-flash` (a GA model with steadier
-  free-tier capacity — the `gemini-flash-latest` alias was returning 503
-  "overloaded", and `gemini-2.0-flash` was retired on 2026-06-01).
+- **LLM writer**: OpenAI-compatible endpoint; default **Groq**
+  (`llama-3.3-70b-versatile`, with `llama-3.1-8b-instant` as the in-run
+  fallback model on the same key). Groq replaced Gemini, whose free tier kept
+  returning 503 "model overloaded" and failing the hourly run. Any
+  OpenAI-compatible provider works via `site.config.ts`.
 - Package manager: the repo ships `package-lock.json`, and CI uses `npm ci`.
   **Use `npm`.** Node 20+.
 
@@ -206,7 +207,7 @@ override — note the empty-string guard, since unset CI secrets arrive as `""`)
 ## Scheduling & deploy
 
 - **`.github/workflows/generate.yml`** is the real scheduler: hourly cron
-  (`0 * * * *`) + `workflow_dispatch`, verifies the Gemini secret, runs
+  (`0 * * * *`) + `workflow_dispatch`, verifies the Groq secret, runs
   `npm ci` and `npx tsx scripts/run-local.ts`, then commits & pushes with a
   rebase-retry loop as `trendblog-bot`. It registers a **union merge driver**
   (`scripts/merge-topic-log.mjs`, mapped in `.gitattributes`) so concurrent
@@ -223,11 +224,11 @@ override — note the empty-string guard, since unset CI secrets arrive as `""`)
 - **`src/site.config.ts`** — the one file that defines the site: branding,
   `audience` (goes into the writer prompt), `categories`/`navCategories`,
   `sources` (subreddits / RSS feeds / Brave queries), `adsenseClient`, the `llm`
-  block (OpenAI-compatible `endpoint` + `model` + `apiKeyEnv`; default **Google
-  Gemini**), and `imageProvider` (`pexels` | `openverse` | `none`).
+  block (OpenAI-compatible `endpoint` + `model` + `apiKeyEnv`; default
+  **Groq**), and `imageProvider` (`pexels` | `openverse` | `none`).
 - **Secrets** live in `.env.local` locally and GitHub Actions secrets in CI.
   `.env.example` is the full annotated list. The LLM key name **must match**
-  `siteConfig.llm.apiKeyEnv` (default `GEMINI_API_KEY`). Most source/integration
+  `siteConfig.llm.apiKeyEnv` (default `GROQ_API_KEY`). Most source/integration
   keys are optional — an unset one is skipped, not fatal.
 - **Never commit real keys.** `.env*` is gitignored; `.env.example` holds
   placeholders only.
