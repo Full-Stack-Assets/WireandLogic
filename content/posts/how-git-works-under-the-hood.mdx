@@ -1,0 +1,67 @@
+---
+title: "How Git Works Under the Hood: Objects, Branches, and Commits"
+description: "Understanding Git's internal mechanics helps developers use it more effectively. Git tracks changes using objects, references, and history."
+date: "2026-06-08T12:00:00.000Z"
+category: "engineering"
+tags: 
+  - "git"
+  - "version control"
+  - "software development"
+hero: 
+  url: "https://live.staticflickr.com/5110/5571391880_2d4df61cd6_b.jpg"
+  alt: "Xornadas Libres GPUL 2011 Git"
+  credit: "txenoo"
+  creditUrl: "https://www.flickr.com/photos/52095154@N00/5571391880"
+sources: 
+  - title: "How Git works under the hood: objects, branches, and commits"
+    url: ""
+  - title: "How Git Works Under the Hood? - GeeksforGeeks"
+    url: "https://www.geeksforgeeks.org/git/how-git-works-under-the-hood/"
+  - title: "How Git Works Under the Hood"
+    url: "https://www.freecodecamp.org/news/git-under-the-hood/"
+  - title: "Git under the hood — Introduction to version control with Git  documentation"
+    url: "https://coderefinery.github.io/git-intro/under-the-hood/"
+---
+
+Git is a distributed version control system that manages code changes and collaboration. Understanding how Git commands work internally helps developers use Git more confidently and effectively. Git tracks file changes using internal objects, references, and history. Each Git command operates on these underlying structures.
+
+<Callout type="takeaway">Git's efficiency and reliability come from its snapshot-based approach and use of objects, references, and history.</Callout>
+
+## What happened
+Git uses a distributed model that efficiently tracks changes using the working directory, staging area, and repository. The working directory is where you make changes, the staging area is where Git tracks changes that will go into your next commit, and the repository is where Git permanently stores all snapshots and change history.
+
+Git's internal data structures are designed to store project data efficiently and accurately track every change made to files over time. A blob (Binary Large Object) stores the actual content of a single file in Git, identified by a SHA-1 hash of its content. Trees represent directories, pointing to blobs (files) and other trees (subdirectories), forming the hierarchical structure of the project.
+
+## Why it matters
+Understanding Git's internal mechanics is crucial for efficient and effective use. It helps with troubleshooting and enables developers to use Git's features with confidence. Knowing how Git works under the hood allows developers to optimize their workflow and resolve issues more easily.
+
+<ProsCons>
+  <Pros>
+    <li>Improved understanding of Git's features and capabilities</li>
+    <li>Enhanced troubleshooting and issue resolution</li>
+    <li>Optimized workflow and increased productivity</li>
+  </Pros>
+  <Cons>
+    <li>Steep learning curve for beginners</li>
+    <li>Requires manual configuration and maintenance</li>
+    <li>Can be overwhelming for large and complex projects</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+When working with Git, think of it as a content-addressed storage system. Each commit object contains information about the author and the commit message, referencing a tree object that lists the files present in the directory at the time. Commits form a directed acyclic graph, and branches are pointers to commits.
+
+<Callout type="warning">Be cautious when modifying commits, as it creates new commits and can lead to complexities in the commit history.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="What is the purpose of the .git folder in a Git repository?">
+The .git folder contains all the content needed for Git to reference a particular directory. It stores the commit history, tree objects, and blob objects.
+  </Question>
+  <Question q="What are the three main states that files can reside in when working with Git?">
+Files can reside in one of three states: Modified, Staged, or Committed. The Modified state is when changes have been made to the file but not yet staged. The Staged state is when changes are marked to be included in the next commit. The Committed state is when changes are safely stored in the local repository.
+  </Question>
+  <Question q="What is a blob object in Git, and how is it used?">
+A blob object stores the actual content of a single file in Git, identified by a SHA-1 hash of its content. It helps Git avoid duplicate storage and save space.
+  </Question>
+</FAQ>

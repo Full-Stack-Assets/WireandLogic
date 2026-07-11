@@ -1,0 +1,63 @@
+---
+title: "Message Queues Explained: Kafka, RabbitMQ, and Event-Driven Architecture"
+description: "Learn about event-driven architecture, message queues, and popular solutions like Kafka and RabbitMQ. Understand the benefits and trade-offs."
+date: "2026-06-13T12:00:00.000Z"
+category: "engineering"
+tags: 
+  - "event-driven architecture"
+  - "message queues"
+  - "kafka"
+  - "rabbitmq"
+hero: 
+  url: "https://live.staticflickr.com/8031/8006969560_b523157cb6_b.jpg"
+  alt: "KamerMaker - Open Source Win"
+  credit: "faberdasher"
+  creditUrl: "https://www.flickr.com/photos/57758382@N04/8006969560"
+sources: 
+  - title: "Message queues explained: Kafka, RabbitMQ, and event-driven architecture"
+    url: ""
+  - title: "Event-Driven Architectures Explained: Kafka, RabbitMQ, and others"
+    url: "https://chudovo.com/event-driven-architectures-explained-kafka-rabbitmq-and-beyond/"
+  - title: "Event-Driven Architecture: Message Queues, CQRS, Event Sourcing, and Kafka vs RabbitMQ [2026]"
+    url: "https://smaple.tr/en/blog/event-driven-mimari-mesaj-kuyrugu-en"
+  - title: "Event-Driven Architecture: Message Queues vs Event Streams vs Pub/Sub Explained"
+    url: "https://www.askantech.com/event-driven-architecture-message-queues-event-streams-pub-sub/"
+---
+
+Event-driven architecture has become a crucial component in modern software development, enabling scalable, performant, and maintainable systems. At its core, event-driven architecture relies on messaging services to communicate between different services. In this article, we'll explore the fundamentals of event-driven systems, message queues, and popular solutions like Kafka and RabbitMQ.
+
+<Callout type="takeaway">Event-driven architecture enables scalable and maintainable systems by decoupling services through asynchronous event communication.</Callout>
+
+## What happened
+Event-driven architecture is a pattern that utilizes messaging services to send information to a queue when an event occurs. This queue processes messages, and another service listens to the queue, receives the message, and processes it. The architecture consists of producers, consumers, and event brokers. Producers send events, consumers process them, and event brokers implement the queue to send information between services.
+
+There are two primary ways for applications to communicate: message queues and pub/sub architectures. Message queues, the most common approach, involve each message going to a single consumer, working as a queue of tasks to be processed one at a time. Pub/sub patterns, on the other hand, involve producers dispatching events about a topic, and consumers subscribed to it receiving the event simultaneously.
+
+## Why it matters
+Event-driven architecture matters because it breaks synchronous coupling between services, allowing them to scale, fail, and deploy independently. This decoupling is crucial in modern software development, where microservices patterns are the default solution for building scalable systems.
+
+## Pros and Cons
+<ProsCons>
+  <Pros>
+    <li>Decouples services, enabling independent scaling and deployment</li>
+    <li>Improves fault tolerance and reliability</li>
+    <li>Supports flexible and dynamic system architecture</li>
+  </Pros>
+  <Cons>
+    <li>Increased complexity in system design and implementation</li>
+    <li>Requires careful consideration of event handling and queue management</li>
+    <li>Can introduce latency and consistency challenges</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+When designing an event-driven architecture, consider the interaction types in distributed systems: commands, events, and queries. Understand the differences between message queues and event streaming, and choose the right approach for your use case. Consider popular solutions like Kafka and RabbitMQ, and evaluate their trade-offs.
+
+<Callout type="warning">When implementing event-driven architecture, be aware of potential challenges such as event handling, queue management, and consistency. Carefully evaluate the trade-offs of different approaches and solutions.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="What is the main difference between message queues and pub/sub architectures?">Message queues involve each message going to a single consumer, while pub/sub architectures involve producers dispatching events about a topic, and consumers subscribed to it receiving the event simultaneously.</Question>
+  <Question q="What are the benefits of event-driven architecture?">Event-driven architecture enables scalable and maintainable systems by decoupling services through asynchronous event communication, improving fault tolerance and reliability, and supporting flexible and dynamic system architecture.</Question>
+  <Question q="What are some popular solutions for event-driven architecture?">Popular solutions include Kafka, RabbitMQ, AWS SQS, and Azure Service Bus.</Question>
+</FAQ>

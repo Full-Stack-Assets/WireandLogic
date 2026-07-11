@@ -1,0 +1,62 @@
+---
+title: "Rate Limiting Algorithms: Token Bucket, Leaky Bucket, and Sliding Windows"
+description: "Rate limiting algorithms like token bucket, leaky bucket, and sliding windows help prevent API abuse and ensure system stability."
+date: "2026-06-20T12:00:00.000Z"
+category: "engineering"
+tags: 
+  - "rate-limiting"
+  - "algorithms"
+  - "api-security"
+hero: 
+  url: "https://upload.wikimedia.org/wikipedia/commons/1/1c/Megalocystidium-Minimum_Evolution-Tree.svg"
+  alt: "File:Megalocystidium-Minimum Evolution-Tree.svg"
+  credit: "Thkgk"
+  creditUrl: "https://commons.wikimedia.org/w/index.php?curid=35334367"
+sources: 
+  - title: "Rate limiting algorithms: token bucket, leaky bucket, and sliding windows"
+    url: ""
+  - title: "Rate Limiting Algorithms: Token Bucket vs Sliding Window vs Fixed Window"
+    url: "https://blog.arcjet.com/rate-limiting-algorithms-token-bucket-vs-sliding-window-vs-fixed-window/"
+  - title: "From Token Bucket to Sliding Window: Pick the Perfect Rate Limiting Algorithm - API7.ai"
+    url: "https://api7.ai/blog/rate-limiting-guide-algorithms-best-practices"
+  - title: "Rate Limiting Algorithms - System Design - GeeksforGeeks"
+    url: "https://www.geeksforgeeks.org/system-design/rate-limiting-algorithms-system-design/"
+---
+
+Rate limiting is a crucial mechanism to control the frequency of requests to an API or service, preventing abuse and ensuring system stability. It determines how systems allocate finite capacity across users, services, and regions. Choosing the right rate limiting algorithm is essential to prevent boundary exploits, uneven load, or distributed consistency failures. 
+
+<Callout type="takeaway">Rate limiting algorithms like token bucket, leaky bucket, and sliding windows help prevent API abuse and ensure system stability.</Callout>
+
+## What happened
+The fixed window algorithm divides time into discrete intervals and tracks the number of requests within each interval. However, it allows boundary burst amplification, where a client can send a large number of requests at the boundary of two intervals. The token bucket algorithm generates tokens at a steady rate, which are required to process requests, allowing bursts of traffic while maintaining an overall rate limit. The leaky bucket algorithm is best for shaping outbound or downstream traffic. 
+
+The sliding window algorithm models recent history and is a practical compromise for scale. The sliding log algorithm is the most accurate but can become memory-intensive. 
+
+## Why it matters
+Rate limiting is essential to prevent abuse, ensure system stability, and maintain fair resource allocation among users. It helps mitigate risks such as denial-of-service attacks, brute-force attempts, and resource exhaustion. Proper rate limiting ensures that legitimate users are not rate-limited into unresponsiveness.
+
+## Pros and Cons
+<ProsCons>
+  <Pros>
+    <li>Prevents abuse and ensures system stability</li>
+    <li>Maintains fair resource allocation among users</li>
+    <li>Helps mitigate risks such as denial-of-service attacks and brute-force attempts</li>
+  </Pros>
+  <Cons>
+    <li>Can be complex to implement and manage</li>
+    <li>May require significant resources and infrastructure</li>
+    <li>Can be challenging to choose the right algorithm</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+When choosing a rate limiting algorithm, consider the specific requirements of your system, including the type of traffic, the level of burst tolerance, and the need for fairness and abuse resistance. A useful mental model is to consider token bucket as modeling capacity accumulation, sliding window as modeling recent history, and fixed window as modeling discrete accounting periods.
+
+<Callout type="warning">When implementing rate limiting, be aware of the potential for boundary burst amplification and uneven load, and choose an algorithm that balances these factors.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="What is rate limiting?">Rate limiting is a defensive mechanism designed to control the frequency of requests a client can make to a server or API within a specified timeframe.</Question>
+  <Question q="What is the token bucket algorithm?">The token bucket algorithm generates tokens at a steady rate, which are required to process requests, allowing bursts of traffic while maintaining an overall rate limit.</Question>
+  <Question q="What is the sliding window algorithm?">The sliding window algorithm models recent history and is a practical compromise for scale, allowing for a more accurate and efficient way to limit requests.</Question>
+</FAQ>

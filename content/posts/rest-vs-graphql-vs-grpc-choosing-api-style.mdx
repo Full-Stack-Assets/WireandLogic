@@ -1,0 +1,63 @@
+---
+title: "REST vs GraphQL vs gRPC: How to Choose the Right API Style for Your Project"
+description: "Compare REST, GraphQL, and gRPC on performance, flexibility, and tooling to decide which API style fits your application."
+date: "2026-06-09T12:00:00.000Z"
+category: "engineering"
+tags: 
+  - "api"
+  - "rest"
+  - "graphql"
+  - "grpc"
+  - "architecture"
+hero: 
+  url: "https://live.staticflickr.com/945/40179540470_7ce4ddf10e_b.jpg"
+  alt: "13- Créer un plugin API REST externe par Denis Lamotte"
+  credit: "florianluce"
+  creditUrl: "https://www.flickr.com/photos/148984564@N08/40179540470"
+sources: 
+  - title: "REST vs GraphQL vs gRPC: choosing an API style"
+    url: ""
+  - title: "REST vs GraphQL vs gRPC"
+    url: "https://www.designgurus.io/blog/rest-graphql-grpc-system-design"
+---
+
+Choosing an API style is one of the first architectural decisions a team makes, and the options—REST, GraphQL, and gRPC—each bring distinct trade‑offs. REST has been the default for web services for years, offering simple HTTP semantics and broad tooling. GraphQL promises client‑driven queries that can cut down over‑fetching, while gRPC leverages binary protobuf messages for high‑throughput, low‑latency communication. Understanding how they differ helps you match the right protocol to your product’s performance and development needs.
+
+<Callout type="takeaway">Pick the API style that aligns with your data access patterns, performance requirements, and ecosystem constraints.</Callout>
+
+## What happened
+REST is an architectural style that uses standard HTTP verbs (GET, POST, PUT, DELETE) and emphasizes statelessness, cacheability, and a uniform interface. Its simplicity and language‑agnostic nature have made it the most widely adopted approach for public APIs.
+
+GraphQL, introduced by Facebook, lets clients specify exactly which fields they need, reducing over‑fetching and under‑fetching. It operates over a single endpoint and supports strong typing, introspection, and real‑time subscriptions.
+
+gRPC, developed by Google, uses Protocol Buffers for schema definition and binary transport over HTTP/2. It excels in low‑latency, high‑throughput scenarios and offers built‑in streaming, making it popular for microservice communication.
+
+## Why it matters
+The choice directly impacts latency, bandwidth consumption, and developer productivity. REST’s ubiquity means tooling and community support are abundant, but its fixed endpoints can lead to chatty interactions. GraphQL’s flexible queries reduce round‑trips but add complexity in caching and require a runtime schema layer. gRPC delivers superior performance for internal services but demands protobuf compilation and may be less accessible to browsers without a gateway.
+
+These trade‑offs affect who can consume the API (public vs internal), how quickly features can be iterated, and the operational overhead of maintaining contracts and versioning.
+
+<ProsCons>
+  <Pros>
+    <li>REST: easy to understand, cache-friendly, works everywhere HTTP is supported.</li>
+    <li>GraphQL: eliminates over‑fetching, single endpoint simplifies client code, strong typing.</li>
+    <li>gRPC: high performance, built‑in streaming, strict contracts reduce runtime errors.</li>
+  </Pros>
+  <Cons>
+    <li>REST: multiple endpoints can cause chatty APIs, limited query flexibility.</li>
+    <li>GraphQL: caching is harder, requires a runtime schema layer, can be overkill for simple CRUD.</li>
+    <li>gRPC: binary protocol not natively browser‑compatible, steeper learning curve, tighter coupling.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Start by mapping your use case: if you need a public, widely consumed API with simple CRUD, REST is usually sufficient. When clients need to compose varied data shapes or you want to reduce network payloads, consider GraphQL, but invest in caching strategies and monitor query complexity. For high‑throughput internal services, especially those that benefit from streaming or strict contracts, gRPC is a strong fit—just provide an HTTP/JSON gateway if external clients are required.
+
+<Callout type="warning">Avoid using gRPC for public browser‑based APIs unless you provide a fallback HTTP/JSON gateway.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="When should I choose REST over GraphQL?">Use REST when your API is primarily CRUD‑oriented, you need broad client compatibility, or you want to leverage HTTP caching without extra infrastructure.</Question>
+  <Question q="Is GraphQL worth the added complexity for a small project?">For small, simple services the flexibility of GraphQL often doesn’t outweigh the overhead of schema management and custom caching, so REST is usually more pragmatic.</Question>
+  <Question q="Can I mix gRPC with REST in the same system?">Yes, many architectures expose public REST endpoints while using gRPC for internal service‑to‑service calls, balancing accessibility with performance.</Question>
+</FAQ>

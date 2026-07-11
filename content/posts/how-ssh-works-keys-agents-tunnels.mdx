@@ -1,0 +1,60 @@
+---
+title: "How SSH Works: Keys, Agents, and Tunnels Explained"
+description: "Learn the fundamentals of SSH, including keys, agents, and tunnels, for secure remote access to Linux servers."
+date: "2026-06-17T12:00:00.000Z"
+category: "engineering"
+tags: 
+  - "ssh"
+  - "security"
+  - "linux"
+  - "networking"
+hero: 
+  url: "https://live.staticflickr.com/7550/15882084127_fccf9ca7b7.jpg"
+  alt: "Fail2ban for SSH Server"
+  credit: "xmodulo"
+  creditUrl: "https://www.flickr.com/photos/91795203@N02/15882084127"
+sources: 
+  - title: "How SSH works: keys, agents, and tunnels explained"
+    url: ""
+  - title: "SSH Essentials: Working with SSH Servers, Clients, and Keys | DigitalOcean"
+    url: "https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys"
+  - title: "SSH Agent Explained"
+    url: "https://smallstep.com/blog/ssh-agent-explained/"
+---
+
+SSH is a secure protocol used to connect to and manage remote Linux servers. It provides encrypted access for running commands, transferring files, and forwarding network traffic. SSH relies on a client-server architecture and uses keys for authentication.
+
+<Callout type="takeaway">SSH keys provide stronger security than passwords and should be the standard for authentication.</Callout>
+
+## What happened
+SSH Essentials guide covers the fundamentals and practical details required to work effectively with SSH. It explains how SSH authentication works, how trust is established using keys, and how to configure SSH securely on both the server and client side.
+
+SSH trust is established ahead of time, not during login. Servers trust public keys placed in authorized_keys, and clients prove identity by possessing the matching private key. Private key protection is critical to SSH security.
+
+## Why it matters
+A secure SSH baseline dramatically reduces exposure. Disabling password logins, blocking direct root access, limiting attempts, and explicitly allowing users should be standard practice. SSH keys authenticate users, while host keys protect clients from connecting to impersonated servers.
+
+<ProsCons>
+  <Pros>
+    <li>Stronger security than passwords</li>
+    <li>Encrypted access for commands, file transfers, and network traffic</li>
+    <li>Secure remote access to Linux servers</li>
+  </Pros>
+  <Cons>
+    <li>Private key protection is critical</li>
+    <li>Agent forwarding can increase risk</li>
+    <li>Configuration can be complex</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+To work effectively with SSH, understand the client-server architecture, key-based authentication, and trust establishment. Use SSH keys instead of passwords and protect private keys with permissions and optional passphrases.
+
+<Callout type="warning">Be cautious with agent forwarding, as it can increase the risk of private key exposure.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="What is SSH?">SSH is a secure protocol used to connect to and manage remote Linux servers.</Question>
+  <Question q="How does SSH authentication work?">SSH authentication works using keys, where servers trust public keys and clients prove identity by possessing the matching private key.</Question>
+  <Question q="What is an SSH agent?">An SSH agent keeps private keys safe by not writing key material to disk and not allowing private keys to be exported.</Question>
+</FAQ>

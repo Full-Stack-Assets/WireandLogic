@@ -1,0 +1,67 @@
+---
+title: "Choosing a Load Balancing Algorithm: Round Robin, Least Connections, and Consistent Hashing"
+description: "A practical guide to round robin, least connections, and consistent hashing load balancers, covering trade‑offs and when to use each."
+date: "2026-06-16T12:00:00.000Z"
+category: "engineering"
+tags: 
+  - "load-balancing"
+  - "round-robin"
+  - "least-connections"
+  - "consistent-hashing"
+  - "scalability"
+hero: 
+  url: "https://live.staticflickr.com/7352/13480332945_ff8fe4893a.jpg"
+  alt: "DNS-based Load Balancing"
+  credit: "xmodulo"
+  creditUrl: "https://www.flickr.com/photos/91795203@N02/13480332945"
+sources: 
+  - title: "Load balancing strategies: round robin, least connections, and consistent hashing"
+    url: ""
+  - title: "Load Balancing Algorithms: Round Robin vs Least Connections vs Consistent Hashing"
+    url: "https://eureka.patsnap.com/article/load-balancing-algorithms-round-robin-vs-least-connections-vs-consistent-hashing"
+  - title: "Understanding Load Balancing Algorithms and Strategies"
+    url: "https://oneuptime.com/blog/post/2026-02-20-load-balancing-algorithms/view"
+---
+
+Modern web services increasingly rely on horizontal scaling, making load balancing a core infrastructure concern. As traffic patterns grow more heterogeneous, choosing the right algorithm—round robin, least connections, or consistent hashing—directly impacts latency and resource utilization. Understanding each strategy’s trade‑offs helps engineers avoid bottlenecks and maintain high availability.
+
+<Callout type="takeaway">Round robin works for stateless uniform loads, least connections for variable workloads, and consistent hashing for stateful or cache‑centric services.</Callout>
+
+## What happened
+Round robin distributes incoming requests sequentially across the server pool. It requires no state and yields an even distribution over time, but it ignores real‑time server load and request cost differences, making it best suited for stateless services with uniform processing times.
+
+Least connections routes each request to the server with the fewest active connections. By adapting to slow or long‑running requests, it handles variable workloads well, though it introduces connection‑tracking overhead and slightly higher latency in the decision path.
+
+Consistent hashing hashes a client attribute—commonly the IP address—to a point on a logical ring, assigning the request to the nearest server. The mapping stays stable as long as the server pool does not change, providing session affinity without cookies; however, uneven IP distribution or NAT can skew traffic, and the algorithm needs virtual nodes to balance the ring.
+
+## Why it matters
+Choosing the wrong algorithm can amplify latency spikes, waste compute resources, or break session affinity, leading to poor user experience and higher operational costs. Round robin offers simplicity for uniform, stateless workloads, while least connections mitigates hot spots in variable‑cost services. Consistent hashing preserves cache locality and reduces reshuffling when servers are added or removed, which is critical for distributed caches and sharded databases.
+
+<ProsCons>
+  <Pros>
+    <li>Simple to implement and understand.</li>
+    <li>Adapts to real‑time load variations (least connections).</li>
+    <li>Provides session stickiness without extra cookies (consistent hashing).</li>
+  </Pros>
+  <Cons>
+    <li>Round robin ignores actual server load.</li>
+    <li>Least connections requires state tracking and extra overhead.</li>
+    <li>Consistent hashing can produce uneven distribution without virtual nodes.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+1. Classify your service: stateless vs stateful, uniform vs variable request cost.
+2. If requests are short and identical, start with round robin for its zero‑state simplicity.
+3. For workloads where request times vary widely, switch to least connections to let the balancer steer traffic toward less‑busy instances.
+4. When you need request affinity—caches, sharded databases, or legacy sessions—use consistent hashing, and configure virtual nodes to smooth out hot spots.
+5. Always pair the algorithm with health checks and passive failure detection to remove unhealthy nodes promptly.
+
+<Callout type="warning">Do not rely on plain IP‑based consistent hashing in environments dominated by NAT or clustered IP ranges; it can concentrate traffic on a few servers.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="When should I choose round robin over least connections?">Use round robin when your service is stateless and each request takes roughly the same amount of time, because its simplicity outweighs the lack of load awareness.</Question>
+  <Question q="How does consistent hashing handle server additions or removals?">It maps servers onto a hash ring; adding or removing a server only affects the requests that map to the neighboring segment, minimizing cache miss churn.</Question>
+  <Question q="What monitoring should accompany any load‑balancing algorithm?">Track per‑instance request rates, connection counts, latency, and health‑check failures; alerts on sudden spikes or failed health checks help keep the pool healthy regardless of the algorithm.</Question>
+</FAQ>

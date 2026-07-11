@@ -1,0 +1,58 @@
+---
+title: "Understanding DNS: From a Typed URL to Its IP Address"
+description: "Explore the step‑by‑step journey a URL takes through DNS to resolve into an IP address, and why it matters for developers."
+date: "2026-06-03T12:00:00.000Z"
+category: "engineering"
+tags: 
+  - "dns"
+  - "networking"
+  - "infrastructure"
+  - "web"
+hero: 
+  url: "https://live.staticflickr.com/5736/21309309199_e1ec965183_b.jpg"
+  alt: "Dublin To Host ICANN’s 54th Public Meeting [I Will Be Attending]REF-10805292"
+  credit: "infomatique"
+  creditUrl: "https://www.flickr.com/photos/80824546@N00/21309309199"
+sources: 
+  - title: "How DNS actually works: from typed URL to IP address"
+    url: ""
+  - title: "DNS Lookup: How a Domain Name is Translated to an IP Address"
+    url: "https://www.catchpoint.com/blog/domain-name-to-ip-address"
+---
+
+When you type a web address into a browser, the request seems instant, but behind the scenes a complex lookup translates that name into a numeric IP. The process involves multiple caches, recursive resolvers, and authoritative servers working together to locate the correct address. Each step adds latency and opportunities for failure, making DNS a critical performance and security layer for every web service.
+
+<Callout type="takeaway">DNS translates human‑readable names into machine‑readable IPs through a hierarchical, cached lookup that powers every web request.</Callout>
+
+## What happened
+The browser first checks its own cache; if the name is fresh, it skips the network entirely. Failing that, the operating system queries the local resolver cache and the static hosts file before contacting the configured recursive resolver, often provided by an ISP or a public service like Cloudflare.
+
+The recursive resolver starts at the root name servers, receives a referral to the appropriate top‑level domain (TLD) servers, then follows referrals to the domain’s authoritative name servers. Those authoritative servers finally return the A (IPv4) or AAAA (IPv6) record that maps the domain to an IP address. The resolver caches the result according to the record’s TTL, and the browser receives the IP to open a TCP connection.
+
+## Why it matters
+Performance hinges on cache hits; a warm cache can resolve a name in a few milliseconds, while a cold lookup may take dozens of milliseconds, affecting page load times. Reliability depends on the distributed nature of the DNS hierarchy—if a root server or a TLD server is unreachable, resolution fails. Security concerns such as cache poisoning or DNS hijacking exploit the trust model of this lookup chain, making proper configuration and monitoring essential for developers and operators.
+
+<ProsCons>
+  <Pros>
+    <li>Hierarchical design provides redundancy and scalability.</li>
+    <li>Caching dramatically reduces latency for repeat lookups.</li>
+    <li>Standardized record types support a wide range of services.</li>
+  </Pros>
+  <Cons>
+    <li>Cache TTLs can cause stale data to linger.</li>
+    <li>Unencrypted queries expose lookups to eavesdropping.</li>
+    <li>Complex delegation can introduce misconfiguration bugs.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Treat DNS as an integral part of your application's performance budget. Use tools like `dig` or `nslookup` to trace the resolution path and identify slow hops. Choose a resolver with low latency and support for DNS‑over‑HTTPS to encrypt queries. When deploying new services, set appropriate TTLs—short enough for flexibility, long enough to benefit from caching. Monitor DNS response times and error rates alongside your other observability signals.
+
+<Callout type="warning">Do not disable local or resolver caches for production traffic; doing so will increase latency and load on upstream name servers.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="What is the difference between recursive and iterative DNS queries?">A recursive query asks the resolver to return the final answer, handling all referrals internally, while an iterative query returns the next server to query, leaving the client to continue the lookup.</Question>
+  <Question q="How long does a DNS lookup typically take?">A cached lookup can complete in under 5 ms, whereas a full recursive lookup from root to authoritative servers often ranges from 30 ms to 150 ms depending on network conditions.</Question>
+  <Question q="Can I bypass DNS caching for testing?">Yes; most tools support a “+trace” or “+nocache” flag, and you can flush OS and browser caches or use a temporary resolver that disables caching.</Question>
+</FAQ>

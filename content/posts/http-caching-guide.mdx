@@ -1,0 +1,71 @@
+---
+title: "How HTTP Caching Works: Cache-Control, ETags, and CDNs"
+description: "Learn how HTTP caching works, including Cache-Control, ETags, and CDNs, to improve website performance and reduce latency."
+date: "2026-06-10T12:00:00.000Z"
+category: "engineering"
+tags: 
+  - "http"
+  - "caching"
+  - "performance"
+  - "cdns"
+hero: 
+  url: "https://upload.wikimedia.org/wikipedia/commons/b/b2/Cypriot_debt_and_EU_average.png"
+  alt: "Cypriot debt and EU average"
+  credit: "Spitzl"
+  creditUrl: "https://commons.wikimedia.org/w/index.php?curid=22339100"
+sources: 
+  - title: "How HTTP caching works: Cache-Control, ETags, and CDNs"
+    url: ""
+  - title: "A complete guide to HTTP caching"
+    url: "https://www.jonoalderson.com/performance/http-caching/"
+---
+
+HTTP caching is the backbone of the web, making sites feel fast, reliable, and affordable to run. It slashes latency, reduces server load, and allows infrastructure to withstand sudden spikes in demand. In this guide, we'll explore how HTTP caching works, including Cache-Control, ETags, and CDNs.
+
+<Callout type="takeaway">HTTP caching is crucial for website performance, and understanding how it works can help you optimize your site.</Callout>
+
+## What happened
+
+HTTP caching uses headers to control how and when resources are cached. The Cache-Control header is used to specify how long a resource is considered fresh. ETags and Last-Modified headers are used to validate cached resources.
+
+The Cache-Control header has several directives, including max-age, s-maxage, and stale-while-revalidate. These directives control how long a resource is cached and when it should be revalidated.
+
+## Why it matters
+
+HTTP caching matters because it can significantly improve website performance. By caching resources, you can reduce the number of requests made to your server, which can reduce latency and improve page load times.
+
+However, caching can also introduce complexity, particularly when dealing with dynamic content. If not implemented correctly, caching can lead to stale content being served to users.
+
+<ProsCons>
+  <Pros>
+    <li>Improved website performance</li>
+    <li>Reduced latency</li>
+    <li>Increased scalability</li>
+  </Pros>
+  <Cons>
+    <li>Complexity in implementing caching</li>
+    <li>Potential for stale content</li>
+    <li>Need for careful configuration</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+
+When implementing HTTP caching, it's essential to consider the types of resources being cached and how they are used. Static assets, such as images and stylesheets, can be cached for longer periods, while dynamic content, such as user data, may require more frequent revalidation.
+
+It's also important to consider the role of CDNs in caching. CDNs can cache resources at edge locations, reducing the distance between users and resources.
+
+<Callout type="warning">When implementing caching, be careful to avoid common pitfalls, such as caching sensitive data or using overly aggressive caching strategies.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="What is the difference between Cache-Control and ETags?">
+    Cache-Control is used to specify how long a resource is considered fresh, while ETags are used to validate cached resources.
+  </Question>
+  <Question q="How do CDNs affect caching?">
+    CDNs can cache resources at edge locations, reducing the distance between users and resources.
+  </Question>
+  <Question q="What are some common caching mistakes?">
+    Common caching mistakes include caching sensitive data, using overly aggressive caching strategies, and failing to revalidate cached resources.
+  </Question>
+</FAQ>

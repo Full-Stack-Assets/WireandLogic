@@ -1,0 +1,66 @@
+---
+title: "Understanding Database Indexes: When They Boost Queries and When They Hurt Writes"
+description: "Learn how B‑tree indexes speed up SELECTs, why they add overhead to INSERT/UPDATE/DELETE, and how to balance indexing for optimal performance."
+date: "2026-06-12T12:00:00.000Z"
+category: "engineering"
+tags: 
+  - "database"
+  - "indexes"
+  - "performance"
+  - "sql"
+  - "optimization"
+hero: 
+  url: "https://upload.wikimedia.org/wikipedia/commons/2/28/Ch%C3%A2teau_de_Montsoreau%28Maine-et-Loire%29.jpg"
+  alt: "File:Château de Montsoreau(Maine-et-Loire).jpg"
+  credit: "sybarite48"
+  creditUrl: "https://commons.wikimedia.org/w/index.php?curid=15952335"
+sources: 
+  - title: "How database indexes work and when they slow you down"
+    url: ""
+  - title: "How Database Indexes Improve SQL Performance — and When Not to Use Them"
+    url: "https://dev.to/alexnicolascode/how-database-indexes-improve-sql-performance-and-when-not-to-use-them-5nd"
+  - title: "How Indexing Enhances Query Performance - Digma"
+    url: "https://digma.ai/how-indexing-enhances-query-performance/"
+---
+
+When a query starts scanning millions of rows, the first instinct is to add an index. Indexes act like a book’s table of contents, letting the engine jump directly to matching rows instead of reading the whole table. Modern relational databases store those indexes as B‑trees, giving logarithmic lookup time for reads. But every time a row is inserted, updated, or deleted, the same structure must be adjusted, adding measurable write latency. Understanding that trade‑off helps teams avoid the common pitfall of over‑indexing.
+
+<Callout type="takeaway">Indexes dramatically speed reads but inevitably slow writes; use them sparingly and measure impact.</Callout>
+
+## What happened
+Indexes improve SELECT performance by allowing the engine to locate rows without a full table scan. Most relational systems—PostgreSQL, MySQL, SQL Server—implement indexes as B‑trees, which provide O(log n) search complexity compared to linear scans. When a table contains millions of rows, an appropriately targeted index can reduce query time from seconds to milliseconds.
+
+At the same time, each INSERT, UPDATE, or DELETE must maintain every relevant index. A table with dozens of indexes can see write latency increase sharply; the source cites a scenario with 30 indexes where every mutation had to touch all of them, dramatically slowing the system. The article advises running a proof of concept and measuring before adding large numbers of indexes.
+
+In practice, developers often pair indexing with other strategies such as caching frequently read data in Redis or refactoring queries. Starting with a small set of well‑chosen indexes and iterating based on real‑world metrics tends to yield the best balance between read speed and write cost.
+
+## Why it matters
+Read‑heavy applications benefit directly from faster lookups, lower CPU usage, and reduced latency, which translates to better user experience and lower cloud costs. Conversely, write‑heavy workloads suffer when every data change triggers multiple index updates, leading to higher CPU, I/O contention, and potential lock contention. Over‑indexing also inflates storage requirements and can confuse the query planner, causing sub‑optimal execution plans. Teams that understand the trade‑off can design schemas that scale predictably as data volume grows.
+
+<ProsCons>
+  <Pros>
+    <li>Fast point‑lookups for filtered queries</li>
+    <li>Efficient range scans and ORDER BY operations</li>
+    <li>Enables the optimizer to choose better execution plans</li>
+  </Pros>
+  <Cons>
+    <li>Every INSERT/UPDATE/DELETE must modify each affected index</li>
+    <li>Excessive indexes increase storage and memory pressure</li>
+    <li>Poorly chosen indexes can mislead the optimizer and degrade performance</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+1. Identify the hottest read queries using logs or an EXPLAIN plan. 2. Prioritize indexes on columns that appear in WHERE clauses, JOIN conditions, or ORDER BY clauses with high selectivity. 3. Start with a primary key and one or two secondary indexes; measure the impact on both read latency and write throughput. 4. Use covering indexes (including needed columns in the index) to avoid extra lookups. 5. Regularly review index usage statistics; drop indexes that show little or no scan activity. 6. For write‑intensive tables, consider alternative patterns such as denormalization, materialized views, or external caches instead of piling on indexes.
+
+<Callout type="warning">Do not index columns that are rarely used in WHERE clauses or have low cardinality, as they add cost without measurable benefit.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="When should I add a new index?">Add an index when a query consistently scans a large portion of a table and the indexed column(s) are used in filters, joins, or sorting, and you have verified the benefit with an EXPLAIN plan and benchmark.
+</Question>
+  <Question q="How many indexes are too many for a table?">There is no fixed limit, but if a table approaches dozens of indexes—especially on write‑heavy workloads—the cumulative maintenance cost often outweighs read gains; monitor write latency and prune indexes that show low usage.
+</Question>
+  <Question q="Can I rely on the database’s automatic index recommendations?">Automatic suggestions can be a useful starting point, but they may overlook application‑specific query patterns or add redundant indexes; always validate recommendations against real traffic and performance metrics.
+</Question>
+</FAQ>

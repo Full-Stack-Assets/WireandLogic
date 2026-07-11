@@ -1,0 +1,74 @@
+---
+title: "Understanding Stack vs Heap and Garbage Collection"
+description: "Learn about the differences between stack and heap memory, and how garbage collection works in programming languages."
+date: "2026-06-19T12:00:00.000Z"
+category: "engineering"
+tags: 
+  - "memory management"
+  - "garbage collection"
+  - "stack"
+  - "heap"
+hero: 
+  url: "https://upload.wikimedia.org/wikipedia/commons/3/37/Kachu%2C_National_Archaeological_Anthropological_Memory_Management.jpg"
+  alt: "Kachu, National Archaeological Anthropological Memory Management"
+  credit: "National Archaeological Anthropological Memory Management"
+  creditUrl: "https://commons.wikimedia.org/w/index.php?curid=119553843"
+sources: 
+  - title: "Stack vs heap and how garbage collection actually works"
+    url: ""
+  - title: "Heap, Stack e Garbage Collector — A practical guide to .NET memory management system."
+    url: "https://andresantarosa.medium.com/heap-stack-e-garbage-collector-a-practical-guide-to-net-memory-management-system-7e60bbadf199"
+  - title: "Does a garbage collector collect stack memory, heap memory, or both?"
+    url: "https://stackoverflow.com/questions/2524792/does-a-garbage-collector-collect-stack-memory-heap-memory-or-both"
+  - title: "Memory Management in Java: Stack vs. Heap & Garbage Collection"
+    url: "https://dev.to/abhishek_kumar_d9009a7ae6/memory-management-in-java-stack-vs-heap-garbage-collection-1aj2"
+---
+
+Memory management is a critical aspect of programming, and understanding how it works can help developers write more efficient code. In the past, memory was a scarce resource, and programmers had to manually manage it to ensure their code ran smoothly. However, with advancements in hardware and the evolution of high-level programming languages, memory management has become more automated.
+
+    <Callout type="takeaway">Garbage collection is a key component of memory management in many programming languages, but it only applies to heap memory.</Callout>
+
+    ## What happened
+    The .NET/C# environment, as well as other languages like Java and Go, use two types of memory: stack and heap. The stack is a contiguous area of memory that stores local variables and method call information, following the Last In, First Out (LIFO) principle. The heap, on the other hand, is a larger and more flexible area of memory used to store objects and dynamic memory.
+
+    When a method is called, a new block is created on the stack, known as a stack frame, which holds information about the parameters received, the caller function return address, and its internal variables. The stack is automatically managed by the language runtime, and memory is deallocated when the method returns.
+
+    The heap, however, requires manual memory management, which can be error-prone. To address this issue, garbage collection was invented to automatically deallocate memory that is no longer in use.
+
+    ## Why it matters
+    Understanding how stack and heap memory work, as well as how garbage collection operates, is essential for writing efficient and scalable code. If memory is not properly managed, it can lead to performance issues, memory leaks, and even crashes.
+
+    <ProsCons>
+      <Pros>
+        <li>Automated memory management reduces the risk of memory-related bugs.</li>
+        <li>Garbage collection frees up memory that is no longer in use, reducing memory waste.</li>
+        <li>Understanding stack and heap memory helps developers optimize their code for performance.</li>
+      </Pros>
+      <Cons>
+        <li>Garbage collection can introduce performance overhead.</li>
+        <li>Manual memory management can be error-prone and time-consuming.</li>
+        <li>Memory leaks can still occur if not properly managed.</li>
+      </Cons>
+    </ProsCons>
+
+    ## How to think about it
+    When writing code, it's essential to consider how memory is being used and managed. Here are some practical guidelines:
+
+    * Use stack memory for local variables and method call information.
+    * Use heap memory for objects and dynamic memory.
+    * Understand how garbage collection works in your chosen programming language.
+
+    <Callout type="warning">Be cautious of memory leaks and performance issues when working with heap memory and garbage collection.</Callout>
+
+    ## FAQ
+    <FAQ>
+      <Question q="What is the main difference between stack and heap memory?">
+        The main difference between stack and heap memory is that stack memory is used for local variables and method call information, following the Last In, First Out (LIFO) principle, while heap memory is used for objects and dynamic memory.
+      </Question>
+      <Question q="How does garbage collection work?">
+        Garbage collection is a process that automatically deallocates memory that is no longer in use, reducing memory waste and the risk of memory-related bugs.
+      </Question>
+      <Question q="Why is understanding stack and heap memory important for developers?">
+        Understanding stack and heap memory is essential for writing efficient and scalable code, as it helps developers optimize their code for performance and avoid memory-related issues.
+      </Question>
+    </FAQ>

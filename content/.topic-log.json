@@ -1448,6 +1448,125 @@
       "url": "https://9to5mac.com/2026/07/10/apple-sues-openai-trade-secret-theft/",
       "publishedAt": "2026-07-11T17:02:56.852Z",
       "signature": "4b038aff45714f1a"
+    },
+    {
+      "slug": "understanding-dns-typed-url-to-ip",
+      "title": "How DNS actually works: from typed URL to IP address",
+      "url": "",
+      "publishedAt": "2026-06-03T12:00:00.000Z",
+      "signature": "aae6e8e8b1425a4f"
+    },
+    {
+      "slug": "sql-vs-nosql-choosing-a-database",
+      "title": "SQL vs NoSQL: how to choose a database and the real tradeoffs",
+      "url": "",
+      "publishedAt": "2026-06-05T12:00:00.000Z",
+      "signature": "cf805da06cb5b816"
+    },
+    {
+      "slug": "tls-handshake-https-protection",
+      "title": "How a TLS handshake works and what HTTPS actually protects",
+      "url": "",
+      "publishedAt": "2026-06-06T12:00:00.000Z",
+      "signature": "199dbd8f9060b0fb"
+    },
+    {
+      "slug": "ci-cd-fundamentals-pipelines-stages-deployment-strategies",
+      "title": "CI/CD fundamentals: pipelines, stages, and deployment strategies",
+      "url": "",
+      "publishedAt": "2026-06-07T12:00:00.000Z",
+      "signature": "17d390dd87ef37f6"
+    },
+    {
+      "slug": "how-git-works-under-the-hood",
+      "title": "How Git works under the hood: objects, branches, and commits",
+      "url": "",
+      "publishedAt": "2026-06-08T12:00:00.000Z",
+      "signature": "bfb89d89d9460380"
+    },
+    {
+      "slug": "rest-vs-graphql-vs-grpc-choosing-api-style",
+      "title": "REST vs GraphQL vs gRPC: choosing an API style",
+      "url": "",
+      "publishedAt": "2026-06-09T12:00:00.000Z",
+      "signature": "cbe829537716f0e3"
+    },
+    {
+      "slug": "http-caching-guide",
+      "title": "How HTTP caching works: Cache-Control, ETags, and CDNs",
+      "url": "",
+      "publishedAt": "2026-06-10T12:00:00.000Z",
+      "signature": "0279ca728d683202"
+    },
+    {
+      "slug": "oauth-2-and-openid-connect-explained",
+      "title": "OAuth 2.0 and OpenID Connect explained for developers",
+      "url": "",
+      "publishedAt": "2026-06-11T12:00:00.000Z",
+      "signature": "a0f27531f2da8dc0"
+    },
+    {
+      "slug": "understanding-database-indexes-boost-queries-hurt-writes",
+      "title": "How database indexes work and when they slow you down",
+      "url": "",
+      "publishedAt": "2026-06-12T12:00:00.000Z",
+      "signature": "7a43bfb2e6748f19"
+    },
+    {
+      "slug": "message-queues-explained",
+      "title": "Message queues explained: Kafka, RabbitMQ, and event-driven architecture",
+      "url": "",
+      "publishedAt": "2026-06-13T12:00:00.000Z",
+      "signature": "ddfed109e65c2978"
+    },
+    {
+      "slug": "critical-rendering-path",
+      "title": "How the browser renders a web page: the critical rendering path",
+      "url": "",
+      "publishedAt": "2026-06-15T12:00:00.000Z",
+      "signature": "d64214fd5a953894"
+    },
+    {
+      "slug": "load-balancing-rr-lc-consistent-hashing",
+      "title": "Load balancing strategies: round robin, least connections, and consistent hashing",
+      "url": "",
+      "publishedAt": "2026-06-16T12:00:00.000Z",
+      "signature": "79f64e7041c0a0bf"
+    },
+    {
+      "slug": "how-ssh-works-keys-agents-tunnels",
+      "title": "How SSH works: keys, agents, and tunnels explained",
+      "url": "",
+      "publishedAt": "2026-06-17T12:00:00.000Z",
+      "signature": "7c50b3e11eae2290"
+    },
+    {
+      "slug": "stack-vs-heap-garbage-collection",
+      "title": "Stack vs heap and how garbage collection actually works",
+      "url": "",
+      "publishedAt": "2026-06-19T12:00:00.000Z",
+      "signature": "d70229a316f2a7da"
+    },
+    {
+      "slug": "rate-limiting-algorithms",
+      "title": "Rate limiting algorithms: token bucket, leaky bucket, and sliding windows",
+      "url": "",
+      "publishedAt": "2026-06-20T12:00:00.000Z",
+      "signature": "4eeb4f13328c2f9a"
+    },
+    {
+      "slug": "webhooks-vs-polling-when-to-use",
+      "title": "Webhooks vs polling: designing systems that react to events",
+      "url": "",
+      "publishedAt": "2026-06-22T12:00:00.000Z",
+      "signature": "9f9b1c648851d41b"
+    },
+    {
+      "slug": "compilers-interpreters-jits",
+      "title": "Compilers, interpreters, and JITs: how your code actually runs",
+      "url": "",
+      "publishedAt": "2026-06-23T12:00:00.000Z",
+      "signature": "3e24c57c95e5e269"
     }
   ]
 }

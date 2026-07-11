@@ -1,0 +1,72 @@
+---
+title: "CI/CD fundamentals: pipelines, stages, and deployment strategies"
+description: "Learn about CI/CD pipelines, their benefits, and best practices for automating the delivery lifecycle."
+date: "2026-06-07T12:00:00.000Z"
+category: "engineering"
+tags: 
+  - "ci-cd"
+  - "pipelines"
+  - "deployment"
+  - "automation"
+  - "devops"
+hero: 
+  url: "https://live.staticflickr.com/4471/37946590921_d14da1ba0c_b.jpg"
+  alt: ".@Ju_Stroh will demonstrate using Jenkins and a CI/CD pipeline! #MesosCon #DevOps"
+  credit: "PLeia2"
+  creditUrl: "https://www.flickr.com/photos/64684255@N00/37946590921"
+sources: 
+  - title: "CI/CD fundamentals: pipelines, stages, and deployment strategies"
+    url: ""
+  - title: "CI/CD Pipeline: All You Need to Know | Harness"
+    url: "https://www.harness.io/blog/ci-cd-pipeline"
+  - title: "What Is a CI/CD Pipeline? Benefits and Best Practices"
+    url: "https://www.snowflake.com/en/fundamentals/understanding-ci-cd-pipelines/"
+  - title: "CI/CD Pipeline Explained: Stages, Tools & Examples (2026)"
+    url: "https://www.netcomlearning.com/blog/ci-cd-pipeline"
+---
+
+The software delivery process has a bottleneck - safely shipping code. Despite increased developer velocity, delivery throughput and deployment stability have not kept pace. CI/CD pipelines automate the entire journey from pull request to production, addressing this issue.
+
+<Callout type="takeaway">CI/CD pipelines automate the delivery lifecycle, enabling teams to ship code predictably and reliably.</Callout>
+
+## What happened
+A CI/CD pipeline consists of several stages, including build, test, security scanning, promotion through environments, deployment, and post-deploy verification. Continuous Integration handles code integration, builds, and early validation, while Continuous Delivery extends that automation with testing environments, artifact promotion, and controlled release into production.
+
+The DORA report has consistently shown that elite software delivery performance is associated with lead times under one hour, frequent production deployments, low change failure rates, and fast recovery from incidents. AI-assisted verification and auto-rollback make high deployment frequency sustainable.
+
+## Why it matters
+CI/CD pipelines matter because they enable teams to ship code predictably and reliably. Without a pipeline, the delivery process is manual, slow, and prone to errors. Bugs show up late, when they're expensive, and every release is a bet.
+
+## Pros and Cons
+<ProsCons>
+  <Pros>
+    <li>Automated testing and validation</li>
+    <li>Faster time-to-market</li>
+    <li>Improved deployment stability</li>
+    <li>Increased productivity</li>
+    <li>Better collaboration</li>
+  </Pros>
+  <Cons>
+    <li>Initial setup and configuration</li>
+    <li>Requires cultural and process changes</li>
+    <li>May require additional tools and infrastructure</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+When implementing a CI/CD pipeline, consider the types of tests to map to each pipeline stage. Unit tests should run on every commit, integration tests on post-build, load tests on pre-production only, and DAST on nightly builds. AI-assisted verification and auto-rollback can make high deployment frequency sustainable.
+
+<Callout type="warning">Be aware that implementing a CI/CD pipeline requires cultural and process changes, and may require additional tools and infrastructure.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="What is a CI/CD pipeline?">
+A CI/CD pipeline automates the entire journey from pull request to production, including build, test, security scanning, promotion through environments, deployment, and post-deploy verification.
+  </Question>
+  <Question q="What are the benefits of CI/CD pipelines?">
+The benefits of CI/CD pipelines include automated testing and validation, faster time-to-market, improved deployment stability, increased productivity, and better collaboration.
+  </Question>
+  <Question q="How do I implement a CI/CD pipeline?">
+To implement a CI/CD pipeline, consider the types of tests to map to each pipeline stage, and use tools and infrastructure that support automation and continuous delivery.
+  </Question>
+</FAQ>

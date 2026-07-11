@@ -1,0 +1,62 @@
+---
+title: "OAuth 2.0 and OpenID Connect: A Guide for Developers"
+description: "Learn how OAuth 2.0 and OpenID Connect work together to handle authentication and authorization in modern applications."
+date: "2026-06-11T12:00:00.000Z"
+category: "engineering"
+tags: 
+  - "oauth"
+  - "openid"
+  - "authentication"
+  - "authorization"
+hero: 
+  url: "https://live.staticflickr.com/2224/2535188191_0e9de8ab58.jpg"
+  alt: "io2008_social_web"
+  credit: "Fotinakis"
+  creditUrl: "https://www.flickr.com/photos/27121563@N07/2535188191"
+sources: 
+  - title: "OAuth 2.0 and OpenID Connect explained for developers"
+    url: ""
+  - title: "Understanding OAuth 2.0 and OpenID Connect for Developers"
+    url: "https://oneuptime.com/blog/post/2026-02-20-oauth2-oidc-explained/view"
+  - title: "OAuth 2.0 and OpenID Connect overview | Okta Developer"
+    url: "https://developer.okta.com/docs/concepts/oauth-openid/"
+  - title: "How OpenID Connect Works - OpenID Foundation"
+    url: "https://openid.net/developers/how-connect-works/"
+---
+
+Many developers struggle to understand how OAuth 2.0 and OpenID Connect fit together and when to use each flow. OAuth 2.0 and OpenID Connect form the backbone of modern identity and access management. This guide breaks down both protocols with practical examples and clear diagrams. Understanding these protocols is crucial for building secure applications.
+
+<Callout type="takeaway">OAuth 2.0 and OpenID Connect are complementary protocols that handle authorization and authentication in modern applications.</Callout>
+
+## What happened
+OAuth 2.0 is an authorization framework that lets third-party applications access resources on behalf of a user without exposing credentials. OpenID Connect is an identity layer built on top of OAuth 2.0 that handles authentication. OAuth 2.0 issues access tokens rather than sharing passwords. The key components of OAuth 2.0 are the Resource Owner, Client, Authorization Server, and Resource Server.
+
+OpenID Connect adds an identity layer to OAuth 2.0, enabling authentication and Single Sign-On (SSO) functionality. It provides a secure and verifiable answer to the question 'What is the identity of the person currently using the browser or mobile app that is connected?'.
+
+## Why it matters
+Understanding OAuth 2.0 and OpenID Connect is essential for building secure applications that protect user data. These protocols enable secure authorization and authentication, reducing the risk of data breaches. Developers must implement these protocols correctly to ensure the security and integrity of their applications.
+
+<ProsCons>
+  <Pros>
+    <li>Secure authorization and authentication</li>
+    <li>Protection of user data</li>
+    <li>Single Sign-On (SSO) functionality</li>
+  </Pros>
+  <Cons>
+    <li>Complexity of implementation</li>
+    <li>Potential for misconfiguration</li>
+    <li>Dependence on third-party services</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+When implementing OAuth 2.0 and OpenID Connect, developers should focus on secure token storage, proper validation of tokens, and protection against common attacks like CSRF. It's essential to choose the correct flow for the application, such as Authorization Code with PKCE for user-facing apps and Client Credentials for service-to-service communication.
+
+<Callout type="warning">Developers should avoid using the implicit flow, storing tokens in localStorage, skipping the state parameter, and not validating tokens server-side.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="What is the main difference between OAuth 2.0 and OpenID Connect?">OAuth 2.0 handles authorization, while OpenID Connect handles authentication and adds an identity layer to OAuth 2.0.</Question>
+  <Question q="Which flow should I use for my user-facing application?">Use Authorization Code with PKCE for user-facing applications.</Question>
+  <Question q="How should I store access tokens securely?">Use httpOnly cookies or in-memory storage to store access tokens securely.</Question>
+</FAQ>
