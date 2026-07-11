@@ -53,10 +53,11 @@ scraper UA in `src/lib/orchestrator/research.ts`
   (`content/.topic-log.json`) is the only piece of mutable state.
 - **Zod** validates the LLM's JSON output.
 - **LLM writer**: OpenAI-compatible endpoint; default **Groq**
-  (`openai/gpt-oss-120b`, with `openai/gpt-oss-20b` as the in-run
-  fallback model on the same key). Groq replaced Gemini, whose free tier kept
-  returning 503 "model overloaded" and failing the hourly run. Any
-  OpenAI-compatible provider works via `site.config.ts`.
+  (`openai/gpt-oss-120b`, with `meta-llama/llama-4-scout-17b-16e-instruct` as
+  the in-run fallback model on the same key — Scout's 30K-TPM free tier gives
+  failover real headroom over the primary's 8K-TPM cap). Groq replaced Gemini,
+  whose free tier kept returning 503 "model overloaded" and failing the hourly
+  run. Any OpenAI-compatible provider works via `site.config.ts`.
 - Package manager: the repo ships `package-lock.json`, and CI uses `npm ci`.
   **Use `npm`.** Node 20+.
 

@@ -12,11 +12,24 @@ const LLM_KEY_ENV = siteConfig.llm.apiKeyEnv;
 const MAX_GENERATION_ATTEMPTS = 5;
 
 /**
- * After this many failed attempts on the primary model, switch to the lighter
- * fallback model — it has far more free-tier capacity, so a sustained 503
- * "overloaded" spike on the primary doesn't fail the whole run.
+ * After this many failed attempts on the primary model — regardless of the
+ * failure type — switch to the fallback model. It has far more free-tier
+ * capacity (30K TPM vs the primary's 8K), so a sustained 503 "overloaded"
+ * spike or rate-limit squeeze on the primary doesn't fail the whole run.
  */
 const FALLBACK_AFTER_ATTEMPT = 3;
+
+/**
+ * Groq admits a request only if input + requested output fit the model's
+ * tokens-per-minute budget (8K on the free tier for the gpt-oss models); an
+ * oversized single request is rejected outright, typically as a 413 "Request
+ * too large". Retrying the same request against the same model can never
+ * succeed, so this class of error skips straight to the fallback model
+ * (which has a 30K TPM budget) instead of burning attempts.
+ */
+function isOverBudgetError(message: string): boolean {
+  return /too large|request too large|413/i.test(message);
+}
 
 /** Pause helper for backing off between retries. */
 function sleep(ms: number): Promise<void> {
@@ -168,6 +181,7 @@ export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
 
   const baseUserPrompt = buildUserPrompt(bundle);
   let lastError = '';
+  let forceFallback = false;
 
   // PostSchema heals the clampable overshoots on its own. Retry only covers the
   // genuinely unrepairable misses (too-short body, too-few tags, malformed JSON)
@@ -180,9 +194,12 @@ export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
         : `${baseUserPrompt}\n\nYour previous response was rejected: ${lastError}\nReturn a corrected JSON object that satisfies every constraint exactly.`;
 
     // Once the primary model has failed a few times (typically a sustained
-    // 503 spike), fall back to the lighter, higher-capacity model.
+    // 503 spike) — or as soon as a request is rejected as over-budget for the
+    // primary's TPM cap — fall back to the higher-capacity model.
     const model =
-      attempt > FALLBACK_AFTER_ATTEMPT && LLM_FALLBACK_MODEL ? LLM_FALLBACK_MODEL : LLM_MODEL;
+      LLM_FALLBACK_MODEL && (forceFallback || attempt > FALLBACK_AFTER_ATTEMPT)
+        ? LLM_FALLBACK_MODEL
+        : LLM_MODEL;
 
     let content: string;
     try {
@@ -193,7 +210,11 @@ export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
       // capped at 30s) so we ride out short capacity spikes instead of burning
       // every attempt in a couple of seconds.
       lastError = err instanceof Error ? err.message : String(err);
-      if (attempt < MAX_GENERATION_ATTEMPTS) {
+      if (isOverBudgetError(lastError)) {
+        // Deterministic rejection, not a capacity blip: switch models now
+        // and skip the backoff — waiting can't shrink the request.
+        forceFallback = true;
+      } else if (attempt < MAX_GENERATION_ATTEMPTS) {
         await sleep(Math.min(30_000, 1000 * 2 ** attempt));
       }
       continue;
@@ -233,7 +254,10 @@ async function callLlm(key: string, userPrompt: string, model: string): Promise<
       body: JSON.stringify({
         model,
         temperature: 0.5,
-        max_tokens: 4096,
+        // Groq's free tier admits a request only if input + max_tokens fit the
+        // 8K TPM budget; with the trimmed research prompt (~3.5-4K tokens of
+        // input) this keeps a single request safely under the cap.
+        max_tokens: 3584,
         response_format: { type: 'json_object' },
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
@@ -279,18 +303,21 @@ function finalize(validated: z.infer<typeof PostSchema>, bundle: ResearchBundle)
 function buildUserPrompt(bundle: ResearchBundle): string {
   const { winner, articles, transcripts, related } = bundle;
 
+  // Excerpt caps are sized so the whole prompt lands around 3.5-4K tokens —
+  // together with max_tokens (3584) that keeps one request inside Groq's
+  // free-tier 8K TPM admission budget for the primary model.
   const articleBlock = articles
     .map(
       (a, i) => `### Source ${i + 1}: ${a.title}
 URL: ${a.url}
-${a.content.slice(0, 4000)}`
+${a.content.slice(0, 2400)}`
     )
     .join('\n\n');
 
   const transcriptBlock = transcripts.length
     ? '\n\n## Video transcripts\n' +
       transcripts
-        .map((t) => `### ${t.title}\n${t.text.slice(0, 3000)}`)
+        .map((t) => `### ${t.title}\n${t.text.slice(0, 1600)}`)
         .join('\n\n')
     : '';
 
