@@ -53,7 +53,7 @@ scraper UA in `src/lib/orchestrator/research.ts`
   (`content/.topic-log.json`) is the only piece of mutable state.
 - **Zod** validates the LLM's JSON output.
 - **LLM writer**: OpenAI-compatible endpoint; default **Groq**
-  (`llama-3.3-70b-versatile`, with `llama-3.1-8b-instant` as the in-run
+  (`openai/gpt-oss-120b`, with `openai/gpt-oss-20b` as the in-run
   fallback model on the same key). Groq replaced Gemini, whose free tier kept
   returning 503 "model overloaded" and failing the hourly run. Any
   OpenAI-compatible provider works via `site.config.ts`.

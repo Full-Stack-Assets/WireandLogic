@@ -55,10 +55,10 @@ export const siteConfig = {
   // 503 "model overloaded" and failing the hourly run.
   llm: {
     endpoint: 'https://api.groq.com/openai/v1/chat/completions',
-    model: 'llama-3.3-70b-versatile',
+    model: 'openai/gpt-oss-120b',
     // Automatic failover: if the primary Groq model is rate-limited or errors,
     // generate.ts retries against this smaller Groq model (same API key).
-    fallbackModel: 'llama-3.1-8b-instant',
+    fallbackModel: 'openai/gpt-oss-20b',
     apiKeyEnv: 'GROQ_API_KEY',
   },
 
