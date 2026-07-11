@@ -97,8 +97,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
       {/* Article header */}
       <header className="mb-12">
-        <div className="mb-4 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-muted">
-          <Link href={`/categories/${frontmatter.category}`} className="border border-accent px-2 py-0.5 text-accent hover:bg-accent hover:text-paper transition-colors">
+        <div className="mb-4 flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-[0.2em] text-muted">
+          <Link href={`/categories/${frontmatter.category}`} className="border border-accent-deep px-2 py-0.5 text-accent-deep hover:bg-accent-deep hover:text-paper transition-colors">
             {frontmatter.category}
           </Link>
           <span>{date}</span>
@@ -108,7 +108,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         <h1 className="font-display text-4xl sm:text-6xl font-black leading-[1.02] tracking-tight">
           {frontmatter.title}
         </h1>
-        <p className="mt-6 font-display text-xl sm:text-2xl font-normal leading-snug text-ink/70">
+        <p className="mt-6 text-xl leading-relaxed text-muted sm:text-2xl sm:leading-snug">
           {frontmatter.description}
         </p>
       </header>
@@ -161,13 +161,13 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
       {/* Sources */}
       {frontmatter.sources?.length > 0 && (
         <section className="mt-16 border-t-2 border-ink pt-8">
-          <div className="mb-4 font-display text-sm font-bold uppercase tracking-[0.3em] text-muted">
+          <div className="mb-4 font-mono text-xs font-semibold uppercase tracking-[0.3em] text-muted">
             Sources
           </div>
           <ol className="space-y-2 text-sm">
             {frontmatter.sources.map((s, i) => (
               <li key={i} className="flex gap-3">
-                <span className="font-mono text-accent">{String(i + 1).padStart(2, '0')}</span>
+                <span className="font-mono text-accent-deep">{String(i + 1).padStart(2, '0')}</span>
                 <a href={s.url} target="_blank" rel="noopener noreferrer" className="underline hover:text-accent break-all">
                   {s.title || s.url}
                 </a>
@@ -191,7 +191,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
       {/* Keep reading — internal links to related posts */}
       {related.length > 0 && (
         <section className="mt-16 border-t-2 border-ink pt-8">
-          <div className="mb-6 font-display text-sm font-bold uppercase tracking-[0.3em] text-muted">
+          <div className="mb-6 font-mono text-xs font-semibold uppercase tracking-[0.3em] text-muted">
             Keep reading
           </div>
           <ul className="space-y-6">

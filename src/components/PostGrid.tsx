@@ -29,16 +29,16 @@ export function LeadStory({ post, priority = false }: { post: Post; priority?: b
         </div>
       )}
       <div className="sm:col-span-2 flex flex-col justify-center">
-        <Link href={`/categories/${frontmatter.category}`} className="mb-3 inline-block self-start border border-accent px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.2em] text-accent hover:bg-accent hover:text-paper transition-colors">
+        <Link href={`/categories/${frontmatter.category}`} className="mb-3 inline-block self-start border border-accent-deep px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-accent-deep hover:bg-accent-deep hover:text-paper transition-colors">
           {frontmatter.category}
         </Link>
         <Link href={`/blog/${slug}`} className="group">
-          <h2 className="font-display text-3xl sm:text-4xl font-black leading-[1.05] tracking-tight group-hover:text-accent transition-colors">
+          <h2 className="font-display text-3xl sm:text-4xl font-black leading-[1.05] tracking-tight group-hover:text-accent-deep transition-colors">
             {frontmatter.title}
           </h2>
         </Link>
-        <p className="mt-4 text-lg leading-relaxed text-ink/75">{frontmatter.description}</p>
-        <div className="mt-5 text-xs uppercase tracking-widest text-muted">
+        <p className="mt-4 text-lg leading-relaxed text-muted">{frontmatter.description}</p>
+        <div className="mt-5 font-mono text-[11px] uppercase tracking-widest text-muted">
           {new Date(frontmatter.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
           {' · '} {readingTimeMin} min read
         </div>
@@ -50,31 +50,33 @@ export function LeadStory({ post, priority = false }: { post: Post; priority?: b
 export function PostCard({ post }: { post: Post }) {
   const { slug, frontmatter, readingTimeMin } = post;
   return (
-    <article className="group flex flex-col">
+    <article className="group flex flex-col overflow-hidden border border-rule bg-white transition-colors duration-200 hover:border-ink/40">
       {frontmatter.hero?.url && (
-        <Link href={`/blog/${slug}`} className="relative mb-4 block aspect-[16/10] overflow-hidden bg-ink/5">
+        <Link href={`/blog/${slug}`} className="relative block aspect-[16/10] overflow-hidden border-b border-rule bg-ink/5">
           <Image
             src={frontmatter.hero.url}
             alt={frontmatter.hero.alt}
             fill
             unoptimized
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         </Link>
       )}
-      <div className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-accent">
-        {frontmatter.category}
-      </div>
-      <Link href={`/blog/${slug}`}>
-        <h3 className="font-display text-xl font-semibold leading-tight group-hover:text-accent transition-colors">
-          {frontmatter.title}
-        </h3>
-      </Link>
-      <p className="mt-2 text-sm text-ink/70 line-clamp-2">{frontmatter.description}</p>
-      <div className="mt-3 text-[11px] uppercase tracking-widest text-muted">
-        {new Date(frontmatter.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-        {' · '} {readingTimeMin} min
+      <div className="flex flex-1 flex-col p-5">
+        <div className="mb-2 font-mono text-[10px] font-semibold uppercase tracking-[0.2em] text-accent-deep">
+          {frontmatter.category}
+        </div>
+        <Link href={`/blog/${slug}`}>
+          <h3 className="font-display text-xl font-bold leading-tight tracking-tight group-hover:text-accent-deep transition-colors">
+            {frontmatter.title}
+          </h3>
+        </Link>
+        <p className="mt-2 text-sm leading-relaxed text-muted line-clamp-2">{frontmatter.description}</p>
+        <div className="mt-auto pt-4 font-mono text-[10px] uppercase tracking-widest text-muted">
+          {new Date(frontmatter.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+          {' · '} {readingTimeMin} min
+        </div>
       </div>
     </article>
   );
