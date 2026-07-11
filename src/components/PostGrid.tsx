@@ -50,7 +50,7 @@ export function LeadStory({ post, priority = false }: { post: Post; priority?: b
 export function PostCard({ post }: { post: Post }) {
   const { slug, frontmatter, readingTimeMin } = post;
   return (
-    <article className="group flex flex-col overflow-hidden border border-rule bg-white transition-colors duration-200 hover:border-ink/40">
+    <article className="card-glow group flex flex-col overflow-hidden border border-rule bg-white">
       {frontmatter.hero?.url && (
         <Link href={`/blog/${slug}`} className="relative block aspect-[16/10] overflow-hidden border-b border-rule bg-ink/5">
           <Image

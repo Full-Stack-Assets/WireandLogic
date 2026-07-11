@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 type CalloutType = 'takeaway' | 'warning' | 'note';
 
 const CALLOUT_CONFIG: Record<CalloutType, { label: string; bg: string; border: string; accent: string }> = {
-  takeaway: { label: 'Takeaway', bg: 'bg-accent/[0.06]', border: 'border-accent', accent: 'text-accent-deep' },
+  takeaway: { label: 'Takeaway', bg: 'bg-gradient-to-r from-accent/[0.08] to-lime-bright/[0.05]', border: 'border-accent', accent: 'text-accent-deep' },
   warning:  { label: 'Watch out', bg: 'bg-amber-500/[0.07]', border: 'border-amber-600', accent: 'text-amber-700' },
   note:     { label: 'Note', bg: 'bg-ink/[0.03]', border: 'border-muted', accent: 'text-muted' },
 };

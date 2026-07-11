@@ -12,8 +12,8 @@ export function Masthead() {
         <div className="font-mono text-[11px] uppercase tracking-[0.3em] text-accent-deep">
           Vol. 1 · Issue {issue}
         </div>
-        <h1 className="mt-3 max-w-2xl font-display text-4xl font-black leading-[1.05] tracking-tight sm:text-6xl">
-          {siteConfig.name}<span className="text-accent">.</span>
+        <h1 className="mt-3 max-w-2xl font-display text-5xl font-black leading-[1.02] tracking-tight sm:text-7xl">
+          <span className="text-gradient">{siteConfig.name}</span><span className="text-accent">.</span>
         </h1>
         <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted">
           {siteConfig.description}
@@ -29,9 +29,9 @@ export function Masthead() {
 export function SectionRule({ label }: { label: string }) {
   return (
     <div className="flex items-center gap-4">
-      <div className="h-px flex-1 bg-rule" />
+      <div className="h-px flex-1 rule-gradient" style={{ transform: 'scaleX(-1)' }} />
       <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.3em] text-muted">{label}</span>
-      <div className="h-px flex-1 bg-rule" />
+      <div className="h-px flex-1 rule-gradient" />
     </div>
   );
 }

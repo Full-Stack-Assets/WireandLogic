@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Archivo, Inter, JetBrains_Mono } from 'next/font/google';
 import Link from 'next/link';
 import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/next';
@@ -9,6 +10,27 @@ import { AdSlot } from '@/components/AdSlot';
 import { ADSENSE_CLIENT, ADSENSE_SLOT_FOOTER } from '@/lib/ads';
 import { siteConfig } from '@/site.config';
 import './globals.css';
+
+// Fonts via next/font — self-hosted at build time, zero render-blocking requests.
+// Archivo (heavy grotesk) drives the editorial headline voice; Inter carries body
+// copy; JetBrains Mono handles the wire-label/terminal accents.
+const fontDisplay = Archivo({
+  subsets: ['latin'],
+  weight: ['600', '700', '800', '900'],
+  variable: '--font-display',
+  display: 'swap',
+});
+const fontBody = Inter({
+  subsets: ['latin'],
+  variable: '--font-body',
+  display: 'swap',
+});
+const fontMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-mono',
+  display: 'swap',
+});
 
 /** Short categories (AI, DIY) read better uppercased; longer ones title-cased. */
 function navLabel(c: string): string {
@@ -45,8 +67,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="relative">
+    <html lang="en" className={`${fontDisplay.variable} ${fontBody.variable} ${fontMono.variable}`}>
+      <body className="relative bg-circuit">
         {ADSENSE_CLIENT && (
           <Script
             async
@@ -78,7 +100,7 @@ function Header() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="group">
           <div className="font-display text-xl font-extrabold tracking-tight leading-none">
-            {brandLead ? `${brandLead} ` : ''}<span className="text-accent">{brandLast}</span>
+            {brandLead ? `${brandLead} ` : ''}<span className="text-gradient">{brandLast}</span>
           </div>
           <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
             {siteConfig.tagline}

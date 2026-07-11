@@ -7,9 +7,9 @@ import { SubscribeForm } from './SubscribeForm';
  */
 export function SubscribeCTA() {
   return (
-    <section className="mt-16 border-2 border-accent bg-accent/[0.04] p-8">
+    <section className="card-glow mt-16 border-2 border-accent bg-gradient-to-br from-accent/[0.06] via-transparent to-lime-bright/[0.06] p-8">
       <div className="font-display text-2xl font-black leading-tight tracking-tight">
-        Get the weekly dispatch
+        <span className="text-gradient">Get the weekly dispatch</span>
       </div>
       <p className="mt-2 max-w-xl text-sm leading-relaxed text-ink/70">
         The week&rsquo;s highest-signal tech and AI stories, synthesized into a five-minute

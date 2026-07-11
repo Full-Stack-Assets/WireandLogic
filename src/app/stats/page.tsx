@@ -3,6 +3,7 @@ import { listPosts } from '@/lib/posts';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import type { TopicLog } from '@/lib/orchestrator/types';
+import { siteConfig } from '@/site.config';
 
 export const revalidate = 300;
 export const metadata = { title: 'Stats' };
@@ -78,7 +79,7 @@ export default async function StatsPage() {
                   </Link>
                   <div className="flex-1 h-6 bg-ink/5 relative overflow-hidden">
                     <div
-                      className="absolute inset-y-0 left-0 bg-accent/80"
+                      className="absolute inset-y-0 left-0 bg-gradient-to-r from-accent-deep to-lime"
                       style={{ width: `${pct}%`, minWidth: '1rem' }}
                     />
                     <span className="absolute inset-y-0 right-2 flex items-center text-[11px] font-mono text-ink/60">
@@ -162,7 +163,7 @@ export default async function StatsPage() {
           href="/"
           className="inline-flex items-center gap-2 font-display font-semibold text-accent hover:gap-3 transition-all"
         >
-          ← Back to Wire and Logic
+          ← Back to {siteConfig.name}
         </Link>
       </div>
     </div>
@@ -171,8 +172,8 @@ export default async function StatsPage() {
 
 function Stat({ label, value }: { label: string; value: number | string }) {
   return (
-    <div className="border border-ink/20 p-5">
-      <div className="font-display text-3xl font-black text-accent">{value}</div>
+    <div className="card-glow border border-ink/20 bg-white/70 p-5">
+      <div className="font-display text-3xl font-black text-gradient">{value}</div>
       <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-muted">
         {label}
       </div>

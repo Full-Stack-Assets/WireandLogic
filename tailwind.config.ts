@@ -8,7 +8,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        display: ['var(--font-display)', 'serif'],
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
         body: ['var(--font-body)', 'sans-serif'],
         mono: ['var(--font-mono)', 'monospace'],
       },
@@ -18,6 +18,8 @@ const config: Config = {
         paper: '#fafafa',      // zinc-50 — page background
         accent: '#059669',     // emerald-600 — the single accent
         'accent-deep': '#047857', // emerald-700 — links / hover (AA on paper)
+        lime: '#65a30d',          // lime-600 — gradient partner (AA on paper)
+        'lime-bright': '#84cc16', // lime-500 — glows/gradient highlights only
         muted: '#52525b',      // zinc-600 — metadata (AA on paper)
         rule: '#e4e4e7',       // zinc-200 — hairline borders
         // Intermediate zinc shade used by the VaporLoop demo (/vaporloop)
