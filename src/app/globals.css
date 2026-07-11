@@ -2,123 +2,213 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
-
+/* Fonts are loaded via next/font in src/app/layout.tsx, which sets
+   --font-display / --font-body / --font-mono on <html>. */
 :root {
-  --font-display: 'Fraunces', 'Times New Roman', serif;
-  --font-body: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --c-ink: #18181b;      /* zinc-900 */
+  --c-body: #27272a;     /* zinc-800 */
+  --c-muted: #52525b;    /* zinc-600 — AA on paper */
+  --c-paper: #fafafa;    /* zinc-50 */
+  --c-line: #e4e4e7;     /* zinc-200 */
+  --c-accent: #059669;   /* emerald-600 */
+  --c-accent-deep: #047857; /* emerald-700 */
+  --c-lime: #65a30d;     /* lime-600 — gradient partner (AA on paper) */
+  --c-lime-bright: #84cc16; /* lime-500 — glow/gradient highlights only */
+  /* RGB triples of the accents above, for alpha derivations via
+     rgb(var(--c-accent-rgb) / a) — keep in sync with their hex twins so no
+     rule ever hard-codes the accent's channel values. */
+  --c-accent-rgb: 5 150 105;      /* = --c-accent */
+  --c-lime-bright-rgb: 132 204 22; /* = --c-lime-bright */
 }
 
 html {
-  background: #f6f3ec;
-  color: #0a0a0a;
-  font-family: var(--font-body);
+  background: var(--c-paper);
+  color: var(--c-ink);
+  font-family: var(--font-body), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 body {
-  background-image:
-    radial-gradient(at 0% 0%, rgba(255, 91, 31, 0.04) 0%, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(10, 10, 10, 0.03) 0%, transparent 50%);
   min-height: 100vh;
 }
 
-/* Subtle paper grain */
-body::before {
+::selection {
+  background: var(--c-accent);
+  color: var(--c-paper);
+}
+
+/* Display utility — tight, high-contrast grotesk headlines */
+.font-display {
+  font-family: var(--font-display), system-ui, sans-serif;
+  letter-spacing: -0.03em;
+}
+
+/* ── Circuit-trace background motif ────────────────────────────────
+   Layered pure-CSS wire grid: fine trace lines + solder-node dots,
+   with an emerald→lime glow bleeding in from the top and a soft
+   vignette. Fixed layer, very low contrast — texture, not noise. */
+.bg-circuit {
+  position: relative;
+}
+.bg-circuit::before {
   content: '';
   position: fixed;
   inset: 0;
+  z-index: 0;
   pointer-events: none;
-  z-index: 1;
-  opacity: 0.35;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode: multiply;
+  background:
+    /* solder nodes at grid intersections */
+    radial-gradient(circle 1.5px at 24px 24px, rgb(var(--c-accent-rgb) / 0.16) 99%, transparent 100%),
+    /* fine wire-trace grid */
+    linear-gradient(to right, rgba(24, 24, 27, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(24, 24, 27, 0.045) 1px, transparent 1px);
+  background-size: 48px 48px, 48px 48px, 48px 48px;
+}
+.bg-circuit::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    /* hero glow — emerald from top-left, lime from top-right */
+    radial-gradient(60rem 32rem at 12% -8%, rgb(var(--c-accent-rgb) / 0.10), transparent 65%),
+    radial-gradient(48rem 26rem at 88% -6%, rgb(var(--c-lime-bright-rgb) / 0.09), transparent 60%),
+    /* bottom vignette to seat the footer */
+    radial-gradient(80rem 40rem at 50% 115%, rgba(24, 24, 27, 0.05), transparent 70%);
 }
 
-::selection {
-  background: #ff5b1f;
-  color: #f6f3ec;
+/* ── Accent gradients & glows ─────────────────────────────────── */
+.text-gradient {
+  background-image: linear-gradient(100deg, var(--c-accent-deep) 0%, var(--c-accent) 45%, var(--c-lime) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.rule-gradient {
+  background-image: linear-gradient(90deg, var(--c-accent), var(--c-lime-bright), transparent);
+}
+/* Terminal-green glow on hover — for cards and interactive panels */
+.card-glow {
+  transition: border-color 200ms ease, box-shadow 250ms ease, transform 250ms ease;
+}
+.card-glow:hover {
+  border-color: rgb(var(--c-accent-rgb) / 0.55);
+  box-shadow:
+    0 0 0 1px rgb(var(--c-accent-rgb) / 0.25),
+    0 4px 24px -6px rgb(var(--c-accent-rgb) / 0.28),
+    0 0 40px -12px rgb(var(--c-lime-bright-rgb) / 0.30);
+  transform: translateY(-2px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-glow, .card-glow:hover { transform: none; transition: none; }
 }
 
-/* Display serif utility */
-.font-display {
-  font-family: var(--font-display);
-  font-optical-sizing: auto;
-  letter-spacing: -0.02em;
-}
-
-/* Prose overrides for MDX body */
+/* ── Editorial prose (post bodies) ─────────────────────────────── */
 .prose-editorial {
-  font-size: 1.125rem;
-  line-height: 1.7;
-  color: #1a1a1a;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--c-body);
 }
 .prose-editorial p {
   margin: 1.25em 0;
 }
+.prose-editorial strong {
+  color: var(--c-ink);
+}
 .prose-editorial h2 {
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 2rem;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  font-weight: 800;
+  font-size: 1.6rem;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
   margin-top: 2.75em;
-  margin-bottom: 0.6em;
-  color: #0a0a0a;
+  margin-bottom: 0.75em;
+  padding-top: 1.25em;
+  border-top: 1px solid var(--c-line);
+  color: var(--c-ink);
 }
 .prose-editorial h2::before {
-  content: '§';
-  color: #ff5b1f;
-  margin-right: 0.4em;
-  font-weight: 900;
+  content: '//';
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.8em;
+  color: var(--c-accent);
+  margin-right: 0.5em;
+  letter-spacing: 0;
 }
 .prose-editorial h3 {
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.4rem;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
   margin-top: 2em;
+  color: var(--c-ink);
 }
 .prose-editorial a {
-  color: #ff5b1f;
+  color: var(--c-accent-deep);
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;
+  text-decoration-color: rgb(var(--c-accent-rgb) / 0.4);
+  transition: text-decoration-color 120ms ease;
 }
 .prose-editorial a:hover {
+  text-decoration-color: var(--c-accent);
   text-decoration-thickness: 2px;
 }
 .prose-editorial code {
   font-family: var(--font-mono);
-  font-size: 0.9em;
-  background: rgba(10, 10, 10, 0.06);
-  padding: 0.15em 0.4em;
-  border-radius: 2px;
+  font-size: 0.875em;
+  color: var(--c-ink);
+  background: rgba(24, 24, 27, 0.06);
+  border: 1px solid var(--c-line);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
 }
 .prose-editorial pre {
-  background: #0a0a0a;
-  color: #f6f3ec;
-  padding: 1.25rem;
-  border-radius: 2px;
+  background: #09090b;           /* zinc-950 */
+  color: #e4e4e7;                /* zinc-200 */
+  border: 1px solid #27272a;     /* zinc-800 */
+  padding: 1.25rem 1.5rem;
+  border-radius: 6px;
   overflow-x: auto;
-  font-size: 0.9rem;
-  line-height: 1.5;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  margin: 1.75em 0;
+}
+.prose-editorial pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
 }
 .prose-editorial blockquote {
-  border-left: 3px solid #ff5b1f;
+  border-left: 2px solid var(--c-accent);
   padding-left: 1.25rem;
-  font-style: italic;
-  color: #3a3a3a;
+  color: var(--c-muted);
   margin: 1.75em 0;
 }
 .prose-editorial ul, .prose-editorial ol {
   padding-left: 1.5rem;
   margin: 1em 0;
 }
+.prose-editorial ol li::marker {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  color: var(--c-accent-deep);
+}
 .prose-editorial ul li { list-style: none; position: relative; padding-left: 1rem; }
 .prose-editorial ul li::before {
   content: '';
-  position: absolute; left: 0; top: 0.7em;
-  width: 0.5rem; height: 1px; background: #ff5b1f;
+  position: absolute; left: 0; top: 0.75em;
+  width: 0.5rem; height: 2px; background: var(--c-accent);
+}
+.prose-editorial hr {
+  border: 0;
+  border-top: 1px solid var(--c-line);
+  margin: 2.5em 0;
 }

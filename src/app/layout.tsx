@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { Archivo, Inter, JetBrains_Mono } from 'next/font/google';
 import Link from 'next/link';
 import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/next';
@@ -9,6 +10,27 @@ import { AdSlot } from '@/components/AdSlot';
 import { ADSENSE_CLIENT, ADSENSE_SLOT_FOOTER } from '@/lib/ads';
 import { siteConfig } from '@/site.config';
 import './globals.css';
+
+// Fonts via next/font — self-hosted at build time, zero render-blocking requests.
+// Archivo (heavy grotesk) drives the editorial headline voice; Inter carries body
+// copy; JetBrains Mono handles the wire-label/terminal accents.
+const fontDisplay = Archivo({
+  subsets: ['latin'],
+  weight: ['600', '700', '800', '900'],
+  variable: '--font-display',
+  display: 'swap',
+});
+const fontBody = Inter({
+  subsets: ['latin'],
+  variable: '--font-body',
+  display: 'swap',
+});
+const fontMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-mono',
+  display: 'swap',
+});
 
 /** Short categories (AI, DIY) read better uppercased; longer ones title-cased. */
 function navLabel(c: string): string {
@@ -45,8 +67,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="relative">
+    <html lang="en" className={`${fontDisplay.variable} ${fontBody.variable} ${fontMono.variable}`}>
+      <body className="relative bg-circuit">
         {ADSENSE_CLIENT && (
           <Script
             async
@@ -74,25 +96,25 @@ function Header() {
   const brandLast = words.pop();
   const brandLead = words.join(' ');
   return (
-    <header className="relative z-20 border-b border-ink/20">
-      <div className="mx-auto flex max-w-6xl items-end justify-between px-6 py-6">
+    <header className="sticky top-0 z-30 border-b border-rule bg-paper/80 backdrop-blur-md">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="group">
-          <div className="font-display text-3xl font-black tracking-tight leading-none">
-            {brandLead ? `${brandLead} ` : ''}<span className="text-accent">{brandLast}</span>
+          <div className="font-display text-xl font-extrabold tracking-tight leading-none">
+            {brandLead ? `${brandLead} ` : ''}<span className="text-gradient">{brandLast}</span>
           </div>
-          <div className="mt-1 text-[10px] uppercase tracking-[0.2em] text-muted">
+          <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
             {siteConfig.tagline}
           </div>
         </Link>
-        <nav className="hidden sm:flex items-center gap-6 text-sm font-medium">
-          <Link href="/" className="hover:text-accent transition-colors">Latest</Link>
+        <nav className="hidden sm:flex items-center gap-5 font-mono text-[11px] font-medium uppercase tracking-[0.15em]">
+          <Link href="/" className="text-muted hover:text-accent-deep transition-colors">Latest</Link>
           {siteConfig.navCategories.map((c) => (
-            <Link key={c} href={`/categories/${c}`} className="hover:text-accent transition-colors">{navLabel(c)}</Link>
+            <Link key={c} href={`/categories/${c}`} className="text-muted hover:text-accent-deep transition-colors">{navLabel(c)}</Link>
           ))}
-          <Link href="/about" className="hover:text-accent transition-colors">About</Link>
-          <Link href="/stats" className="hover:text-accent transition-colors">Stats</Link>
-          <Link href="/sponsor" className="hover:text-accent transition-colors">Sponsor</Link>
-          <a href="/feed.xml" className="hover:text-accent transition-colors" title="RSS Feed">
+          <Link href="/about" className="text-muted hover:text-accent-deep transition-colors">About</Link>
+          <Link href="/stats" className="text-muted hover:text-accent-deep transition-colors">Stats</Link>
+          <Link href="/sponsor" className="text-muted hover:text-accent-deep transition-colors">Sponsor</Link>
+          <a href="/feed.xml" className="text-muted hover:text-accent-deep transition-colors" title="RSS Feed">
             <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><circle cx="6.18" cy="17.82" r="2.18"/><path d="M4 4.44v2.83c7.03 0 12.73 5.7 12.73 12.73h2.83c0-8.59-6.97-15.56-15.56-15.56zm0 5.66v2.83c3.9 0 7.07 3.17 7.07 7.07h2.83c0-5.47-4.43-9.9-9.9-9.9z"/></svg>
           </a>
         </nav>
@@ -103,10 +125,10 @@ function Header() {
 
 function Footer() {
   return (
-    <footer className="relative z-10 mt-32 border-t border-ink/20">
-      <div className="mx-auto max-w-6xl px-6 py-10 text-sm text-muted">
+    <footer className="relative z-10 mt-32 border-t border-rule bg-white">
+      <div className="mx-auto max-w-6xl px-6 py-12 text-sm text-muted">
         <AdSlot slot={ADSENSE_SLOT_FOOTER} format="auto" className="mb-8 block" />
-        <div className="mb-8 flex flex-col gap-4 border-b border-ink/15 pb-8 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mb-8 flex flex-col gap-4 border-b border-rule pb-8 sm:flex-row sm:items-center sm:justify-between">
           <div className="max-w-md">
             <div className="font-display text-base font-semibold text-ink">Get the weekly dispatch</div>
             <p className="mt-1">The week’s highest-signal stories, synthesized. No spam.</p>
@@ -118,15 +140,15 @@ function Footer() {
             <span className="font-display text-base font-semibold text-ink">{siteConfig.name}</span>
             {' '}— {siteConfig.footerNote}
           </div>
-          <div className="text-xs uppercase tracking-widest">
+          <div className="font-mono text-[11px] uppercase tracking-widest">
             © {new Date().getFullYear()} — No humans were harmed in the making of this blog.
           </div>
         </div>
-        <nav className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-xs uppercase tracking-widest">
-          <Link href="/about" className="hover:text-accent transition-colors">About</Link>
-          <Link href="/sponsor" className="hover:text-accent transition-colors">Sponsor</Link>
-          <Link href="/engine" className="hover:text-accent transition-colors">Get the engine</Link>
-          <a href="/feed.xml" className="hover:text-accent transition-colors">RSS</a>
+        <nav className="mt-6 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[11px] uppercase tracking-widest">
+          <Link href="/about" className="hover:text-accent-deep transition-colors">About</Link>
+          <Link href="/sponsor" className="hover:text-accent-deep transition-colors">Sponsor</Link>
+          <Link href="/engine" className="hover:text-accent-deep transition-colors">Get the engine</Link>
+          <a href="/feed.xml" className="hover:text-accent-deep transition-colors">RSS</a>
         </nav>
         <p className="mt-6 max-w-3xl text-xs leading-relaxed text-muted/80">
           Editorial standards: {siteConfig.name}&rsquo;s articles are researched and drafted with

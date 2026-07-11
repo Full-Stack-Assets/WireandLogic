@@ -48,29 +48,22 @@ export const siteConfig = {
   // AdSense publisher id (ca-pub-...). Leave '' to keep the site ad-free.
   adsenseClient: 'ca-pub-4655488107179825',
 
-  // ── Engine: the writer LLM (any OpenAI-compatible chat endpoint) ──
-  // Swap providers by changing these three lines. `apiKeyEnv` names the env var
-  // holding the key, so different sites can use different providers/quotas.
+  // ── Engine: writer LLM (Groq, OpenAI-compatible) ──────────────
+  // Any OpenAI-compatible chat endpoint works — swap providers by changing
+  // `endpoint`/`model`/`apiKeyEnv` (e.g. OpenRouter, Gemini's OpenAI shim).
+  // Groq replaced Gemini as the default: Gemini's free tier kept returning
+  // 503 "model overloaded" and failing the hourly run.
   llm: {
-    // Google Gemini free tier (~1,500 requests/day), OpenAI-compatible endpoint.
-    // The key (set as the GEMINI_API_KEY secret) is sent as a Bearer token.
-    endpoint: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
-    // Pinned to a stable GA model. The `gemini-flash-latest` alias was
-    // returning 503 "model is overloaded" (it points at the newest, busiest
-    // model), and gemini-2.0-flash was shut down on 2026-06-01. gemini-2.5-flash
-    // is GA with steadier free-tier capacity.
-    model: 'gemini-2.5-flash',
-    // Fallback used when the primary keeps returning 503 "overloaded": a lighter
-    // GA model with much more free-tier capacity, so transient spikes on the
-    // primary don't fail the run.
-    fallbackModel: 'gemini-2.5-flash-lite',
-    apiKeyEnv: 'GEMINI_API_KEY',
-    // Groq (fast, free; 12K tokens/min):
-    //   endpoint: 'https://api.groq.com/openai/v1/chat/completions',
-    //   model: 'llama-3.3-70b-versatile',  apiKeyEnv: 'GROQ_API_KEY'
-    // OpenRouter (one key, many free models):
-    //   endpoint: 'https://openrouter.ai/api/v1/chat/completions',
-    //   model: 'meta-llama/llama-3.3-70b-instruct:free',  apiKeyEnv: 'OPENROUTER_API_KEY'
+    endpoint: 'https://api.groq.com/openai/v1/chat/completions',
+    model: 'openai/gpt-oss-120b',
+    // Automatic failover (same API key): generate.ts switches to this model
+    // after FALLBACK_AFTER_ATTEMPT failed attempts on the primary — whatever
+    // the failure type — and immediately when a request is rejected as too
+    // large for the primary's budget. The fallback exists to dodge the
+    // primary's 8K tokens-per-minute free-tier ceiling and transient outages:
+    // Llama 4 Scout's free tier allows 30K TPM, so failover has real headroom.
+    fallbackModel: 'meta-llama/llama-4-scout-17b-16e-instruct',
+    apiKeyEnv: 'GROQ_API_KEY',
   },
 
   // ── Engine: hero images ───────────────────────────────────────

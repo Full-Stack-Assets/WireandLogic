@@ -35,7 +35,7 @@ export default async function HomePage() {
       {gridItems.length > 0 && (
         <div className="mt-20">
           <SectionRule label="More dispatches" />
-          <div className="mt-8 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {gridItems.map((p) => (
               <PostCard key={p.slug} post={p} />
             ))}
