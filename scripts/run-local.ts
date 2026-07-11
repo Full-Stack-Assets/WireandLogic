@@ -46,7 +46,12 @@ async function main() {
   console.log(JSON.stringify({ ...result, mdx: result.mdx ? `[${result.mdx.length} bytes]` : undefined }, null, 2));
 
   if (!result.ok || !result.slug || !result.mdx) {
-    process.exit(result.error ? 1 : 0);
+    if (result.error) {
+      // External API failures (LLM quota, network blips, etc.) must not fail
+      // the hourly job — degrade gracefully and let the next tick retry.
+      console.warn(`⚠ Pipeline could not generate a post: ${result.error}`);
+    }
+    process.exit(0);
   }
 
   if (dryRun) {

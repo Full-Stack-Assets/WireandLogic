@@ -188,11 +188,17 @@ export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
     try {
       content = await callLlm(key, userPrompt, model);
     } catch (err) {
+      lastError = err instanceof Error ? err.message : String(err);
+      // Non-retryable: billing/quota exhaustion (429 RESOURCE_EXHAUSTED). No
+      // amount of retrying will refill credits — bail immediately so we don't
+      // burn the full retry budget on a permanent state.
+      if (lastError.includes('RESOURCE_EXHAUSTED') || lastError.includes('credits are depleted')) {
+        break;
+      }
       // Rate limit / 5xx (e.g. Gemini 503 "model overloaded") / network blip —
       // worth another attempt. Back off with exponential delay (2s, 4s, 8s, 16s,
       // capped at 30s) so we ride out short capacity spikes instead of burning
       // every attempt in a couple of seconds.
-      lastError = err instanceof Error ? err.message : String(err);
       if (attempt < MAX_GENERATION_ATTEMPTS) {
         await sleep(Math.min(30_000, 1000 * 2 ** attempt));
       }
