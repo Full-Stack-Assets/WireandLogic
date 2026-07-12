@@ -1,0 +1,65 @@
+---
+title: "Why LLM hype hurts developers and how open-source models can deliver real value"
+description: "Geohot argues that hype around frontier LLMs obscures practical benefits of open-source models, urging developers to focus on real productivity gains."
+date: "2026-07-12T22:01:08.012Z"
+category: "opinion"
+tags: 
+  - "llms"
+  - "open-source"
+  - "developer-productivity"
+  - "ai-hype"
+  - "software-engineering"
+hero: 
+  url: "https://live.staticflickr.com/65535/53004532375_d00b97ddbd_b.jpg"
+  alt: "MosaicML to merge with Databricks"
+  credit: "jurvetson"
+  creditUrl: "https://www.flickr.com/photos/44124348109@N01/53004532375"
+sources: 
+  - title: "I love LLMs, I hate hype"
+    url: "https://geohot.github.io//blog/jekyll/update/2026/07/12/i-love-llms.html"
+  - title: "I love LLMs, I hate hype"
+    url: "https://geohot.github.io//blog/jekyll/update/2026/07/12/i-love-llms.html"
+  - title: "I love LLMs, I hate hype | Hacker News"
+    url: "https://news.ycombinator.com/item?id=48883343"
+---
+
+Geohot’s latest blog post celebrates the rapid progress of large language models while calling out the noisy hype that surrounds them. He describes setting up a Linux box with the open‑source GLM‑5.2 model and seeing immediate productivity gains. At the same time he condemns narratives that push developers toward expensive frontier services. The conversation on Hacker News adds market data about subscription pricing and the limits of what users are willing to pay.
+
+<Callout type="takeaway">Open‑source LLMs already meet most developer needs, so the hype‑driven premium on frontier models is largely unjustified.</Callout>
+
+## What happened
+
+In his post, Geohot notes his excitement for new LLMs, self‑driving cars, video generation, and coding agents. He reports that installing tmux with a Geohot‑style configuration on a local GLM‑5.2 box worked out of the box, which he describes as evidence that the “Year of the Linux Desktop” is arriving. He criticizes two strands of hype: the pessimistic narrative that developers are falling behind, and the straw‑man claim that LLMs will instantly dominate every industry.
+
+A parallel discussion on Hacker News highlights the economics of frontier models. Subscription plans range from $100 to $200 per month for limited token bundles, while OpenAI offers a $20 plan that competes on capability. Commenters argue that few individuals or small teams would justify spending $1,000 or $10,000 per month, and that open‑source alternatives like GLM‑5.2 are “good enough” for most workloads.
+
+## Why it matters
+
+If developers default to costly frontier services, a significant portion of the software ecosystem will be locked behind recurring fees, limiting experimentation and widening the gap between well‑funded companies and independent creators. Open‑source LLMs democratize access, enabling smaller teams to build AI‑augmented tools without prohibitive budgets. The market’s resistance to extreme pricing also signals that the business model for frontier labs may need to adapt, potentially reshaping investment flows in AI.
+
+<ProsCons>
+  <Pros>
+    <li>Reduces direct cost for individuals and small teams.</li>
+    <li>Allows customization to specific development workflows.</li>
+    <li>Encourages community‑driven innovation and rapid iteration.</li>
+  </Pros>
+  <Cons>
+    <li>May lag behind the latest benchmark performance of frontier models.</li>
+    <li>Limited official support and SLA guarantees.</li>
+    <li>Reliance on community maintenance can introduce stability risks.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+
+Start by defining the concrete task—code completion, documentation, or data extraction—and benchmark an open‑source model against the frontier alternative on that workload. Factor in total cost of ownership, including compute, maintenance, and potential licensing fees. If the open model meets a predefined accuracy threshold, adopt it and allocate saved budget to other engineering priorities. Re‑evaluate periodically as both open and closed models evolve.
+
+<Callout type="warning">Do not assume open‑source models will automatically replace all frontier services; some enterprise use cases still require the scale and reliability of commercial APIs.</Callout>
+
+## FAQ
+
+<FAQ>
+  <Question q="Should I replace my current paid LLM subscription with an open‑source model?">Evaluate the specific features you rely on, run side‑by‑side benchmarks, and consider the total cost; many developers find open models sufficient for day‑to‑day coding assistance.</Question>
+  <Question q="How do token‑based pricing plans affect small development teams?">Token caps translate into predictable monthly expenses, but high per‑token rates can quickly exceed budgets, making flat‑rate open‑source deployments more economical.</Question>
+  <Question q="What are the risks of ignoring AI hype entirely?">Dismissal can lead to missed productivity gains and slower adoption of useful tooling, so a balanced approach that tests both open and frontier options is advisable.</Question>
+</FAQ>

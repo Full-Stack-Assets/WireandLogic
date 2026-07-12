@@ -1665,6 +1665,13 @@
       "url": "https://systima.ai/blog/claude-code-vs-opencode-token-overhead",
       "publishedAt": "2026-07-12T20:59:22.806Z",
       "signature": "3ceb29b1c3145514"
+    },
+    {
+      "slug": "why-llm-hype-hurts-developers-open-source-value",
+      "title": "I love LLMs, I hate hype",
+      "url": "https://geohot.github.io//blog/jekyll/update/2026/07/12/i-love-llms.html",
+      "publishedAt": "2026-07-12T22:01:08.013Z",
+      "signature": "4cd58dbdbe523f11"
     }
   ]
 }
