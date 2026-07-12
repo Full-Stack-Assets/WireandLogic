@@ -58,8 +58,6 @@ Choosing the wrong mechanism can inflate operational spend, increase latency, or
 ## FAQ
 <FAQ>
   <Question q="When should I choose polling over webhooks?">Polling is appropriate when you cannot expose a public endpoint, when event frequency is low, or when you need deterministic control over request timing.</Question>
-  <Question q="How can I secure a webhook endpoint?">Use HTTPS, validate signatures or secret tokens provided by the sender, restrict IP ranges if possible, and store secrets securely.
-  </Question>
-  <Question q="What fallback strategies work if a webhook fails?">Implement retry queues with exponential back‑off, log failed deliveries, and optionally run a low‑frequency poll as a safety net to catch missed events.
-  </Question>
+  <Question q="How can I secure a webhook endpoint?">Use HTTPS, validate signatures or secret tokens provided by the sender, restrict IP ranges if possible, and store secrets securely.</Question>
+  <Question q="What fallback strategies work if a webhook fails?">Implement retry queues with exponential back‑off, log failed deliveries, and optionally run a low‑frequency poll as a safety net to catch missed events.</Question>
 </FAQ>
