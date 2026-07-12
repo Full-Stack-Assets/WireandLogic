@@ -57,10 +57,7 @@ Read‑heavy applications benefit directly from faster lookups, lower CPU usage,
 
 ## FAQ
 <FAQ>
-  <Question q="When should I add a new index?">Add an index when a query consistently scans a large portion of a table and the indexed column(s) are used in filters, joins, or sorting, and you have verified the benefit with an EXPLAIN plan and benchmark.
-</Question>
-  <Question q="How many indexes are too many for a table?">There is no fixed limit, but if a table approaches dozens of indexes—especially on write‑heavy workloads—the cumulative maintenance cost often outweighs read gains; monitor write latency and prune indexes that show low usage.
-</Question>
-  <Question q="Can I rely on the database’s automatic index recommendations?">Automatic suggestions can be a useful starting point, but they may overlook application‑specific query patterns or add redundant indexes; always validate recommendations against real traffic and performance metrics.
-</Question>
+  <Question q="When should I add a new index?">Add an index when a query consistently scans a large portion of a table and the indexed column(s) are used in filters, joins, or sorting, and you have verified the benefit with an EXPLAIN plan and benchmark.</Question>
+  <Question q="How many indexes are too many for a table?">There is no fixed limit, but if a table approaches dozens of indexes—especially on write‑heavy workloads—the cumulative maintenance cost often outweighs read gains; monitor write latency and prune indexes that show low usage.</Question>
+  <Question q="Can I rely on the database’s automatic index recommendations?">Automatic suggestions can be a useful starting point, but they may overlook application‑specific query patterns or add redundant indexes; always validate recommendations against real traffic and performance metrics.</Question>
 </FAQ>

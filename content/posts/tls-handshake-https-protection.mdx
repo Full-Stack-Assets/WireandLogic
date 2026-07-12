@@ -24,7 +24,7 @@ sources:
 ---
 
 When you type https:// in a browser, a series of network protocols spring into action before any page appears. First TCP establishes a reliable connection, then TLS negotiates an encrypted tunnel, and finally HTTP runs inside that tunnel. Understanding each step reveals what HTTPS truly protects and where its guarantees stop. For developers, the handshake details affect performance, security posture, and debugging strategies.
-<Callout type=\"takeaway\">The TLS handshake creates an encrypted, authenticated tunnel, but HTTPS only secures data while it travels over the network.\</Callout>
+<Callout type="takeaway">The TLS handshake creates an encrypted, authenticated tunnel, but HTTPS only secures data while it travels over the network.</Callout>
 ## What happened
 The client begins by completing TCP’s three‑way handshake, creating a bidirectional, ordered channel that carries raw bytes without encryption.
 Over this channel the TLS handshake starts. The client sends a ClientHello listing supported TLS versions and cipher suites along with a random nonce. The server replies with ServerHello choosing the protocol version and cipher suite, then sends its X.509 certificate containing a public key signed by a trusted CA.
@@ -45,10 +45,10 @@ The handshake guarantees confidentiality (the shared secret encrypts traffic), i
 </ProsCons>
 ## How to think about it
 Treat the TLS handshake as a baseline security layer, not a silver bullet. Verify certificates against up‑to‑date trust stores, enforce TLS 1.2 or higher, and prefer cipher suites with forward secrecy. Enable HTTP Strict Transport Security (HSTS) to force browsers to use HTTPS. For highly sensitive payloads, add end‑to‑end encryption at the application level so that data remains protected even if the server is compromised.
-<Callout type=\"warning\">Do not assume HTTPS protects data stored on the server or protects against client‑side malware; it only secures the transport channel.\</Callout>
+<Callout type="warning">Do not assume HTTPS protects data stored on the server or protects against client‑side malware; it only secures the transport channel.</Callout>
 ## FAQ
 <FAQ>
-  <Question q=\"Does HTTPS encrypt the entire request and response?\">Yes. Once the TLS handshake completes, all HTTP headers and body are wrapped in encrypted TLS records, so the network sees only ciphertext.</Question>
-  <Question q=\"Which handshake message provides server authentication?\">The server’s Certificate message (and any subsequent ServerKeyExchange signatures) proves its identity, as long as the client validates the CA chain.</Question>
-  <Question q=\"Can a TLS handshake be downgraded or bypassed?\">Modern browsers reject downgrade attempts and require at least TLS 1.2, but misconfigured servers or outdated clients can still fall back to weaker versions, exposing the connection to attacks.</Question>
+  <Question q="Does HTTPS encrypt the entire request and response?">Yes. Once the TLS handshake completes, all HTTP headers and body are wrapped in encrypted TLS records, so the network sees only ciphertext.</Question>
+  <Question q="Which handshake message provides server authentication?">The server’s Certificate message (and any subsequent ServerKeyExchange signatures) proves its identity, as long as the client validates the CA chain.</Question>
+  <Question q="Can a TLS handshake be downgraded or bypassed?">Modern browsers reject downgrade attempts and require at least TLS 1.2, but misconfigured servers or outdated clients can still fall back to weaker versions, exposing the connection to attacks.</Question>
 </FAQ>
