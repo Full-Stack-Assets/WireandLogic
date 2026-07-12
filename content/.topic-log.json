@@ -1658,6 +1658,13 @@
       "url": "https://www.economist.com/leaders/2026/07/09/a-no-brainer-for-protecting-your-brain",
       "publishedAt": "2026-07-12T19:15:12.365Z",
       "signature": "ac954af9b81279f4"
+    },
+    {
+      "slug": "claude-code-token-overhead-vs-opencode",
+      "title": "Claude Code sends 33k tokens before reading the prompt; OpenCode sends 7k",
+      "url": "https://systima.ai/blog/claude-code-vs-opencode-token-overhead",
+      "publishedAt": "2026-07-12T20:59:22.806Z",
+      "signature": "3ceb29b1c3145514"
     }
   ]
 }

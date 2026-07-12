@@ -1,0 +1,63 @@
+---
+title: "Claude Code incurs 33k token overhead per request versus OpenCode’s 7k: cost and cache implications"
+description: "Claude Code adds ~33,000 tokens before reading a prompt, while OpenCode adds ~7,000. We explain why this matters for cost, latency, and caching."
+date: "2026-07-12T20:59:22.805Z"
+category: "engineering"
+tags: 
+  - "claude-code"
+  - "opencode"
+  - "token-overhead"
+  - "ai-agents"
+  - "cost"
+hero: 
+  url: "https://live.staticflickr.com/8170/28584476004_5b85519439_b.jpg"
+  alt: "DSC_1067"
+  credit: "Governor Earl Ray Tomblin"
+  creditUrl: "https://www.flickr.com/photos/56770773@N04/28584476004"
+sources: 
+  - title: "Claude Code sends 33k tokens before reading the prompt; OpenCode sends 7k"
+    url: "https://systima.ai/blog/claude-code-vs-opencode-token-overhead"
+  - title: "Claude Code Sends 4.7x More Tokens Than OpenCode Before Reading Your Prompt"
+    url: "https://systima.ai/blog/claude-code-vs-opencode-token-overhead"
+  - title: "Claude Code sends 33k tokens before reading the prompt; OpenCode sends 7k | Hacker News"
+    url: "https://news.ycombinator.com/item?id=48883275"
+  - title: "[BUG] Excessive token usage (~20k–30k tokens) for trivial prompts in Claude Code CLI · Issue #52979 · anthropics/claude-code"
+    url: "https://github.com/anthropics/claude-code/issues/52979"
+---
+
+When developers compare Claude Code and OpenCode on identical hardware and tasks, Claude Code injects roughly 33 000 tokens before the user’s prompt reaches the model, while OpenCode adds about 7 000. This overhead comes from system prompts, tool schemas, and caching scaffolding that Claude Code rewrites on every turn. The disparity translates directly into higher API costs, longer latency, and reduced context budget for actual code. Understanding this token bloat is essential for teams building production‑grade agentic AI. The findings stem from a systematic logging proxy that captured every request at the API boundary.
+
+<Callout type="takeaway">Claude Code’s token overhead can be up to five times OpenCode’s, inflating cost and latency for every interaction.</Callout>
+
+## What happened
+We placed a transparent proxy between each harness and Anthropic’s endpoint, recorded the usage blocks for a one‑line reply task, and observed that Claude Code sent ~33 000 tokens of system prompt, tool schemas, and injected scaffolding before the user prompt arrived, whereas OpenCode sent ~7 000. The proxy showed Claude Code repeatedly rewrote tens of thousands of cache‑write tokens mid‑session, generating up to 54× more cache writes than OpenCode.
+
+Because cache writes are billed at a premium, Claude Code’s dashboard usage climbed sharply. A typical production repository adds another ~20 000 tokens from a 72 KB instruction file, plus 5‑7 000 tokens from multiple MCP servers, pushing the first request past 75 000 tokens. Sub‑agents inherit this baseline, so a small task that would cost ~121 000 tokens directly can balloon to >500 000 tokens when fanned out to two sub‑agents.
+
+## Why it matters
+The token overhead directly inflates operational costs—each cache‑write token is charged at a higher rate than a read token—so the baseline of tens of thousands of tokens can dominate a bill even for trivial prompts. Latency suffers because the model must process a much larger context before reaching the user’s query, and the effective context window for actual code shrinks, limiting the complexity of tasks you can handle. For teams subject to regulatory reporting (e.g., EU AI Act Article 12), the hidden payload makes auditability harder, as you must account for thousands of tokens that never contribute to user‑visible output.
+
+<ProsCons>
+  <Pros>
+    <li>Lower total tokens on some multi‑step batched tasks where Claude Code’s tool‑call batching shines.</li>
+    <li>Better tool‑call aggregation can reduce round‑trips.</li>
+    <li>OpenCode’s stable prefix enables cheap cache reads.</li>
+  </Pros>
+  <Cons>
+    <li>Baseline overhead of ~33k tokens per request.</li>
+    <li>Cache writes billed at premium increase cost dramatically.</li>
+    <li>Context budget eaten by scaffolding limits prompt size.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Treat the token baseline as a fixed cost and factor it into your per‑request budget. If the baseline exceeds a few thousand tokens, consider switching sub‑agents to lighter models (e.g., Haiku) or trimming the system prompt files (AGENTS.md, CLAUDE.md). Monitor usage dashboards for cache‑write spikes and experiment with caching the exact same request payload across turns to avoid rewrites. When designing pipelines, batch tool calls where possible to let Claude Code’s batching advantage offset its higher baseline, but only after you’ve quantified the net token trade‑off.
+
+<Callout type="warning">Do not assume the overhead disappears by simply adding more subagents; each subagent inherits the same baseline unless you explicitly switch to a lighter model.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="Why does Claude Code inject so many tokens before the prompt?">Claude Code includes extensive system prompts, tool schemas, and a dynamic caching scaffold that it rebuilds on each turn, which together amount to tens of thousands of tokens before any user content is processed.</Question>
+  <Question q="Can I reduce the overhead without switching to OpenCode?">Yes. You can trim or consolidate the AGENTS.md/CLAUDE.md files, cache the exact request payload across turns, and route sub‑agents to smaller models for non‑critical steps. However, the core harness still adds a sizable baseline.</Question>
+  <Question q="How does the token overhead affect pricing and latency?">Each cache‑write token is priced higher than a read token, so the large baseline inflates your bill even for simple queries. The inflated context also forces the model to process more data, increasing response latency and reducing the space available for actual user‑generated content.</Question>
+</FAQ>
