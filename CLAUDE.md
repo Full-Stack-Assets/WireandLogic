@@ -207,8 +207,15 @@ override — note the empty-string guard, since unset CI secrets arrive as `""`)
 
 ## Scheduling & deploy
 
-- **`.github/workflows/generate.yml`** is the real scheduler: hourly cron
-  (`0 * * * *`) + `workflow_dispatch`, verifies the Groq secret, runs
+- **`.github/workflows/generate.yml`** is the real scheduler: twice-hourly
+  off-peak cron (`7,37 * * * *`) + `workflow_dispatch`. GitHub throttles
+  minute-0 crons hard (ticks arrive up to an hour late or get dropped
+  outright — observed 2026-07-12: only ~9 of 21 hourly ticks fired), so the
+  workflow fires two off-peak ticks per hour and a **freshness gate** (first
+  step) skips the run when the newest `content/.topic-log.json` entry is
+  under 50 minutes old — net effect: at most one post per hour, with a
+  second chance whenever GitHub drops a tick. `workflow_dispatch` bypasses
+  the gate. When a post is due it verifies the Groq secret, runs
   `npm ci` and `npx tsx scripts/run-local.ts`, then commits & pushes with a
   rebase-retry loop as `trendblog-bot`. It registers a **union merge driver**
   (`scripts/merge-topic-log.mjs`, mapped in `.gitattributes`) so concurrent
