@@ -1,0 +1,64 @@
+---
+title: "xAI Grok Build CLI uploads full repo and .env secrets by default"
+description: "A wire‑level analysis shows Grok Build CLI sends your entire codebase and .env files to xAI, raising privacy concerns."
+date: "2026-07-12T11:19:35.279Z"
+category: "security"
+tags: 
+  - "xai"
+  - "grok"
+  - "cli"
+  - "privacy"
+  - "data-leak"
+  - "sandbox"
+hero: 
+  url: "https://live.staticflickr.com/65535/54556625268_0fe5165a37_b.jpg"
+  alt: "AI_generated_Pomeranian-Spitz_052"
+  credit: "Juhele_CZ"
+  creditUrl: "https://www.flickr.com/photos/96541566@N06/54556625268"
+sources: 
+  - title: "What xAI's Grok Build CLI Actually Sends to xAI"
+    url: "https://gist.github.com/cereblab/dc9a40bc26120f4540e4e09b75ffb547"
+  - title: "What xAI Grok Build CLI actually sends to xAI - a wire-level analysis (grok 0.2.93)"
+    url: "https://gist.github.com/cereblab/dc9a40bc26120f4540e4e09b75ffb547"
+  - title: "What xAI's Grok Build CLI Actually Sends to xAI | Hacker News"
+    url: "https://news.ycombinator.com/item?id=48877371"
+  - title: "Grok Build CLI Review 2026: Features & Alternatives"
+    url: "https://www.eigent.ai/blog/grok-build-cli"
+---
+
+Developers using xAI’s Grok Build CLI assume the tool only sends the snippets it reads to the model. A recent wire‑level teardown shows the binary uploads the entire repository—including every tracked file and its Git history—as well as raw .env contents. The data is sent to a Google Cloud Storage bucket named grok‑code‑session‑traces and is not mentioned in the official docs. Because the upload happens by default, even “disable improve the model” settings do not stop it. This behavior has immediate privacy and compliance implications for anyone handling sensitive code.
+
+<Callout type="takeaway">Grok Build CLI silently ships your full codebase and environment secrets to xAI.</Callout>
+
+## What happened
+The analysis captured traffic from version 0.2.93 of the Grok CLI. When a user runs a normal build, the tool makes two distinct HTTP calls: a POST to /v1/responses that includes the live model turn, and a POST to /v1/storage that uploads a session_state archive. The archive contains the verbatim contents of every file read—including .env files—and a full Git bundle of the repository. In a test with a 12 GB repository, the storage endpoint transferred over 5 GiB while the model‑turn channel transferred only 192 KB, confirming that the bulk upload is independent of what the model actually reads.
+
+The storage endpoint resolves to a Google Cloud Storage bucket (gs://grok-code-session-traces/…) hard‑coded in the binary. The upload is enabled by default; the CLI reports `trace_upload_enabled: true` even when the “Improve the model” flag is turned off. No failures were observed for storage uploads, and the only non‑200 responses were unrelated quota errors on the model‑turn endpoint.
+
+## Why it matters
+Sending an entire codebase—including secrets—to a remote bucket creates a clear vector for data leakage. Organizations that store proprietary algorithms, confidential APIs, or regulated data could inadvertently expose themselves to compliance violations. Even if xAI does not currently use the uploaded data for model training, the mere possession of raw source and environment variables raises legal and trust concerns. Developers need to understand that the CLI’s default behavior bypasses typical security controls and that existing documentation does not disclose this telemetry.
+
+<ProsCons>
+  <Pros>
+    <li>Provides the model with complete context, which can improve code‑generation quality.</li>
+    <li>Facilitates reproducible debugging by preserving the exact repository state.</li>
+    <li>Simplifies setup—no manual packaging of files is required.</li>
+  </Pros>
+  <Cons>
+    <li>Exposes raw secrets and proprietary code to an external storage bucket.</li>
+    <li>Violates many data‑privacy and compliance policies for sensitive projects.</li>
+    <li>Lacks a documented opt‑out mechanism; the “Improve the model” toggle does not stop uploads.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Treat the Grok CLI as a potentially untrusted data exporter. Before running it on sensitive code, isolate the execution environment with a sandbox (e.g., `bwrap` or `gvisor`) and mount a filtered network namespace that only permits connections to the LLM provider. Remove or encrypt `.env` files and any other secret material from the repository prior to invocation. Consider wrapping the CLI in a script that intercepts the storage POST and redirects it to a controlled endpoint, or use a proxy that blocks uploads to `grok-code-session-traces`. Finally, audit the binary for hard‑coded endpoints and verify that any opt‑out flags are truly effective.
+
+<Callout type="warning">Do not rely on the ‘Improve the model’ toggle to prevent data upload; the CLI will still transmit files.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="What data does Grok Build CLI actually upload?">It uploads the full Git repository—including every tracked file, commit history, and any `.env` or other secret files—via a POST to the `/v1/storage` endpoint, plus the live model turn payload to `/v1/responses`.</Question>
+  <Question q="Can I disable the repository upload?">The current CLI does not provide a documented flag to turn off the storage upload; the `trace_upload_enabled` setting remains true even when “Improve the model” is disabled. The only reliable method is to block the endpoint with a network filter or sandbox.</Question>
+  <Question q="Are there safe ways to run Grok Build CLI with sensitive projects?">Yes. Run the CLI inside a sandbox that isolates the filesystem and network, strip or encrypt secret files before execution, and use a proxy that blocks the GCS bucket URL. Monitoring outbound traffic can also alert you to unexpected uploads.</Question>
+</FAQ>

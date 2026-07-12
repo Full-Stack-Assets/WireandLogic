@@ -1623,6 +1623,13 @@
       "url": "https://www.npr.org/2026/06/30/nx-s1-5835631/turner-camhi-do-no-harm-college-loans",
       "publishedAt": "2026-07-12T09:09:06.822Z",
       "signature": "8ff300f0984c183a"
+    },
+    {
+      "slug": "xai-grok-cli-uploads-repo-and-env",
+      "title": "What xAI's Grok Build CLI Actually Sends to xAI",
+      "url": "https://gist.github.com/cereblab/dc9a40bc26120f4540e4e09b75ffb547",
+      "publishedAt": "2026-07-12T11:19:35.281Z",
+      "signature": "f9dbb258996ec4b5"
     }
   ]
 }
