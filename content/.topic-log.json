@@ -1679,6 +1679,13 @@
       "url": "https://www.theregister.com/on-prem/2026/07/11/irish-datacenters-now-guzzle-23-of-the-countrys-electricity/5270013",
       "publishedAt": "2026-07-13T01:53:55.710Z",
       "signature": "70f59717ccec4195"
+    },
+    {
+      "slug": "hn-flag-ai-generated-articles",
+      "title": "Ask HN: Add flag for AI-generated articles",
+      "url": "https://news.ycombinator.com/item?id=48886741",
+      "publishedAt": "2026-07-13T03:55:05.603Z",
+      "signature": "39cdce9971794c07"
     }
   ]
 }
