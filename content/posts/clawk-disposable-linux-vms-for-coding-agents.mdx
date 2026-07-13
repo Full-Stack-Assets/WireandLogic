@@ -1,0 +1,66 @@
+---
+title: "Clawk: Disposable Linux VMs for Coding Agents"
+description: "Clawk provides a disposable Linux VM for coding agents, enhancing security and control."
+date: "2026-07-13T16:10:39.796Z"
+category: "tools"
+tags: 
+  - "linux"
+  - "ai"
+  - "security"
+  - "devops"
+  - "coding-agents"
+hero: 
+  url: "https://live.staticflickr.com/3367/3617470717_577dfdc74c.jpg"
+  alt: "L'ombra di Callisto su Giove"
+  credit: "gerlos"
+  creditUrl: "https://www.flickr.com/photos/12033805@N00/3617470717"
+sources: 
+  - title: "Show HN: Clawk – Give coding agents a disposable Linux VM, not your laptop"
+    url: "https://github.com/clawkwork/clawk"
+  - title: "GitHub - clawkwork/clawk: Disposable, network-restricted Linux VMs for AI coding agents"
+    url: "https://github.com/clawkwork/clawk"
+  - title: "AI Agents for Linux – Full Control with Natural Language! | John Capobianco"
+    url: "https://www.linkedin.com/posts/john-capobianco-644a1515_ai-agents-for-linux-unleashing-the-power-activity-7294775049717231616-niyG"
+---
+
+Clawk, a new tool, offers a disposable Linux VM for coding agents, providing a secure and controlled environment for AI-powered coding.
+
+<Callout type="takeaway">Clawk gives coding agents their own disposable Linux machine, enhancing security and control.</Callout>
+
+## What happened
+Clawk, a GitHub project, provides a disposable Linux VM for coding agents. This allows agents to operate independently without accessing the host machine. The tool uses an OCI image as the rootfs, providing a full OS with the required tools. Clawk's network allow-list blocks connections to unknown servers, adding an extra layer of security.
+
+The tool works by mounting the user's code into the VM, allowing the agent to operate with root privileges without affecting the host machine. If the agent causes issues, the VM can be destroyed and recreated without losing any data.
+
+## Why it matters
+Clawk matters because it provides a secure and controlled environment for coding agents. By isolating the agent in a disposable VM, users can prevent potential security risks associated with AI-powered coding. This approach also enables developers to give their agents more freedom to operate without constant supervision.
+
+## Pros and Cons
+<ProsCons>
+  <Pros>
+    <li>Enhanced security through isolation</li>
+    <li>Increased control over coding agents</li>
+    <li>Disposable VM for easy cleanup</li>
+  </Pros>
+  <Cons>
+    <li>Additional complexity in setup and management</li>
+    <li>Potential performance overhead</li>
+    <li>Limited support for certain tools and configurations</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+When considering Clawk, think about the trade-offs between security, control, and convenience. While Clawk provides an additional layer of security and control, it may require more setup and management effort. Users should weigh the benefits against the potential drawbacks and consider their specific use cases.
+
+## FAQ
+<FAQ>
+  <Question q="What is Clawk?">
+    Clawk is a tool that provides a disposable Linux VM for coding agents, enhancing security and control.
+  </Question>
+  <Question q="How does Clawk work?">
+    Clawk works by mounting the user's code into a disposable Linux VM, allowing the coding agent to operate independently.
+  </Question>
+  <Question q="What are the benefits of using Clawk?">
+    The benefits of using Clawk include enhanced security, increased control over coding agents, and a disposable VM for easy cleanup.
+  </Question>
+</FAQ>

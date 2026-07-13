@@ -1707,6 +1707,13 @@
       "url": "https://raymyers.org/post/zed-creator-calls-spade-a-spade/",
       "publishedAt": "2026-07-13T13:31:12.855Z",
       "signature": "9de0085e78a4526f"
+    },
+    {
+      "slug": "clawk-disposable-linux-vms-for-coding-agents",
+      "title": "Show HN: Clawk – Give coding agents a disposable Linux VM, not your laptop",
+      "url": "https://github.com/clawkwork/clawk",
+      "publishedAt": "2026-07-13T16:10:39.797Z",
+      "signature": "3f17f63183be6d70"
     }
   ]
 }
