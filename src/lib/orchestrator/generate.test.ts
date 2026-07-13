@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { clampMeta, slugify, normalizeTags, PostSchema } from './generate';
+import { clampMeta, slugify, normalizeTags, isTruncatedJsonError, PostSchema } from './generate';
 
 describe('clampMeta', () => {
   it('leaves short strings untouched (after whitespace collapse)', () => {
@@ -106,5 +106,18 @@ describe('PostSchema', () => {
   it('rejects fewer than 2 tags rather than fabricating one', () => {
     const result = PostSchema.safeParse({ ...baseFields(), tags: ['only-one'], body: validBody() });
     expect(result.success).toBe(false);
+  });
+});
+
+describe('isTruncatedJsonError', () => {
+  it('matches the Groq json_validate_failed rejection from the 2026-07-13 incident', () => {
+    const msg =
+      'LLM API error 400: {"error":{"message":"Failed to generate JSON. Please adjust your prompt.","type":"invalid_request_error","code":"json_validate_failed"}}';
+    expect(isTruncatedJsonError(msg)).toBe(true);
+  });
+
+  it('does not match unrelated errors', () => {
+    expect(isTruncatedJsonError('LLM API error 429: rate limited')).toBe(false);
+    expect(isTruncatedJsonError('LLM API error 503: model overloaded')).toBe(false);
   });
 });
