@@ -1,0 +1,70 @@
+---
+title: "Zig Creator Slams Anthropic’s Rust Rewrite of Bun, Warns AI Hype Threatens Software Engineering Decisions"
+description: "Andrew Kelley critiques Anthropic’s Rust port of Bun, arguing AI hype fuels risky language switches and clouded engineering choices."
+date: "2026-07-13T13:31:12.853Z"
+category: "engineering"
+tags: 
+  - "zig"
+  - "rust"
+  - "anthropic"
+  - "ai"
+  - "software-engineering"
+hero: 
+  url: "https://live.staticflickr.com/7532/16301066386_6323346048_b.jpg"
+  alt: "Zig Zag Railway"
+  credit: "njg234908"
+  creditUrl: "https://www.flickr.com/photos/50483324@N00/16301066386"
+sources: 
+  - title: "Zig Creator Calls Spade a Spade, Anthropic Blows Smoke"
+    url: "https://raymyers.org/post/zed-creator-calls-spade-a-spade/"
+  - title: "Zig Creator Calls Spade a Spade, Anthropic Blows Smoke"
+    url: "https://raymyers.org/post/zed-creator-calls-spade-a-spade/"
+  - title: "Zig Creator Calls Spade a Spade, Anthropic Blows Smoke | Hacker News"
+    url: "https://news.ycombinator.com/item?id=48889637"
+  - title: "The Brutalist Report"
+    url: "https://brutalist.report/"
+---
+
+Andrew Kelley, the creator of the systems language Zig, has publicly rebuked Anthropic’s recent announcement that the Bun runtime would be ported from Zig to Rust. Anthropic, backed by $132 billion in funding and a projected trillion‑dollar valuation, framed the move as a showcase of AI‑driven code generation. The rewrite was merged without prior notice, prompting a blunt response that highlighted the risks of swapping battle‑tested code for a hype‑driven rewrite. For developers and engineering leaders, the episode illustrates how AI hype can distort language‑choice decisions.
+
+<Callout type="takeaway">AI hype is driving risky language migrations that can undermine battle‑tested code.</Callout>
+
+## What happened
+
+Anthropic announced that Bun, its JavaScript runtime, would be migrated from Zig to Rust. The company released an explanation two months after the migration landed on the main branch, describing the change as an “unsafe Rust” port that allowed a file‑by‑file migration to minimize risk. The timing and lack of upfront communication let headlines focus on the AI narrative rather than technical trade‑offs.
+
+Zig creator Andrew Kelley responded with a terse statement, calling the move a “spade a spade” and warning that the optics of a high‑profile AI firm rewriting production code could mislead engineers. He emphasized that decisions should be based on clear technical criteria, not on fear of being left behind by AI hype.
+
+## Why it matters
+
+The episode highlights three stakes for engineering teams: the loss of battle‑tested Zig code that has accumulated real‑world reliability, the hidden cost of a large‑scale language migration, and the broader narrative that AI can replace human judgment in architectural choices. When funding giants like Anthropic promote AI‑generated rewrites, product managers and CTOs may feel pressure to adopt the latest hype, potentially sacrificing stability and long‑term maintainability.
+
+<ProsCons>
+  <Pros>
+    <li>Rust offers a mature ecosystem and strong memory‑safety guarantees.</li>
+    <li>Potential performance improvements for low‑level runtime components.</li>
+    <li>Alignment with a high‑visibility AI vendor may attract talent.</li>
+  </Pros>
+  <Cons>
+    <li>Existing Zig codebase is battle‑tested; the Rust version starts with zero production feedback.</li>
+    <li>Migration risk includes hidden bugs, integration friction, and developer onboarding costs.</li>
+    <li>Decision driven by AI hype rather than concrete technical evaluation.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+
+1. **Measure, don’t assume** – Benchmark the current Zig implementation against a prototype in Rust before committing.
+2. **Incremental migration** – Move isolated modules behind feature flags rather than a wholesale rewrite.
+3. **Team expertise** – Align language choice with the existing skill set; invest in training only if the benefits outweigh the cost.
+4. **Separate AI hype from engineering merit** – Treat AI‑generated suggestions as data points, not directives.
+5. **Post‑migration validation** – Require real‑world usage and feedback before deprecating the original code.
+
+<Callout type="warning">Do not let AI‑driven marketing narratives dictate a language migration without solid performance data and a clear rollback plan.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="Should my team rewrite existing Zig code to Rust based on AI hype?">No. Base the decision on measurable performance, maintainability, and team readiness, not on hype alone.</Question>
+  <Question q="How reliable are Anthropic’s claims about AI replacing software engineers?">The claims are speculative; AI can automate parts of coding but cannot replace the judgment and testing that keep production systems reliable.</Question>
+  <Question q="What criteria should we use to decide on a language migration?">Consider performance gains, ecosystem support, existing test coverage, developer expertise, migration risk, and the ability to roll back if needed.</Question>
+</FAQ>
