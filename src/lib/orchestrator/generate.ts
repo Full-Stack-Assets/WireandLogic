@@ -31,6 +31,19 @@ function isOverBudgetError(message: string): boolean {
   return /too large|request too large|413/i.test(message);
 }
 
+/**
+ * Groq's `response_format: json_object` mode rejects a completion whose output
+ * was cut off before the JSON closed (e.g. by the max_tokens cap — reasoning
+ * models spend part of that budget thinking) with a 400 `json_validate_failed`
+ * (observed 2026-07-13: five straight rejections killed an hourly run).
+ * Retrying the same model with the same cap tends to truncate at the same
+ * place, so treat it like the over-budget case: switch to the fallback model,
+ * whose 30K-TPM budget affords a much larger completion cap.
+ */
+export function isTruncatedJsonError(message: string): boolean {
+  return /json_validate_failed|failed to generate json/i.test(message);
+}
+
 /** Pause helper for backing off between retries. */
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -210,9 +223,10 @@ export async function generate(bundle: ResearchBundle): Promise<GeneratedPost> {
       // capped at 30s) so we ride out short capacity spikes instead of burning
       // every attempt in a couple of seconds.
       lastError = err instanceof Error ? err.message : String(err);
-      if (isOverBudgetError(lastError)) {
+      if (isOverBudgetError(lastError) || isTruncatedJsonError(lastError)) {
         // Deterministic rejection, not a capacity blip: switch models now
-        // and skip the backoff — waiting can't shrink the request.
+        // and skip the backoff — waiting can't shrink the request or stop
+        // the same completion cap from truncating in the same place.
         forceFallback = true;
       } else if (attempt < MAX_GENERATION_ATTEMPTS) {
         await sleep(Math.min(30_000, 1000 * 2 ** attempt));
@@ -255,9 +269,11 @@ async function callLlm(key: string, userPrompt: string, model: string): Promise<
         model,
         temperature: 0.5,
         // Groq's free tier admits a request only if input + max_tokens fit the
-        // 8K TPM budget; with the trimmed research prompt (~3.5-4K tokens of
-        // input) this keeps a single request safely under the cap.
-        max_tokens: 3584,
+        // model's TPM budget; with the trimmed research prompt (~3.5-4K tokens
+        // of input) 3584 keeps a primary request safely under its 8K cap. The
+        // fallback's 30K budget affords a far larger completion cap, which is
+        // also its escape hatch when the primary's cap truncated mid-JSON.
+        max_tokens: model === LLM_FALLBACK_MODEL ? 8192 : 3584,
         response_format: { type: 'json_object' },
         messages: [
           { role: 'system', content: SYSTEM_PROMPT },
