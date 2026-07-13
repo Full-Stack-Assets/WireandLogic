@@ -1714,6 +1714,13 @@
       "url": "https://github.com/clawkwork/clawk",
       "publishedAt": "2026-07-13T16:10:39.797Z",
       "signature": "3f17f63183be6d70"
+    },
+    {
+      "slug": "grok-cli-uploads-home-directory-to-gcs",
+      "title": "Grok CLI uploaded the whole home directory to GCS",
+      "url": "https://twitter.com/a_green_being/status/2076598897779020159",
+      "publishedAt": "2026-07-13T20:03:33.753Z",
+      "signature": "5e1391b448acb87f"
     }
   ]
 }
