@@ -1672,6 +1672,13 @@
       "url": "https://geohot.github.io//blog/jekyll/update/2026/07/12/i-love-llms.html",
       "publishedAt": "2026-07-12T22:01:08.013Z",
       "signature": "4cd58dbdbe523f11"
+    },
+    {
+      "slug": "irish-datacenters-electricity-consumption",
+      "title": "Irish datacenters now guzzle 23% of the country's electricity",
+      "url": "https://www.theregister.com/on-prem/2026/07/11/irish-datacenters-now-guzzle-23-of-the-countrys-electricity/5270013",
+      "publishedAt": "2026-07-13T01:53:55.710Z",
+      "signature": "70f59717ccec4195"
     }
   ]
 }
