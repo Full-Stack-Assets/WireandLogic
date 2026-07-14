@@ -1,0 +1,65 @@
+---
+title: "Git’s experimental “git history” command simplifies fixing old commits"
+description: "Explore the new git history command, its fixup, reword, and split subcommands, and how it can safely rewrite commits without leaving your repo in a broken state."
+date: "2026-07-14T08:55:27.068Z"
+category: "tools"
+tags: 
+  - "git"
+  - "history"
+  - "fixup"
+  - "rebase"
+  - "workflow"
+hero: 
+  url: "https://upload.wikimedia.org/wikipedia/commons/c/c1/Mediawiki_core_git_history_parallel_lines_in_GitExtensions.png"
+  alt: "Mediawiki core git history parallel lines in GitExtensions"
+  credit: "Aron Manning"
+  creditUrl: "https://commons.wikimedia.org/w/index.php?curid=91719652"
+sources: 
+  - title: "The git history command"
+    url: "https://lalitm.com/post/git-history/"
+  - title: "The git history command deserves more attention"
+    url: "https://lalitm.com/post/git-history/"
+  - title: "Git - Viewing the Commit History"
+    url: "https://git-scm.com/book/en/v2/Git-Basics-Viewing-the-Commit-History"
+  - title: "History or log of commands executed in Git"
+    url: "https://stackoverflow.com/questions/7435452/history-or-log-of-commands-executed-in-git"
+  - title: "W3Schools.com"
+    url: "https://www.w3schools.com/git/git_history.asp"
+---
+
+Working with many parallel changes in Git often forces developers into messy rebases and branch juggling. The experimental git history command, introduced in Git 2.54 (April) and refined in 2.55 (June), adds three subcommands—fixup, reword, and split—to streamline retroactive edits. By folding staged changes into an existing commit and automatically updating descendant branches, it promises a safer, more atomic workflow. Because it lives inside the core Git distribution, you can try it without installing external tools. Understanding its capabilities and limits can change how teams manage long‑running feature branches.
+
+<Callout type="takeaway">git history lets you rewrite old commits atomically while keeping all descendant branches in sync.</Callout>
+
+## What happened
+The command ships with three subcommands. **git history fixup** takes a staged change, folds it into a target commit, and then rebases every local branch that descends from that commit so the new hash propagates automatically. **git history reword** lets you edit a commit message without altering the tree, while **git history split** breaks a single commit into multiple logical pieces.
+
+All three operations are designed to be atomic: the command refuses to start if the rewrite could leave the repository in an inconsistent state. This includes a safeguard against merge commits—if the target commit has a merge parent, the command aborts, because rewriting across merges can produce ambiguous histories.
+
+## Why it matters
+Developers who spend hours manually crafting interactive rebase scripts can now rely on a built‑in, single‑command workflow that updates every affected branch. The atomic nature eliminates the half‑broken trees that often result from interrupted rebases, reducing the risk of lost work. Because the feature is part of core Git, teams avoid the overhead of adopting a separate tool like jj while still gaining many of its advertised benefits. However, its experimental status and merge‑commit limitation mean it isn’t a drop‑in replacement for all scenarios.
+
+<ProsCons>
+  <Pros>
+    <li>Atomic rewrites keep the repository consistent.</li>
+    <li>All descendant branches are updated automatically.</li>
+    <li>No additional installation required; it’s in core Git.</li>
+  </Pros>
+  <Cons>
+    <li>Experimental feature; documentation is sparse.</li>
+    <li>Cannot operate on commits that are part of a merge.</li>
+    <li>Large branch trees may be rewritten unexpectedly, so caution is needed.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Treat git history as a targeted fix‑tool rather than a bulk‑rewrite engine. Before running it, create a temporary branch or tag the current tip so you can recover with `git reflog` if needed. Use **fixup** for small code corrections, **reword** for message clean‑ups, and **split** when a commit bundles unrelated changes. Run the command on feature branches that haven’t been merged publicly; once a branch is shared, coordinate with teammates or avoid rewriting altogether.
+
+<Callout type="warning">Do not run git history on branches that contain merge commits or on public/shared branches without a clear rollback plan.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="Can I use git history on a branch that has already been pushed to origin?">You can, but the command will rewrite the commit hashes, which forces everyone who has fetched the branch to reset or re‑base. It’s safest on private or feature branches that haven’t been shared.</Question>
+  <Question q="What happens to the reflog after a git history rewrite?">Git records the original refs in the reflog, so you can recover the pre‑rewrite state with `git reflog` and `git reset --hard` if something goes wrong.</Question>
+  <Question q="Is there a way to limit the rewrite to the current branch only?">Yes. The command offers an option to restrict updates to the current branch, preventing automatic changes to other local branches that also descend from the target commit.</Question>
+</FAQ>

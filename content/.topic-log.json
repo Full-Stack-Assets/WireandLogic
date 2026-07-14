@@ -1763,6 +1763,13 @@
       "url": "https://www.normaltech.ai/p/what-will-be-left-for-us-to-work",
       "publishedAt": "2026-07-14T06:39:28.744Z",
       "signature": "7ff1a3f70355e392"
+    },
+    {
+      "slug": "git-history-command-fixup-reword-split",
+      "title": "The git history command",
+      "url": "https://lalitm.com/post/git-history/",
+      "publishedAt": "2026-07-14T08:55:27.070Z",
+      "signature": "4d1d77e25cd35356"
     }
   ]
 }
