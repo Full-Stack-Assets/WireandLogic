@@ -1784,6 +1784,13 @@
       "url": "https://github.com/eu-digital-identity-wallet/av-doc-technical-specification/discussions/19",
       "publishedAt": "2026-07-14T12:22:29.530Z",
       "signature": "20d66df4dd0e1816"
+    },
+    {
+      "slug": "codex-encrypts-subagent-prompts-audit",
+      "title": "Codex starts encrypting sub-agent prompts",
+      "url": "https://github.com/openai/codex/issues/28058",
+      "publishedAt": "2026-07-14T14:28:09.426Z",
+      "signature": "e6b45ed8a2197014"
     }
   ]
 }

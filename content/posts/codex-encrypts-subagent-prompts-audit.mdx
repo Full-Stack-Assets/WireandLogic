@@ -1,0 +1,58 @@
+---
+title: "OpenAI Codex encrypts sub‑agent prompts, removing human‑readable audit trails"
+description: "A recent change encrypts MultiAgentV2 payloads, hiding sub‑agent instructions from rollout logs and raising auditability concerns for developers."
+date: "2026-07-14T14:28:09.424Z"
+category: "engineering"
+tags: 
+  - "codex"
+  - "encryption"
+  - "subagents"
+  - "audit"
+  - "multiagent"
+hero: 
+  url: "https://upload.wikimedia.org/wikipedia/commons/a/aa/Codex_Zouche-Nuttall_-_higher_definition.jpg"
+  alt: "Codex Zouche-Nuttall - higher definition"
+  credit: "Szilas"
+  creditUrl: "https://commons.wikimedia.org/w/index.php?curid=128772157"
+sources: 
+  - title: "Codex starts encrypting sub-agent prompts"
+    url: "https://github.com/openai/codex/issues/28058"
+  - title: "Regression: encrypted MultiAgentV2 messages remove readable task audit trail · Issue #28058 · openai/codex"
+    url: "https://github.com/openai/codex/issues/28058"
+  - title: "Codex starts encrypting sub-agent prompts | Hacker News"
+    url: "https://news.ycombinator.com/item?id=48905028"
+  - title: "Subagents | ChatGPT Learn"
+    url: "https://developers.openai.com/codex/subagents"
+---
+
+OpenAI's recent update to Codex's MultiAgentV2 layer encrypts the payloads sent to sub‑agents, turning previously readable task descriptions into ciphertext. The change landed in the #26210 merge on June 5 2026 and is enabled by default in releases after version 0.137.0. As a result, the rollout and history views no longer show the human‑readable instructions that spawned a sub‑agent. Developers who rely on those logs for debugging, compliance, or insight now face a blind spot.
+<Callout type="takeaway">Encrypting sub‑agent prompts removes the readable audit trail that many developers depend on.</Callout>
+## What happened
+The change originated in pull request #26210, which marks the model‑facing message parameter as encrypted and stores the ciphertext in `InterAgentCommunication.encrypted_content` while leaving `InterAgentCommunication.content` empty. This modification is not tied to any specific model; it applies to all MultiAgentV2 operations (`spawn_agent`, `send_message`, `followup_task`) once MultiAgentV2 is enabled.
+
+Because the content field is cleared, the rollout UI, CLI history, and any local trace files only display the encrypted blob. Issue #28058 documents how this regression makes it impossible to answer basic questions such as “what task did the spawn_agent call give the child?” or “why does a sub‑thread appear in the rollout after the fact?”
+
+The developer community on Hacker News reacted strongly, calling the move user‑hostile and comparing it to DRM. Commentators speculate that the opaque payloads may be intended to protect proprietary prompt data from being harvested for training, but the lack of a parallel plaintext audit copy raises transparency concerns.
+## Why it matters
+Without a readable audit trail, developers lose a primary debugging instrument; tracing why a sub‑agent behaved a certain way now requires decryption keys that are not exposed to end users. Compliance regimes that mandate traceability of automated decisions (e.g., GDPR, SOC 2) may consider the hidden payload a violation, forcing teams to implement additional controls. On the other hand, encrypting prompts reduces the risk of accidental leakage of proprietary instructions through logs or third‑party integrations, which can be a significant security benefit.
+<ProsCons>
+  <Pros>
+    <li>Encrypting prompts prevents accidental leakage of proprietary instructions to logs or third‑party tools.</li>
+    <li>It aligns with internal security policies that treat prompt text as sensitive data.</li>
+    <li>Reduces the attack surface for malicious actors who might scrape rollout histories.</li>
+  </Pros>
+  <Cons>
+    <li>Developers lose the ability to inspect sub‑agent tasks without decrypting, hampering debugging.</li>
+    <li>Regulatory audits that require traceability of automated decisions become more difficult.</li>
+    <li>Existing tooling that parses rollout text for metrics or CI integration breaks.</li>
+  </Cons>
+</ProsCons>
+## How to think about it
+If you need full visibility, pin your Codex client to a version earlier than 0.137.0 or disable the MultiAgentV2 flag in the client configuration; this restores the content field but also disables any downstream features that depend on MultiAgentV2. Submit a feature request on the Codex repository to expose a non‑encrypted audit copy alongside the encrypted payload. In the meantime, capture the plaintext task yourself before calling `spawn_agent`—store it in your own log or metadata store. Monitor OpenAI's changelog for a future release that adds an `audit_content` field, and design your pipelines to tolerate both encrypted and clear‑text modes.
+<Callout type="warning">Do not assume that encryption alone satisfies security or compliance requirements; you still need a separate, accessible audit record.</Callout>
+## FAQ
+<FAQ>
+  <Question q="Can I revert the encryption change?">Yes, by using a Codex build prior to the #26210 merge (pre‑0.137.0) or by disabling the MultiAgentV2 flag in the client configuration; this restores the content field but also disables any downstream features that depend on MultiAgentV2.</Question>
+  <Question q="How can I retain a readable audit trail?">Manually log the prompt text before invoking `spawn_agent`, or request that OpenAI add an `audit_content` field. Some teams wrap the API call in a helper that writes the task to a separate database while still sending the encrypted payload.</Question>
+  <Question q="Does encryption affect token usage or cost?">The encryption itself does not change the number of tokens sent to the model; the ciphertext is transmitted in place of the original text. However, storing an additional audit copy may increase storage or logging costs.</Question>
+</FAQ>
