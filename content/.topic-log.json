@@ -1819,6 +1819,13 @@
       "url": "https://www.heise.de/en/news/S-P-downgrades-Oracle-to-BBB-only-one-notch-above-junk-level-11363472.html",
       "publishedAt": "2026-07-14T20:22:52.228Z",
       "signature": "a88230c7cb2655de"
+    },
+    {
+      "slug": "measuring-input-latency-linux-x11-wayland-vrr-dxvk",
+      "title": "Measuring Input Latency on Linux: X11 vs. Wayland, VRR, and DXVK",
+      "url": "https://marco-nett.de/blog/measuring-input-latency-on-linux-x11-vs-wayland-vrr-dxvk/",
+      "publishedAt": "2026-07-14T21:36:38.465Z",
+      "signature": "9f010316651a97b2"
     }
   ]
 }

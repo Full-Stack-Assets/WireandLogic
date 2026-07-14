@@ -1,0 +1,56 @@
+---
+title: "Measuring Input Latency on Linux: X11 vs Wayland, VRR, and DXVK Findings"
+description: "A deep dive into measured input latency across X11, Wayland, VRR, and DXVK on Linux, using a custom photodiode rig."
+date: "2026-07-14T21:36:38.463Z"
+category: "engineering"
+tags: 
+  - "linux"
+  - "input-latency"
+  - "x11"
+  - "wayland"
+  - "dxvk"
+  - "vrr"
+hero: 
+  url: "https://upload.wikimedia.org/wikipedia/commons/9/91/Linux_kernel_and_gaming_input-output_latency.svg"
+  alt: "Linux kernel and gaming input-output latency"
+  credit: "ScotXW"
+  creditUrl: "https://commons.wikimedia.org/w/index.php?curid=31418026"
+sources: 
+  - title: "Measuring Input Latency on Linux: X11 vs. Wayland, VRR, and DXVK"
+    url: "https://marco-nett.de/blog/measuring-input-latency-on-linux-x11-vs-wayland-vrr-dxvk/"
+  - title: "Measuring input latency on Linux: X11 vs Wayland, VRR, and DXVK - Marco Nett"
+    url: "https://marco-nett.de/blog/measuring-input-latency-on-linux-x11-vs-wayland-vrr-dxvk/"
+  - title: "Measuring Input Latency on Linux: X11 vs. Wayland, VRR, and DXVK | Hacker News"
+    url: "https://news.ycombinator.com/item?id=48909424"
+  - title: "Hard numbers in the Wayland vs X11 input latency discussion - Mort's Ramblings"
+    url: "https://mort.coffee/home/wayland-input-latency/"
+---
+
+When Linux gamers chase lower input latency, they often rely on anecdote rather than hard data. Marco Nett built a DIY rig that combines an Adafruit QT Py RP2040 acting as a 1000 Hz USB HID mouse with a photodiode that samples every ~24 µs. By streaming 12,000 samples per click to a CSV, the rig captures the full end‑to‑end latency chain from click to screen change. The measurements compare X11, Wayland, variable‑refresh‑rate (VRR) modes, and DXVK‑based DirectX‑to‑Vulkan translation, giving developers concrete numbers to back performance claims. Understanding these differences matters for anyone tuning Linux for competitive gaming or low‑latency UI work.
+<Callout type="takeaway">X11 consistently shows lower raw input latency than Wayland, while VRR and DXVK introduce measurable but manageable overhead.</Callout>
+## What happened
+The rig uses a QT Py RP2040 to generate mouse clicks at a 1000 Hz polling rate. Immediately after each click, the microcontroller samples the attached photodiode at ~24 µs intervals, producing 12,000 samples per click that are logged to a CSV file for analysis. Tests were run on a 144.99 Hz 4K IPS monitor under native X11, native Wayland, with VRR enabled, and with DXVK translating DirectX calls to Vulkan.
+Across multiple runs, the X11 configuration yielded the smallest measured latency, typically a few milliseconds lower than Wayland. Enabling VRR added a small, consistent increase, while using DXVK introduced additional latency comparable to the VRR overhead. The data was corroborated by a secondary video‑based method that captured cursor movement at 240 FPS, confirming the order of magnitude of the differences.
+## Why it matters
+Input latency directly impacts competitive gaming, where a few milliseconds can decide a match. Developers optimizing Linux graphics stacks need quantitative evidence to prioritize work on X11 compatibility layers, Wayland compositors, or DXVK improvements. System integrators and power users also benefit: knowing the latency cost of VRR helps decide whether the smoother visual experience outweighs the slight input delay.
+<ProsCons>
+  <Pros>
+    <li>DIY rig provides high‑resolution, end‑to‑end latency data without expensive equipment.</li>
+    <li>Open‑source hardware and firmware make the setup reproducible.</li>
+    <li>Results clarify real performance trade‑offs between X11, Wayland, VRR, and DXVK.</li>
+  </Pros>
+  <Cons>
+    <li>Hardware assembly requires soldering and microcontroller programming skills.</li>
+    <li>Photodiode sampling is limited by the microcontroller’s clock and USB bandwidth.</li>
+    <li>Video‑based validation is constrained by camera frame rates, especially on high‑refresh monitors.</li>
+  </Cons>
+</ProsCons>
+## How to think about it
+Start by defining the latency budget for your target use case—gaming typically demands sub‑10 ms end‑to‑end latency. Replicate the DIY rig or use an existing open‑source device, then run baseline measurements on X11 before switching to Wayland. Record both raw click‑to‑light times and the visual cursor lag captured with a high‑frame‑rate camera. Compare the numbers against your budget; if VRR or DXVK push you over, consider disabling them for latency‑critical sessions. Finally, treat the measurements as a regression suite: any driver or compositor update should be re‑tested to catch inadvertent latency regressions.
+<Callout type="warning">Camera‑based latency checks can miss sub‑frame variations on 144 Hz+ displays; rely on the photodiode rig for precise numbers.</Callout>
+## FAQ
+<FAQ>
+  <Question q="Can I use this rig on any Linux distribution?">Yes, the firmware runs on any system that supports USB HID and serial communication, making it distribution‑agnostic.</Question>
+  <Question q="Does Wayland always have higher latency than X11?">The measurements show Wayland typically adds a few milliseconds of latency, but the exact gap depends on the compositor and driver stack.</Question>
+  <Question q="Is VRR worth the latency penalty for competitive play?">VRR improves visual smoothness but adds a small, consistent latency; many players disable it for the most latency‑sensitive sessions.</Question>
+</FAQ>
