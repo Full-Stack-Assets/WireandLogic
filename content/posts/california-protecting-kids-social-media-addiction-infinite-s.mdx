@@ -1,0 +1,65 @@
+---
+title: "California’s Protecting Kids from Social Media Addiction Bill Threatens Infinite Scroll Feature"
+description: "A new California law targeting addictive UI could force platforms to remove infinite scroll, reshaping user experience for all."
+date: "2026-07-14T04:13:44.318Z"
+category: "news"
+tags: 
+  - "california"
+  - "social-media"
+  - "infinite-scroll"
+  - "legislation"
+  - "ux"
+hero: 
+  url: "https://live.staticflickr.com/4103/5010221272_7b20ef2589_b.jpg"
+  alt: "20100920-NodeXL-Twitter-#oow10 - in and out degree above 10"
+  credit: "Marc_Smith"
+  creditUrl: "https://www.flickr.com/photos/49503165485@N01/5010221272"
+sources: 
+  - title: "The infinite scroll may become endangered if controversial Calif. law passes"
+    url: "https://www.sfgate.com/politics/article/meta-social-media-teenagers-22337724.php"
+  - title: "Client Challenge"
+    url: "https://www.sfgate.com/politics/article/meta-social-media-teenagers-22337724.php"
+  - title: "The infinite scroll may become endangered if controversial Calif. law passes | Hacker News"
+    url: "https://news.ycombinator.com/item?id=48897104"
+  - title: "Regulating the Scroll: How Lawmakers Are Redefining Social Media for Minors – Social Media Legality"
+    url: "https://socialmediablawg.blogs.pace.edu/2025/10/22/regulating-the-scroll-how-lawmakers-are-redefining-social-media-for-minors/"
+  - title: "New social media regulation proposals are on tap in states - Pluribus News"
+    url: "https://pluribusnews.com/news-and-events/new-social-media-regulation-proposals-are-on-tap-in-states/"
+---
+
+A California bill aimed at curbing “addictive” social‑media features could make infinite scroll illegal for platforms serving minors. The legislation, titled the Protecting Our Kids from Social Media Addiction Act, defines ‘addictive feeds’ and bans design patterns that keep users scrolling for extended periods. Lawmakers have already filed similar measures in New York, Florida and Virginia, and industry groups have secured a temporary injunction against the California law. If the bill survives, developers will need to redesign pagination and navigation across a wide range of web products. The shift would affect both user experience and ad‑tech revenue models.
+
+<Callout type="takeaway">Infinite scroll may become illegal for platforms that serve minors under the new California law.</Callout>
+
+## What happened
+The California Protecting Our Kids from Social Media Addiction Act was introduced this session to prohibit ‘addictive’ UI elements, including infinite scroll, on services accessed by users under 18. The bill requires platforms to provide explicit pagination or opt‑out mechanisms and to obtain parental consent for any feature that automatically loads additional content.
+
+NetChoice, a trade group representing major tech companies, won a temporary injunction that blocks enforcement of the law while its constitutionality is litigated. Similar proposals have passed in New York’s SAFE for Kids Act and in Florida’s ban on social‑media accounts for children under 14, signaling a broader regulatory trend.
+
+## Why it matters
+Infinite scroll lowers friction, keeping users engaged longer, which translates into higher ad impressions and longer session times. Regulators argue that the same friction can impair sleep and mental health for minors, creating a public‑policy conflict that forces engineers to balance revenue against user wellbeing. Beyond health concerns, the legal exposure for platforms that fail to comply could include fines, injunctions, or liability for harms attributed to addictive design.
+
+<ProsCons>
+  <Pros>
+    <li>Reduces accidental over‑consumption for minors</li>
+    <li>Encourages deliberate navigation and content discovery</li>
+    <li>Lowers memory usage on low‑end devices</li>
+  </Pros>
+  <Cons>
+    <li>Degrades seamless browsing experience</li>
+    <li>Reduces ad inventory and revenue</li>
+    <li>Requires substantial redesign and testing effort</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Start by auditing any auto‑loading components and mapping them to user age groups. Implement age‑gating so that infinite scroll is disabled only for accounts identified as under 18. Offer a clear “load more” button or numbered pagination as a fallback. Test the impact on engagement metrics and adjust the UI to retain usability for adult users while staying compliant for minors. Keep legal counsel involved throughout the redesign to ensure the solution matches the bill’s language.
+
+<Callout type="warning">Do not remove infinite scroll globally without assessing whether the law applies only to minor users; over‑broad removal can alienate adult audiences and breach existing accessibility commitments.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="Will the California law apply to all users or only to minors?">The bill targets features that are presented to users under 18, so compliance mechanisms can be scoped to age‑gated experiences rather than the entire site.</Question>
+  <Question q="Can developers use server‑side pagination as a safe alternative?">Yes, providing explicit page numbers or a “load more” button that requires a user action satisfies the intent of the legislation while preserving most of the content flow.</Question>
+  <Question q="What are the immediate steps for a product team facing this potential regulation?">Audit UI components for auto‑loading behavior, add age‑gating logic, consult legal counsel, and prototype a paginated fallback to test user impact before any law takes effect.</Question>
+</FAQ>
