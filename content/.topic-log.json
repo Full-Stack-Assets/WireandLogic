@@ -1917,6 +1917,13 @@
       "url": "https://smarterarticles.co.uk/the-three-second-theft-why-ai-voice-fraud-outruns-every-defence",
       "publishedAt": "2026-07-15T21:14:01.641Z",
       "signature": "4e2eeceedfdce54b"
+    },
+    {
+      "slug": "grok-build-terminal-ai-coding-agent",
+      "title": "Grok Build",
+      "url": "https://github.com/xai-org/grok-build",
+      "publishedAt": "2026-07-15T22:36:44.712Z",
+      "signature": "c7fea3d750d295d3"
     }
   ]
 }

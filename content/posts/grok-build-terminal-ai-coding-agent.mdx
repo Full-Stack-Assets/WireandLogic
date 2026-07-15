@@ -1,0 +1,77 @@
+---
+title: "Introducing Grok Build: A Terminal-Based AI Coding Agent for Full-Screen TUI and Headless Automation"
+description: "Grok Build is SpaceXAI's open-source terminal AI coding agent that offers an interactive TUI, headless scripting, and ACP integration."
+date: "2026-07-15T22:36:44.710Z"
+category: "tools"
+tags: 
+  - "ai"
+  - "coding"
+  - "tui"
+  - "rust"
+  - "automation"
+hero: 
+  url: "https://live.staticflickr.com/4153/5005302656_2678ab831d.jpg"
+  alt: "Gunpoint - AI Code"
+  credit: "Pentadact"
+  creditUrl: "https://www.flickr.com/photos/55099282@N00/5005302656"
+sources: 
+  - title: "Grok Build"
+    url: "https://github.com/xai-org/grok-build"
+  - title: "GitHub - xai-org/grok-build: SpaceXAI's coding agent harness and TUI. Fullscreen, mouse interactive, extensible."
+    url: "https://github.com/xai-org/grok-build"
+  - title: "Grok"
+    url: "https://grok.com/build"
+  - title: "Grok Build | SpaceXAI Docs"
+    url: "https://docs.x.ai/build/overview"
+---
+
+Grok Build arrived on GitHub as SpaceXAI's new terminal‑based AI coding agent. It ships as a full‑screen, mouse‑interactive TUI that can edit code, run shell commands, search the web, and manage long‑running tasks. The project also supports headless operation for CI pipelines and can be embedded in editors via the Agent Client Protocol (ACP). Built in Rust and released under Apache‑2.0, it targets macOS, Linux, and best‑effort Windows binaries. For developers who want AI assistance directly inside their terminal, Grok Build promises a tightly integrated workflow.
+
+<Callout type="takeaway">Grok Build brings AI‑driven coding to the terminal, blending an interactive TUI with headless automation.</Callout>
+
+## What happened
+The Grok Build repository (github.com/xai-org/grok-build) contains the Rust source for the grok CLI/TUI and its agent runtime. The binary, named xai-grok-pager and distributed as "grok", runs as a fullscreen TUI that understands the current codebase, can edit files, execute shell commands, perform web searches, and orchestrate long‑running tasks. Users can also invoke the agent in headless mode for scripting or CI, or connect through the Agent Client Protocol (ACP) to embed it in editors and other tools.
+
+Pre‑built binaries are provided for macOS and Linux, with Windows builds marked as best‑effort and not actively tested. The project pins the Rust toolchain via rust-toolchain.toml, and includes a protoc launcher for protobuf code generation. On first launch the tool opens a browser for authentication, while environments without a browser can use an API key set in ~/.grok/config.toml.
+
+The agent ships with the grok‑4.5 model—the same model available via the xAI API—and supports custom models through the user‑level config file. Documentation covers keyboard shortcuts, slash commands, plugins, hooks, theming, and sandboxing, and the repository layout is read‑only for the workspace root.
+
+## Why it matters
+By moving AI‑assisted coding into the terminal, Grok Build reduces context switches for developers who spend most of their day in a shell or Vim/Neovim. The headless mode enables automated refactoring, code generation, and testing within CI pipelines, potentially accelerating development cycles. Integration via ACP also opens the door for IDE plugins and custom tooling, extending the reach of the underlying grok‑4.5 model beyond the TUI.
+
+<ProsCons>
+  <Pros>
+    <li>Full‑screen TUI offers rich, mouse‑interactive experience without leaving the terminal.</li>
+    <li>Headless mode fits naturally into CI/CD and automation scripts.</li>
+    <li>Extensible via ACP, custom models, plugins, and user‑defined hooks.</li>
+  </Pros>
+  <Cons>
+    <li>Windows binaries are best‑effort and lack thorough testing.</li>
+    <li>Initial authentication requires a browser or manual API‑key setup.</li>
+    <li>External contributions are not accepted, limiting community‑driven improvements.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Start by installing the pre‑built binary for your platform and run `grok` to complete the browser‑based authentication. For scriptable use, generate an API key and place it in `~/.grok/config.toml`, then invoke commands like `grok inspect` to let the agent map your project. Choose the appropriate model with `/model <name>` inside the TUI or via the `--model` flag in headless mode. When integrating into an editor, use the Agent Client Protocol to forward requests, keeping the agent process separate for stability. Treat the TUI as a powerful REPL for code edits: experiment, accept or reject changes, and let Grok handle repetitive tasks such as dependency updates or boilerplate generation.
+
+<Callout type="warning">
+Windows builds are best‑effort only; for production use on Windows, consider running the Linux binary under WSL or building from source.
+
+External contributions are not accepted, so you must fork the repo to apply custom patches.
+
+Authentication requires a browser on first launch; headless environments must pre‑configure an API key.
+</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="Can Grok Build be used in CI pipelines without a TUI?">
+Yes. Invoke the binary with the `--headless` flag and provide an API key in `~/.grok/config.toml` to run commands programmatically.
+  </Question>
+  <Question q="Is there support for custom AI models beyond grok‑4.5?">
+Custom models can be added by specifying their endpoint and credentials in the user‑level config file; the agent will load them at runtime.
+  </Question>
+  <Question q="What platforms are officially supported?">
+Official pre‑built binaries are provided for macOS and Linux. Windows binaries are built on a best‑effort basis and are not officially tested.
+  </Question>
+</FAQ>
