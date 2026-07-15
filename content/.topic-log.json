@@ -1861,6 +1861,13 @@
       "url": "https://lucumr.pocoo.org/2026/7/13/the-tower-keeps-rising/",
       "publishedAt": "2026-07-15T06:41:43.749Z",
       "signature": "04a0dc9881c05d8a"
+    },
+    {
+      "slug": "claude-ai-vulnerability-exposes-user-data",
+      "title": "I tricked Claude into leaking your deepest, darkest secrets",
+      "url": "https://www.ayush.digital/blog/the-memory-heist",
+      "publishedAt": "2026-07-15T09:21:27.260Z",
+      "signature": "cc925fec5e2a923f"
     }
   ]
 }
