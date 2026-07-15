@@ -1840,6 +1840,13 @@
       "url": "https://shkspr.mobi/blog/2026/07/im-a-usb-c-maximalist/",
       "publishedAt": "2026-07-14T23:32:36.600Z",
       "signature": "828f59b18664e528"
+    },
+    {
+      "slug": "bonsai-27b-first-27b-llm-on-device",
+      "title": "Bonsai 27B: A 27B-Class model that runs on a phone",
+      "url": "https://prismml.com/news/bonsai-27b",
+      "publishedAt": "2026-07-15T00:57:44.862Z",
+      "signature": "8c33e1c05c72d559"
     }
   ]
 }

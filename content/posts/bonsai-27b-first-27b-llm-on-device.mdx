@@ -1,0 +1,65 @@
+---
+title: "Bonsai 27B: First 27‑Billion‑Parameter LLM Running Fully On‑Device at 3.9 GB"
+description: "PrismML’s Bonsai 27B brings a 27‑billion‑parameter multimodal model to phones at 3.9 GB, showing on‑device AI can match cloud‑scale capabilities."
+date: "2026-07-15T00:57:44.860Z"
+category: "news"
+tags: 
+  - "bonsai"
+  - "prismml"
+  - "on-device"
+  - "llm"
+  - "quantization"
+hero: 
+  url: "https://live.staticflickr.com/2130/2404563191_c409284389_b.jpg"
+  alt: "Dawn Redwood bonsai"
+  credit: "nosha"
+  creditUrl: "https://www.flickr.com/photos/77316550@N00/2404563191"
+sources: 
+  - title: "Bonsai 27B: A 27B-Class model that runs on a phone"
+    url: "https://prismml.com/news/bonsai-27b"
+  - title: "PrismML — Announcing Bonsai 27B: The First 27B-Class Model to Run on a Phone"
+    url: "https://prismml.com/news/bonsai-27b"
+  - title: "Bonsai 27B: A 27B-Class model that runs on a phone | Hacker News"
+    url: "https://news.ycombinator.com/item?id=48910545"
+  - title: "prism-ml/Bonsai-27B-gguf · Hugging Face"
+    url: "https://huggingface.co/prism-ml/Bonsai-27B-gguf"
+  - title: "PrismML Announces 1-bit Bonsai 27B - The First 27B Model to Run on a Phone"
+    url: "https://www.manilatimes.net/2026/07/15/tmt-newswire/plentisoft/prismml-announces-1-bit-bonsai-27b-the-first-27b-model-to-run-on-a-phone/2384502"
+---
+
+The AI community woke up to a surprise on July 14: PrismML released Bonsai 27B, a 27‑billion‑parameter model that can run on a consumer smartphone. By compressing the model to a 3.9 GB 1‑bit variant and a 5.9 GB ternary variant, the company shattered the long‑standing belief that such large models belong only in data‑center clouds. The release includes full multimodal support, 262K‑token context, and speculative decoding for speed. For developers, this means powerful reasoning, tool‑calling, and vision capabilities can now be embedded directly into mobile apps, opening new privacy‑first and offline use cases.
+
+<Callout type="takeaway">Bonsai 27B proves that 27B‑class intelligence can be deployed on‑device without sacrificing most of its capabilities.</Callout>
+
+## What happened
+PrismML announced two low‑bit variants of Bonsai 27B, both built on the Qwen‑3.6 27B backbone. The ternary version uses {‑1,0,+1} weights with FP16 group‑wise scaling, yielding a 5.9 GB footprint that fits on a laptop while preserving 95% of full‑precision performance. The 1‑bit version uses binary {‑1,+1} weights, achieving a 3.9 GB size that fits within the memory budget of an iPhone 17 Pro, delivering roughly 90% of the baseline accuracy.
+
+Across a 15‑benchmark suite covering knowledge, reasoning, math, coding, instruction following, tool calling, and vision, the ternary model retained 95% and the 1‑bit model retained 90% of full‑precision scores. Both variants run end‑to‑end in low‑bit mode, including embeddings, attention, MLPs, and the LM head, and ship with a compact 4‑bit vision tower. The models are released under the Apache 2.0 license, enabling immediate experimentation.
+
+## Why it matters
+Running a 27B‑class model on a phone collapses the latency and privacy gap between cloud inference and edge execution. Developers can now ship AI‑driven features—such as on‑device code assistance, multi‑step planning, and image‑aware assistants—without sending data to remote servers. The reduced memory footprint also lowers power consumption, extending battery life for continuous AI workloads. Moreover, the open‑source license encourages community‑driven optimization and integration into diverse platforms, accelerating the shift toward decentralized AI.
+
+<ProsCons>
+  <Pros>
+    <li>Enables high‑capacity reasoning and vision on consumer hardware.</li>
+    <li>Preserves most of the original model’s accuracy (90‑95%).</li>
+    <li>Open‑source Apache 2.0 license encourages broad adoption.</li>
+  </Pros>
+  <Cons>
+    <li>Performance still lags behind full‑precision 27B models, especially on complex math.</li>
+    <li>Requires high‑end devices (e.g., iPhone 17 Pro) to meet memory constraints.</li>
+    <li>Tooling for on‑device deployment is still emerging, adding integration effort.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Start by profiling your target device’s memory and compute budget; the 1‑bit variant fits under 4 GB, while the ternary version needs about 6 GB. Use PrismML’s provided GGUF files and the spec‑decode API to maximize token throughput. For latency‑sensitive tasks, benchmark both variants on the actual hardware and decide if the 5‑% accuracy trade‑off of the 1‑bit model is acceptable. Integrate the vision tower only when image input is essential, as it adds a modest 4‑bit overhead. Finally, consider hybrid deployment: run the 1‑bit model on‑device for privacy‑critical steps and fall back to a cloud service for heavy‑weight inference when needed.
+
+<Callout type="warning">The 1‑bit and ternary models still lose 5‑10% of full‑precision accuracy, and their speed on older phones may be insufficient for real‑time interaction.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="Can Bonsai 27B run on older smartphones with less than 4 GB RAM?">No. The 1‑bit variant requires roughly 3.9 GB of memory, so devices with less RAM will be unable to load the model without swapping, which defeats the on‑device advantage.</Question>
+  <Question q="How does the 1‑bit variant compare to the ternary variant in practice?">The 1‑bit model is smaller and runs on more constrained hardware, but it retains about 90% of the full‑precision benchmark scores, whereas the ternary version retains about 95% and offers slightly better reasoning quality at the cost of a larger memory footprint.</Question>
+  <Question q="What toolchain is needed to deploy Bonsai 27B on iOS?">You need the PrismML GGUF loader, a compatible C++/Swift bridge for the GGUF runtime, and the spec‑decode library. Apple’s Metal Performance Shaders can accelerate the group‑wise scaling operations, and the model can be packaged as a Core ML model using the provided conversion scripts.</Question>
+</FAQ>
