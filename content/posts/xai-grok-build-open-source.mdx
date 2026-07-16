@@ -1,0 +1,65 @@
+---
+title: "xAI Open Sources Grok Build: Local AI Coding Agent Now Fully Transparent and Unlimited"
+description: "xAI releases Grok Build as open‑source, letting developers run the AI coding TUI locally, eliminating cloud data sync and usage caps."
+date: "2026-07-16T01:07:16.164Z"
+category: "news"
+tags: 
+  - "ai"
+  - "open-source"
+  - "coding"
+  - "cli"
+  - "privacy"
+hero: 
+  url: "https://live.staticflickr.com/3267/2302808158_a126befa41_b.jpg"
+  alt: "Will narrow-AI Natural language processing (NLP) software ever correctly interpet this paragraph?"
+  credit: "brewbooks"
+  creditUrl: "https://www.flickr.com/photos/93452909@N00/2302808158"
+sources: 
+  - title: "Grok Build is open source"
+    url: "https://github.com/xai-org/grok-build"
+  - title: "GitHub - xai-org/grok-build: SpaceXAI's coding agent harness and TUI. Fullscreen, mouse interactive, extensible."
+    url: "https://github.com/xai-org/grok-build"
+  - title: "Grok Build Is Now Open-Source: What You Need to Know"
+    url: "https://www.basenor.com/blogs/news/grok-build-is-now-open-source-what-you-need-to-know"
+  - title: "SpaceXAI makes Grok Build open source"
+    url: "https://breakingthenews.net/Article/SpaceXAI-makes-Grok-Build-open-source/66706904"
+---
+
+On July 15, 2026, xAI announced that Grok Build, its terminal‑based AI coding agent, is now fully open source on GitHub. The repository includes the Rust source for the CLI/TUI, the agent runtime, and the complete extension system. By publishing the code, developers can run the tool locally, keeping their code off the cloud and bypassing the usage caps that applied to the hosted version. This shift addresses recent privacy concerns and restores functionality for teams that hit rate limits. It also signals a broader move toward transparency in AI developer tools.
+
+<Callout type="takeaway">Open‑sourcing Grok Build gives developers full visibility and removes cloud‑imposed limits.</Callout>
+
+## What happened
+Grok Build’s source code was released under the Apache 2.0 license in the xai‑org/grok‑build GitHub repository. Pre‑built binaries for macOS, Linux, and Windows are provided, and the project pins the Rust toolchain via rust‑toolchain.toml for reproducible builds. The release bundles the core agent loop, file‑interaction commands, the full‑screen TUI, and the extensible plugin architecture that supports skills, hooks, and MCP servers.
+
+The open‑source move directly responds to a privacy issue uncovered earlier in the year: earlier builds automatically synced entire code repositories to Google Cloud without explicit consent. xAI confirmed that all previously uploaded data has been deleted and that cloud‑side retention has been disabled. Running the agent locally now ensures that source code never leaves the developer’s machine unless they explicitly enable remote services.
+
+In parallel, xAI reset usage limits for all users on the same day, removing the server‑side rate caps for local executions of Grok Build. The hosted version still enforces limits, but developers who compile and run the binary themselves are no longer subject to those quotas.
+
+## Why it matters
+Privacy is a top concern for enterprises that embed AI tools into their development pipelines. By eliminating automatic cloud sync, Grok Build becomes viable for proprietary codebases and regulated industries. The removal of usage caps also makes the tool practical for heavy‑use scenarios such as continuous integration, where frequent AI‑driven edits are common. Finally, the open‑source release invites community scrutiny, potentially accelerating security hardening and feature innovation, even though external contributions are currently restricted.
+
+<ProsCons>
+  <Pros>
+    <li>Full transparency into how the agent interacts with code.</li>
+    <li>Local execution guarantees data never leaves the host machine.</li>
+    <li>Unlimited usage for self‑hosted runs removes cloud rate limits.</li>
+  </Pros>
+  <Cons>
+    <li>External contributions are not accepted, limiting community patches.</li>
+    <li>Windows builds are best‑effort and not officially tested.</li>
+    <li>Users must manage Rust toolchain and updates themselves.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Start by assessing whether your workflow requires AI‑assisted code edits on sensitive repositories. If privacy is paramount, clone the repository, install the pinned Rust toolchain, and build the binary on an air‑gapped machine. Evaluate the built‑in extension system to see if existing plugins meet your needs, or develop custom hooks for internal tooling. For CI pipelines, consider running Grok Build in headless mode and scripting common slash commands, but remember to pin the version you built to avoid unexpected changes. Finally, monitor the project’s changelog for security patches, as you will be responsible for applying updates.
+
+<Callout type="warning">Windows binaries are built on a best‑effort basis and may lack full feature parity; test thoroughly before adopting in production.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="Do I need an xAI account to run Grok Build locally?">No. The open‑source binary runs entirely on your hardware and does not require authentication, though optional remote model services still need an account.</Question>
+  <Question q="Can I contribute patches or plugins to the project?">External contributions to the core repository are not accepted at this time, but you can publish independent plugins that interface with the Agent Client Protocol.</Question>
+  <Question q="What happens to cloud‑based features like model updates after the open‑source release?">Cloud‑hosted model updates remain available only through the hosted service; the local binary uses the bundled model version unless you configure it to connect to a remote endpoint.</Question>
+</FAQ>
