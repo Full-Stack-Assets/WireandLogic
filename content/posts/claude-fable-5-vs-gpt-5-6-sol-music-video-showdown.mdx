@@ -1,0 +1,56 @@
+---
+title: "Claude Fable 5 vs GPT-5.6 Sol: $100 AI-Driven Music Video Showdown"
+description: "We let Claude Fable 5 and GPT-5.6 Sol autonomously create full-length music videos on a $100 budget and compare tool use, cost, and output."
+date: "2026-07-16T23:34:18.985Z"
+category: "engineering"
+tags: 
+  - "ai"
+  - "music-video"
+  - "agentic"
+  - "cost"
+  - "tool-use"
+hero: 
+  url: "https://live.staticflickr.com/4126/5008128133_ba3385ac41_b.jpg"
+  alt: "Social Media Week Milano :: Il Festival della rete"
+  credit: "br1dotcom"
+  creditUrl: "https://www.flickr.com/photos/21394564@N04/5008128133"
+sources: 
+  - title: "$100 AI Music Video: Claude Fable 5 vs. GPT-5.6 Sol"
+    url: "https://www.tryai.dev/blog/ai-music-video-arena-claude-vs-gpt-5.6"
+  - title: "$100 AI Music Video: Claude Fable 5 vs. GPT-5.6 Sol"
+    url: "https://www.tryai.dev/blog/ai-music-video-arena-claude-vs-gpt-5.6"
+  - title: "GPT 5.6 vs Claude Fable 5: The Best AI Model Across 6 Practical Use Cases"
+    url: "https://creatoreconomy.so/p/gpt-vs-claude-fable-i-tested-6-real-use-cases"
+  - title: "Claude Fable 5 vs GPT-5.5: Benchmarks, Pricing, Speed (July 2026)"
+    url: "https://benchlm.ai/compare/claude-fable-vs-gpt-5-5"
+---
+
+Imagine handing an AI model a song, a budget, and a set of production tools, then watching it deliver a complete music video on its own. That’s exactly what we did with Claude Fable 5 and OpenAI’s GPT‑5.6 Sol, each given the hit “Uptown Funk” and a $100 spend limit. The models ran an autonomous loop of planning, web search, budget checks, image/video generation, and ffmpeg editing. Both completed the task without human intervention, producing a full‑length video with the original track. This experiment shows how far autonomous tool‑calling has come and what cost trade‑offs creators face.
+<Callout type="takeaway">Both models can produce a full‑length AI‑generated music video within $100, but Claude Fable 5 spends more to deliver slightly longer footage.</Callout>
+## What happened
+We built a lightweight agentic harness that hands a model a song, a hard dollar budget, and six tools: a planning stub, web_search, get_budget, generate_image, generate_video, and a local run_command with ffmpeg. Each model received the same lyric‑timestamped description of Bruno Mars and Mark Ronson’s “Uptown Funk” and was allowed to decide how to research video models, generate clips, edit, and assemble the final cut.
+We ran four experiments: Claude Fable 5 and GPT‑5.6 Sol at $25 and $100 budgets. All runs finished on their own and produced a valid video file. At the $100 level the models spent the allocated generation budget—$48.60 for Claude Fable 5 and $36.57 for GPT‑5.6 Sol—demonstrating that more money translates into more generated footage, though the spend does not include the compute cost of the language model itself.
+The full logs, tool‑call transcripts, and the open‑source harness are available at github.com/hershalb/music-video‑arena, allowing anyone to replicate or extend the experiment.
+## Why it matters
+For creators, the ability to hand off an entire video production to an LLM reduces manual editing time and opens new rapid‑prototyping workflows. However, the cost differential—Claude Fable 5’s higher token price and higher generation spend—means that budget‑constrained teams may favor GPT‑5.6 Sol despite slightly shorter footage. The experiment also highlights the importance of tool selection; models that can reliably invoke external generation services and manage ffmpeg commands autonomously are better suited for end‑to‑end media pipelines.
+<ProsCons>
+  <Pros>
+    <li>End‑to‑end video creation without human hands‑on editing.</li>
+    <li>Transparent tool‑call logs reveal each model’s research and editing strategy.</li>
+    <li>Open‑source harness makes the workflow reproducible for other projects.</li>
+  </Pros>
+  <Cons>
+    <li>Claude Fable 5’s higher token pricing reduces budget efficiency.</li>
+    <li>Reliance on external image/video generation services can introduce quality variability.</li>
+    <li>Budget caps still limit total footage length and visual diversity.</li>
+  </Cons>
+</ProsCons>
+## How to think about it
+Start by defining the creative output and the maximum spend you’re willing to allocate for generation services. Choose a model whose API pricing aligns with that budget—GPT‑5.6 Sol currently offers about a 50 % cost advantage over Claude Fable 5. Next, map the required toolchain (search, generation, editing) and verify that the model can invoke each tool reliably. Run a short pilot with a $25 budget to gauge footage length and quality before scaling to $100 or more. Finally, factor in hidden compute costs for the language model itself; they can double the effective spend if not accounted for.
+<Callout type="warning">Do not assume the $100 figure includes the compute charges for running the language model; those costs are separate and can be significant.</Callout>
+## FAQ
+<FAQ>
+  <Question q="Can I run the music‑video arena on a smaller budget?">Yes—you can start with a $25 budget, which both models nearly exhaust, yielding a shorter but still complete video. This is a good way to test workflow stability before committing more funds.</Question>
+  <Question q="How does the visual quality compare between Claude Fable 5 and GPT‑5.6 Sol?">Both models produced watchable full‑length videos, but Claude Fable 5 tended to generate slightly longer clips, while GPT‑5.6 Sol’s output was marginally less polished in some scenes due to the lower‑cost generation models it selected.</Question>
+  <Question q="Is the cost advantage of GPT‑5.6 Sol consistent across other creative tasks?">In the broader creator economy GPT‑5.6 Sol is reported to be about 50 % cheaper per token than Claude Fable 5, so the savings generally carry over to tasks like image generation, code assistance, and text editing, though actual spend depends on how many paid generation calls each task requires.</Question>
+</FAQ>
