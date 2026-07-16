@@ -1,0 +1,69 @@
+---
+title: "Kimi K3 Launches as First Open 2.8‑Trillion‑Parameter Model with 1M‑Token Context"
+description: "Kimi releases K3, a 2.8‑trillion‑parameter open model featuring a 1‑million‑token window and native vision, marking a new scaling milestone."
+date: "2026-07-16T21:15:52.795Z"
+category: "news"
+tags: 
+  - "kimi"
+  - "large-language-models"
+  - "open-source"
+  - "multimodal"
+  - "scaling"
+hero: 
+  url: "https://live.staticflickr.com/7019/6518977467_2ebbe8f8d4.jpg"
+  alt: "KIMI"
+  credit: "imnick_H"
+  creditUrl: "https://www.flickr.com/photos/72014537@N06/6518977467"
+sources: 
+  - title: "Kimi K3: Open Frontier Intelligence"
+    url: "https://www.kimi.com/blog/kimi-k3"
+  - title: "Kimi K3 Tech Blog: Open Frontier Intelligence"
+    url: "https://www.kimi.com/blog/kimi-k3"
+  - title: "Kimi.ai (@Kimi_Moonshot) on X"
+    url: "https://x.com/Kimi_Moonshot/status/2077830229968683203"
+  - title: "Kimi K3 - Kimi API Platform"
+    url: "https://platform.kimi.ai/docs/guide/kimi-k3-quickstart"
+  - title: "Kimi K3 - Open Agentic Intelligence by Moonshot AI"
+    url: "https://kimik3.xyz/"
+---
+
+Kimi announced the launch of K3, its newest open‑source large language model. At 2.8 trillion parameters and a 1‑million‑token context window, K3 pushes the open‑model frontier beyond previous limits. The model also adds native vision capabilities and a sparsely‑gated Mixture‑of‑Experts layer that activates 16 of 896 experts. While its raw performance still trails the leading proprietary models, K3’s scaling efficiency is reported to be about 2.5 × higher than its predecessor K2. For developers, the immediate availability via Kimi.com, Kimi Work, and the API means a powerful tool is now ready for integration.
+
+<Callout type="takeaway">K3 demonstrates that open models can now match frontier‑scale parameters and context lengths previously reserved for closed systems.</Callout>
+
+## What happened
+On July 16, 2026, Kimi released K3, a 2.8 trillion‑parameter model built on Kimi Delta Attention and Attention Residuals. The architecture introduces a sparsely‑gated Mixture‑of‑Experts system that selects 16 of 896 experts per token, and it scales training efficiency by roughly 2.5 × compared with K2.
+
+K3 ships with a 1‑million‑token context window and native vision, allowing it to ingest screenshots, CAD drawings, or full codebases in a single pass. Early benchmark runs show frontier‑level performance on Kimi’s internal evaluation suite, consistently beating other open models and approaching the scores of Claude Fable 5 and GPT 5.6 Sol on selected tasks.
+
+The full model weights are slated for public release on July 27, 2026, and Kimi plans to roll out low‑ and high‑effort inference modes after launch. Partnerships with inference providers are being finalized to ensure a reliable ecosystem rollout.
+
+## Why it matters
+K3’s open‑source status lowers the barrier for developers to experiment with trillion‑parameter models without licensing fees, accelerating research and product innovation. The massive context window enables end‑to‑end processing of entire repositories or long documents, which can reshape workflows in code generation, documentation, and multimodal design. However, the model still lags the most powerful proprietary offerings, meaning critical applications may still prefer closed alternatives for peak performance.
+
+<ProsCons>
+  <Pros>
+    <li>Open weights give unrestricted access for customization.</li>
+    <li>1 million token window supports whole‑codebase reasoning.</li>
+    <li>Vision integration opens new multimodal use cases.</li>
+  </Pros>
+  <Cons>
+    <li>Performance still trails top proprietary models on some benchmarks.</li>
+    <li>Current inference defaults to max thinking effort, increasing compute cost.</li>
+    <li>Full ecosystem (low/high‑effort modes) not yet available at launch.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Treat K3 as a platform rather than a drop‑in replacement for existing APIs. Start by prototyping tasks that benefit from long context—such as codebase navigation or document summarization—and evaluate cost versus accuracy. When performance ceilings are hit, consider hybrid pipelines that fall back to specialized proprietary models for the most demanding sub‑tasks. Keep an eye on upcoming low‑effort inference modes, which will reduce latency and cost for production workloads.
+
+<Callout type="warning">
+Do not assume K3 will outperform proprietary models on all benchmarks; validate against your target tasks before committing to production.
+</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="How can developers access Kimi K3?">K3 is available immediately through Kimi.com, Kimi Work, Kimi Code, and the public Kimi API. The full model weights will be downloadable on July 27, 2026.</Question>
+  <Question q="What hardware is needed to run the 2.8‑trillion‑parameter model?">Running K3 at full scale requires multiple high‑end GPUs (e.g., A100 or H100) with sufficient VRAM to host the 2.8 T parameters and the 1 M‑token context. For most developers, using the hosted Kimi API is the practical entry point.</Question>
+  <Question q="How does K3 compare to GPT‑5 in code generation?">Early internal benchmarks show K3 achieving frontier‑level performance that approaches GPT‑5 on code generation tasks, but it still trails GPT‑5 on a few high‑precision benchmarks. Real‑world results will vary by workload.</Question>
+</FAQ>
