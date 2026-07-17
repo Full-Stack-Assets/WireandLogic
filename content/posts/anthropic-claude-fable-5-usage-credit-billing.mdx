@@ -1,0 +1,61 @@
+---
+title: "Anthropic’s Claude Fable 5 Shifts to Usage‑Credit Billing After July 7 Outage"
+description: "Claude Fable 5 outage fixed, but the model moves to usage‑credit billing after July 7, with subscription access pending capacity."
+date: "2026-07-17T19:26:09.915Z"
+category: "news"
+tags: 
+  - "anthropic"
+  - "claude"
+  - "fable5"
+  - "usage-credits"
+  - "ai"
+hero: 
+  url: "https://live.staticflickr.com/65535/54585378881_c3af946154_b.jpg"
+  alt: "Claude AI by Anthropic"
+  credit: "RyanDonegan"
+  creditUrl: "https://www.flickr.com/photos/203061726@N08/54585378881"
+sources: 
+  - title: "Ask HN: Did Fable disappear from your Claude usage and requires credits now?"
+    url: "https://news.ycombinator.com/item?id=48950477"
+  - title: "Ask HN: Did Fable disappear from your Claude usage and requires credits now? | Hacker News"
+    url: "https://news.ycombinator.com/item?id=48950477"
+  - title: "Claude Fable 5 isn’t permanently leaving subscriptions, Anthropic says"
+    url: "https://www.bleepingcomputer.com/news/artificial-intelligence/claude-fable-5-isnt-permanently-leaving-subscriptions-anthropic-says/"
+---
+
+Earlier this week Anthropic experienced an outage that temporarily removed Claude Fable 5 from Claude.ai, Claude Code, and related surfaces. The issue was acknowledged on the Claude status page and fixed within hours, but it coincided with the end of a limited‑time promotion that ran from July 1 to July 19, 2026. During the promotion subscription users received “best‑effort” access to Fable, but the model is now being moved to usage‑credit billing after July 7. The shift has sparked concern among developers who relied on Fable for high‑capacity tasks. Understanding the timeline and the billing change is essential for planning future workloads.
+
+<Callout type="takeaway">Fable 5 will require usage credits after July 7, with subscription access returning only when capacity permits.</Callout>
+
+## What happened
+Anthropic posted an incident on status.claude.com indicating that users could not select Claude Fable 5 across its platforms, and the problem was resolved by the end of the day. The outage highlighted the fragility of the model’s deployment pipeline, which had been redeployed multiple times in the preceding days.
+
+Separately, Anthropic announced that after the promotional window ending July 19, Fable 5 would be removed from Pro, Max, Team, and select Enterprise subscription plans on July 7. The model will remain available via the Claude API and consumption‑based Enterprise plans, and subscription users will receive up to 50 % of their weekly usage limits for free until the cutoff, after which usage‑credit billing applies. The company said it intends to restore Fable to subscriptions once capacity allows.
+
+## Why it matters
+Developers who built pipelines around Fable’s larger context window now face unexpected credit costs, potentially affecting project budgets and timelines. The shift also signals Anthropic’s broader strategy to manage high demand for its most powerful models through usage‑based billing, which could influence how teams evaluate AI model selection. Organizations with strict cost controls must monitor credit usage closely, while those with flexible budgets may benefit from the on‑demand scalability that credits provide.
+
+<ProsCons>
+  <Pros>
+    <li>Access to the most capable Claude model without immediate subscription limits.</li>
+    <li>Usage‑credit model scales with actual demand, preventing over‑provisioning.</li>
+    <li>Anthropic has pledged to reinstate subscription access when capacity improves.</li>
+  </Pros>
+  <Cons>
+    <li>Unexpected credit charges can disrupt budgeting.</li>
+    <li>Subscription users lose guaranteed access during peak demand.</li>
+    <li>Capacity‑driven reinstatement timeline is uncertain.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Treat Fable 5 as a premium, on‑demand resource rather than a default subscription feature. Estimate your typical token usage and compare the projected credit cost against your budget; if the cost is prohibitive, consider alternative Claude models or third‑party options for the same tasks. Set up monitoring alerts for credit consumption to avoid surprise overruns. Keep an eye on Anthropic’s status updates for announcements about capacity improvements that could restore subscription access.
+
+<Callout type="warning">Do not assume Fable will remain available under your current subscription without confirming capacity‑related reinstatement notices.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="When will Fable be back on subscription plans?">Anthropic says Fable will return to subscriptions once sufficient capacity is available, but no exact date has been provided.</Question>
+  <Question q="How can I estimate usage‑credit costs for Fable?">Review your recent token usage on Claude, apply the current credit rate published on the Anthropic pricing page, and factor in the 50 % free weekly quota that applies until the July 7 cutoff.</Question>
+  <Question q="What alternatives exist while Fable is on usage‑credit billing?">Consider using Claude Opus for most tasks, Claude Code for coding‑focused work, or other high‑capacity models that remain under subscription plans.</Question>
+</FAQ>
