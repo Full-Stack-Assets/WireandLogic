@@ -2078,6 +2078,13 @@
       "url": "https://news.ycombinator.com/item?id=48950477",
       "publishedAt": "2026-07-17T19:26:09.917Z",
       "signature": "595167f199d87d03"
+    },
+    {
+      "slug": "state-of-open-source-ai",
+      "title": "The state of open source AI",
+      "url": "https://stateofopensource.ai/",
+      "publishedAt": "2026-07-17T20:32:07.021Z",
+      "signature": "ee6b80af6a846fcd"
     }
   ]
 }
