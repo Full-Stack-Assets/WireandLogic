@@ -1,0 +1,65 @@
+---
+title: "What building 2,500 Jamcorder recorders taught me about hardware vs software"
+description: "Selling 2,500 simple recorders revealed that hardware can be easier than software, reshaping indie makers' expectations."
+date: "2026-07-19T19:51:25.738Z"
+category: "engineering"
+tags: 
+  - "hardware"
+  - "software"
+  - "manufacturing"
+  - "indie"
+  - "product"
+hero: 
+  url: "https://live.staticflickr.com/2686/4053353580_c3f15e6b20_b.jpg"
+  alt: "New Computing Cycles Supported by 10x More Devices - Opportunities for Semiconductor / Hardware / Software / Services"
+  credit: "zipckr"
+  creditUrl: "https://www.flickr.com/photos/7363465@N08/4053353580"
+sources: 
+  - title: "What I learned selling 2,500 MIDI recorders: Hardware is not so hard"
+    url: "https://chipweinberger.com/articles/20260719-hardware-is-not-so-hard"
+  - title: "Hardware is not so hard - Chip Weinberger"
+    url: "https://chipweinberger.com/articles/20260719-hardware-is-not-so-hard"
+---
+
+When I launched the Jamcorder—a single‑screw, single‑PCB piano recorder—I never imagined it would become a modest commercial success. In the past year and a half I’ve shipped over 2,500 units and the product now sustains a small business. The surprise was not the sales numbers but the fact that the hardware side felt almost frictionless. Most of the headaches came from writing roughly 200 K lines of firmware, app code, and tooling. Understanding why the hardware was easy reshapes how indie makers should approach product development.
+
+<Callout type="takeaway">Hardware is only as hard as you make it.</Callout>
+
+## What happened
+
+The Jamcorder was born from two personal goals: a fully automated piano‑recording device and a chance to build hardware after a software career. After finalizing a single‑screw enclosure and a generous‑draft injection‑molded shell, the first production run shipped and sales quickly climbed to 2,500 units.
+
+Behind the scenes, the software effort dwarfed the hardware. Roughly 200 K lines of code spread across firmware, a companion app, and manufacturing tooling took three years to mature, and most of the development pain points were bugs, UI polish, and cloud integration.
+
+Component shortages and tariff concerns appeared briefly—Trump‑era USB‑C tariffs were a close call—but they never halted production, reinforcing the perception that the hardware supply chain was manageable for this scale.
+
+## Why it matters
+
+The experience challenges the common mantra that hardware is inherently harder than software for small teams. When the mechanical design is deliberately simple, the real bottleneck shifts to code, testing, and post‑sale support. Indie creators can therefore allocate resources more efficiently, focusing on software quality while keeping hardware lean.
+
+<ProsCons>
+  <Pros>
+    <li>Simple mechanical design reduces tooling cost.</li>
+    <li>Low part count makes sourcing trivial.</li>
+    <li>Fast iteration cycles keep inventory lean.</li>
+  </Pros>
+  <Cons>
+    <li>Limited feature set caps market reach.</li>
+    <li>Scaling to higher volumes introduces new supply‑chain risks.</li>
+    <li>Heavy reliance on software means bugs affect the whole product.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+
+Start by stripping the product to its essential function; aim for a single PCB, minimal fasteners, and a mold with generous draft angles. Validate the software stack early—automated tests, continuous integration, and clear versioning will save far more time than tweaking a screw hole. When you consider adding features, treat them as separate modules rather than complicating the core hardware. Finally, plan for the next scale step: negotiate component lead times, design for manufacturability, and budget for a larger firmware team before you hit volume thresholds.
+
+<Callout type="warning">Don’t assume a simple design will stay simple when you add features or target high‑volume markets.</Callout>
+
+## FAQ
+
+<FAQ>
+  <Question q="Is hardware really easier for indie makers?">If the mechanical design stays simple and the bill of materials stays low, the hardware side can be relatively painless; the real difficulty usually lies in software, certification, and scaling.</Question>
+  <Question q="How much software effort is typical for a product like this?">In my case the firmware, companion app, and production tooling added up to about 200 K lines of code over three years, which is comparable to a small SaaS project.</Question>
+  <Question q="What should I watch out for when scaling hardware production?">Beyond the initial tooling, larger volumes bring tighter component lead times, stricter quality controls, and the need for a more robust supply chain; ignoring these can turn a smooth launch into a costly nightmare.</Question>
+</FAQ>
