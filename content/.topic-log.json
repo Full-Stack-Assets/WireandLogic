@@ -2162,6 +2162,13 @@
       "url": "https://stephen.bochinski.dev/blog/2026/07/18/the-kimi-k3-moment/",
       "publishedAt": "2026-07-18T23:04:31.443Z",
       "signature": "2d665864a377b2e4"
+    },
+    {
+      "slug": "claude-code-rust-bun-startup-speed",
+      "title": "Claude Code uses Bun written in Rust now",
+      "url": "https://simonwillison.net/2026/Jul/19/claude-code-in-bun-in-rust/",
+      "publishedAt": "2026-07-19T12:07:10.954Z",
+      "signature": "75c9298b859cb265"
     }
   ]
 }

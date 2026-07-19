@@ -1,0 +1,61 @@
+---
+title: "Claude Code v2.1.181 Switches to Rust‑Based Bun, Boosting Startup Speed by 10%"
+description: "Claude Code v2.1.181 now runs Bun compiled in Rust, delivering a 10% faster startup on Linux and previewing Bun v1.4.0 ahead of release."
+date: "2026-07-19T12:07:10.952Z"
+category: "engineering"
+tags: 
+  - "claude-code"
+  - "bun"
+  - "rust"
+  - "startup-performance"
+  - "opensource"
+hero: 
+  url: "https://live.staticflickr.com/8484/28586833023_bda9f7a09a_b.jpg"
+  alt: "DSC_0163"
+  credit: "Governor Earl Ray Tomblin"
+  creditUrl: "https://www.flickr.com/photos/56770773@N04/28586833023"
+sources: 
+  - title: "Claude Code uses Bun written in Rust now"
+    url: "https://simonwillison.net/2026/Jul/19/claude-code-in-bun-in-rust/"
+  - title: "Claude Code uses Bun written in Rust now"
+    url: "https://simonwillison.net/2026/Jul/19/claude-code-in-bun-in-rust/"
+---
+
+Claude Code v2.1.181, released on June 17, now runs Bun compiled in Rust. The Rust port was first mentioned by Jarred Sumner, who reported a 10 % faster startup on Linux. A local inspection shows Claude reporting Bun v1.4.0 even though the latest public Bun release is v1.3.14. This shift signals that a preview of the next Bun version is already in production across many devices.
+
+<Callout type="takeaway">Switching to the Rust‑based Bun gives Claude Code a measurable startup boost while keeping the runtime under the radar.</Callout>
+
+## What happened
+Claude Code v2.1.181 and later versions were updated to use the Rust port of Bun. Jarred Sumner noted a 10 % reduction in startup time on Linux, though most users did not notice any other changes.
+
+Running `claude-code --version` on a macOS arm64 machine reports Bun v1.4.0, a version that does not exist in the official GitHub releases, whose latest tag is v1.3.14 from May 12. The Rust build can be installed via `bun upgrade --canary`, confirming it is a canary release.
+
+The installation lists 563 filenames, indicating a full production deployment across millions of devices.
+
+## Why it matters
+A 10 % startup improvement can reduce latency for interactive AI workflows, especially in serverless or containerized environments where cold starts dominate. The Rust implementation also brings memory safety and potentially lower binary size, aligning with the broader trend of rewriting performance‑critical tools in Rust. However, the canary status means the runtime may still have bugs, and developers need to weigh early‑access benefits against stability.
+
+<ProsCons>
+  <Pros>
+    <li>10 % faster startup on Linux reduces latency.</li>
+    <li>Rust’s safety guarantees lower crash risk.</li>
+    <li>Access to Bun v1.4.0 features before official release.</li>
+  </Pros>
+  <Cons>
+    <li>Canary build may contain undiscovered bugs.</li>
+    <li>Limited documentation for the Rust port.</li>
+    <li>Potential incompatibility with existing Bun plugins.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Test the Rust Bun in a staging environment before promoting to production. Use `bun upgrade --canary` to obtain the latest Rust build, then benchmark startup times against the stable version. If the performance gain outweighs any stability concerns, consider pinning the canary version in your deployment scripts. Keep an eye on the official Bun release notes for migration guidance.
+
+<Callout type="warning">Do not deploy the canary Rust Bun to critical production services without thorough testing, as breaking changes may appear without notice.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="Will the Rust Bun affect Claude Code’s token usage?">The runtime change does not alter the model’s token processing; it only impacts the surrounding execution environment.</Question>
+  <Question q="How can I confirm I am running the Rust version of Bun?">Run `bun --version`; a version number higher than the latest stable release (e.g., v1.4.0) indicates the Rust canary is active.</Question>
+  <Question q="What steps are required to upgrade and what risks should I monitor?">Execute `bun upgrade --canary`, then run your test suite and monitor startup latency and error logs for regressions.</Question>
+</FAQ>
