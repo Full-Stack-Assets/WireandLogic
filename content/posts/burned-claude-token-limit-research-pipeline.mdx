@@ -1,0 +1,51 @@
+---
+title: "How I Burned My Claude Token Limit and Built a Cost‑Effective Multi‑Model Research Pipeline"
+description: "I spent my Claude Max 5x quota in minutes, then engineered a multi‑model pipeline that cuts token costs while preserving research depth."
+date: "2026-07-19T15:10:06.474Z"
+category: "tools"
+tags: 
+  - "tokenomics"
+  - "ai-cost"
+  - "agentic"
+  - "research-pipeline"
+  - "optimization"
+hero: 
+  url: "https://live.staticflickr.com/4774/40017417194_e3f7163a01_b.jpg"
+  alt: "Floppy Disk Repair"
+  credit: "jurvetson"
+  creditUrl: "https://www.flickr.com/photos/44124348109@N01/40017417194"
+sources: 
+  - title: "I burned all my tokens researching how to save tokens"
+    url: "https://quesma.com/blog/custom-deep-research-pipeline/"
+  - title: "I burned all my tokens researching how to save tokens - Quesma Blog"
+    url: "https://quesma.com/blog/custom-deep-research-pipeline/"
+---
+
+Running a deep‑research pipeline on Claude Max 5x, I watched the token budget evaporate in 30 minutes as 111 agents fired off 123 claims and only 25 were verified. The run hit the plan’s hard limit, forcing a multi‑hour cooldown with no synthesized output. That failure forced me to rethink how to orchestrate multiple subscriptions—Claude, Codex, Antigravity—so they share memory and divide work. The result is a modular pipeline that stays within a single plan’s quota while still surfacing high‑quality insights. For builders who rely on AI agents, the experiment shows that token economics can be engineered, not just accepted.
+<Callout type="takeaway">Orchestrating multiple models with shared memory can slash token spend without sacrificing research depth.</Callout>
+## What happened
+The first version of my custom pipeline exhausted the entire Claude Max 5x allocation in half an hour. It launched 111 native Claude agents, queued 123 claims for verification, and managed to verify only 25 before the quota was reached, after which the synthesis step never ran.
+Realizing the waste, I repurposed the three subscriptions I already paid for—Claude, Codex, and Antigravity—by extending the claude‑mem plugin to expose a shared memory layer. Claude Code became the primary harness, delegating sub‑tasks to Codex for code‑centric queries and Antigravity for retrieval‑augmented generation. By routing each task to the model best suited for it, the pipeline reduced token consumption dramatically while preserving breadth of coverage.
+## Why it matters
+Token limits are a hard ceiling for teams that run autonomous research agents at scale. Exhausting a quota not only stalls a single experiment but also inflates operational costs and delays product timelines. A multi‑model orchestration strategy lets developers stretch existing budgets, avoid additional spend, and maintain control over data provenance. Moreover, the shared‑memory approach creates a single source of truth that improves verification consistency across agents.
+<ProsCons>
+  <Pros>
+    <li>Significant reduction in token spend per research run.</li>
+    <li>Leverages existing subscriptions, no extra cost.</li>
+    <li>Improved verification success rate through model specialization.</li>
+  </Pros>
+  <Cons>
+    <li>Increased system complexity and orchestration overhead.</li>
+    <li>Potential for inconsistent outputs if memory sync fails.</li>
+    <li>Requires careful prompt engineering for each model.</li>
+  </Cons>
+</ProsCons>
+## How to think about it
+Start by cataloguing the capabilities of every model you already have access to. Map each research sub‑task—code generation, fact retrieval, synthesis—to the model that excels at it. Implement a shared memory store (e.g., a vector DB or a key‑value cache) that all agents can read and write. Use a lightweight harness (Claude Code in my case) to coordinate task dispatch, monitor token counters, and enforce budget caps. Finally, iterate on the orchestration logic, measuring token usage after each change to ensure savings are realized.
+<Callout type="warning">Do not assume that shared memory guarantees consistency; always include verification steps to catch stale or conflicting data.</Callout>
+## FAQ
+<FAQ>
+  <Question q="How can I monitor token usage across multiple models?">Most provider dashboards expose per‑model token counts; aggregate them with a simple script that queries each API’s usage endpoint after every run.</Question>
+  <Question q="What’s the best way to decide which model handles which task?">Benchmark each model on a representative subset of your workload and pick the one with the lowest token‑to‑accuracy ratio for that task.</Question>
+  <Question q="Can I apply this pattern to non‑Claude subscriptions?">Yes. The orchestration logic is agnostic; you only need a plugin or wrapper that exposes a common memory interface for each service.</Question>
+</FAQ>
