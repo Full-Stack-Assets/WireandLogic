@@ -1,0 +1,54 @@
+---
+title: "How I Replaced a $120k Bowling Center Scoring System with $1.6k of ESP32 Hardware"
+description: "A family rebuilt an abandoned bowling center's scoring and control system using ESP32 microcontrollers for under $2,000, cutting costs dramatically."
+date: "2026-07-19T22:06:32.437Z"
+category: "engineering"
+tags: 
+  - "esp32"
+  - "bowling"
+  - "open-hardware"
+  - "cost-savings"
+  - "microcontrollers"
+hero: 
+  url: "https://upload.wikimedia.org/wikipedia/commons/9/92/Espressif_ESP32_Chip_Function_Block_Diagram.svg"
+  alt: "File:Espressif ESP32 Chip Function Block Diagram.svg"
+  credit: "Brian Krent (talk · contribs)"
+  creditUrl: "https://commons.wikimedia.org/w/index.php?curid=72304119"
+sources: 
+  - title: "Show HN: I replaced a $120k bowling center system with $1,600 in ESP32s"
+    url: "https://news.ycombinator.com/item?id=48968606"
+  - title: "Show HN: I replaced a $120k bowling center system with $1,600 in ESP32s | Hacker News"
+    url: "https://news.ycombinator.com/item?id=48968606"
+---
+
+When a family bought an abandoned eight‑lane bowling center in the Midwest, they faced a $120k proprietary scoring system that was costly to replace. Instead of paying the vendor, they built a custom solution using ESP32 microcontrollers and off‑the‑shelf components. The prototype cost roughly $200 per lane pair, bringing the total hardware spend to under $2,000. This DIY approach shows how open‑hardware can disrupt niche commercial markets.
+<Callout type="takeaway">A $120k bowling‑center score system can be replaced with a sub‑$2k ESP32 mesh.</Callout>
+## What happened
+The original 2008 system combined ball‑speed calculation, camera‑based pin detection, foul tracking, animations, and control of the pin‑setting machine. It cost between $80k and $120k to replace, with each lane‑pair requiring about $4,000 in parts, and the entire installation demanded a six‑figure service contract.
+
+The family designed a replacement using ESP32 boards networked via ESP‑Now in a star‑topology mesh. Each node drives relays, optocouplers, and IR break‑beam sensors to actuate the mechanical pin‑setter and report lane status to a Raspberry Pi gateway that runs Redis and a simple state‑machine. An RS485 fallback provides wired redundancy, and all firmware is open‑source.
+
+Development focused on writing lightweight firmware to translate sensor inputs into lane events and to synchronize scores across the mesh. The system was flashed onto spare ESP32s, mounted in a drawer, and integrated with existing relay wiring, achieving functional parity with the legacy commercial unit at a fraction of the cost.
+## Why it matters
+Replacing a six‑figure proprietary system with inexpensive microcontrollers demonstrates that even highly specialized commercial hardware can be re‑engineered with open tools. The cost savings make bowling centers viable in small towns, preserving community recreation spaces. Moreover, the project showcases the maturity of ESP32, ESP‑Now, and open‑source networking for real‑time, safety‑critical control tasks.
+<ProsCons>
+  <Pros>
+    <li>Hardware cost under $2,000 versus $120,000 vendor price.</li>
+    <li>Open‑source firmware allows continual improvement and customization.</li>
+    <li>Mesh networking provides low‑latency communication without expensive wiring.</li>
+  </Pros>
+  <Cons>
+    <li>Reliability depends on DIY testing and maintenance.</li>
+    <li>Compliance with electrical codes and liability insurance may be complex.</li>
+    <li>Performance tuning of ESP‑Now in noisy RF environments can be challenging.</li>
+  </Cons>
+</ProsCons>
+## How to think about it
+Start by cataloguing every function the legacy system performs—sensor reading, relay actuation, score calculation, and display updates. Map each function to a low‑cost microcontroller I/O capability and choose a communication protocol (ESP‑Now for wireless, RS485 for fallback). Build a minimal firmware module for one lane, test it in isolation, then scale to a mesh, ensuring deterministic timing for score updates. Use a central gateway (Raspberry Pi) to aggregate state, persist scores, and expose a simple API for a web UI. Finally, document wiring, firmware flashing procedures, and a maintenance checklist to keep the system reliable over time.
+<Callout type="warning">Do not deploy the system without verifying electrical safety, proper isolation of high‑voltage components, and compliance with local regulations; improper wiring can cause fire hazards or liability issues.</Callout>
+## FAQ
+<FAQ>
+  <Question q="Can this DIY setup be used in a commercial bowling alley?">Yes, but you must ensure it meets local safety codes, obtain any required inspections, and consider liability coverage before serving the public.</Question>
+  <Question q="What is the learning curve for the ESP32 firmware?">Developing the firmware requires familiarity with C/C++ for ESP‑IDF or Arduino, real‑time sensor handling, and ESP‑Now networking, which can take a few weeks for someone with embedded experience.</Question>
+  <Question q="How does the ESPNow mesh handle interference in a crowded environment?">ESPNow uses the 2.4 GHz band, which can be noisy; you should plan channel selection, use antenna placement, and optionally enable the RS485 fallback for critical lanes to mitigate packet loss.</Question>
+</FAQ>
