@@ -1,0 +1,60 @@
+---
+title: "Minecraft Java Edition switches from GLFW to SDL3 for window and input handling"
+description: "Minecraft Java Edition’s 26.3 snapshot replaces GLFW with SDL3, altering window management and input handling across platforms."
+date: "2026-07-19T18:36:57.002Z"
+category: "engineering"
+tags: 
+  - "minecraft"
+  - "sdl3"
+  - "java"
+  - "game-development"
+  - "windows"
+  - "linux"
+hero: 
+  url: "https://live.staticflickr.com/8513/8400032466_ac704e1618_b.jpg"
+  alt: "Minecraft Coffee Shop"
+  credit: "Uriel 1998"
+  creditUrl: "https://www.flickr.com/photos/21369563@N00/8400032466"
+sources: 
+  - title: "Minecraft: Java Edition now uses SDL3"
+    url: "https://www.minecraft.net/en-us/article/minecraft-26-3-snapshot-4"
+  - title: "Minecraft 26.3 Snapshot 4"
+    url: "https://www.minecraft.net/en-us/article/minecraft-26-3-snapshot-4"
+---
+
+The 26.3 snapshot for Minecraft Java Edition announced a core library change: the game now uses SDL3 instead of GLFW for window management, input, and platform integration. SDL3 brings a modern, cross‑platform API that many developers already use in native games and tools. For modders and server operators, the switch touches everything from mouse handling to fullscreen behavior on Windows, macOS, and Linux. Understanding these changes early helps avoid compatibility surprises when updating to the latest snapshot.
+
+<Callout type="takeaway">Minecraft Java Edition now runs on SDL3, reshaping its window and input stack across all supported platforms.</Callout>
+
+## What happened
+In the 26.3 snapshot the developers replaced the long‑standing GLFW dependency with SDL3, a library that handles window creation, input events, and platform abstraction in a single, actively maintained codebase. The change affects how the game acquires mouse input (now always relative mode), how key bindings map to physical keys, and how fullscreen modes are toggled.
+
+Additional platform‑specific notes were included: exclusive fullscreen on Windows can crash in certain multi‑monitor setups, exclusive fullscreen on Wayland crashes outright, and macOS no longer supports exclusive fullscreen at all. The client now prefers native Wayland on Linux when available, and borderless fullscreen is the default mode.
+
+## Why it matters
+Switching to SDL3 modernizes Minecraft’s low‑level stack, potentially improving performance, reducing bugs, and aligning the engine with a library familiar to many game developers. However, the shift also introduces new failure modes—especially around exclusive fullscreen—that can impact streamers, competitive players, and anyone running the game on multi‑monitor rigs. Mod developers who interact directly with window or input APIs will need to verify that their code works with SDL3’s event model.
+
+<ProsCons>
+  <Pros>
+    <li>Unified, actively maintained library reduces technical debt.</li>
+    <li>Better cross‑platform consistency, especially on Linux/Wayland.</li>
+    <li>Physical‑key key bindings improve international keyboard support.</li>
+  </Pros>
+  <Cons>
+    <li>Exclusive fullscreen crashes on Windows and Wayland.</li>
+    <li>macOS loses exclusive fullscreen capability.</li>
+    <li>Existing mods that hook GLFW may need updates.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+If you maintain a mod or a custom client, audit any native code that references GLFW symbols and replace them with SDL3 equivalents or abstract them behind a compatibility layer. Test the game in both borderless and exclusive fullscreen on each OS you support, and add fallback logic for the known crash scenarios. For server operators, communicate the change to players and suggest disabling exclusive fullscreen if they encounter instability.
+
+<Callout type="warning">Do not enable exclusive fullscreen on Windows or Wayland until a future snapshot addresses the crash issues; use borderless fullscreen instead.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="Will existing mods that rely on GLFW break?">Mods that directly call GLFW functions will fail to load because the library is no longer bundled. Authors should migrate to SDL3 or use Minecraft’s higher‑level APIs that abstract the window layer.</Question>
+  <Question q="How does the SDL3 switch affect custom input handling?">SDL3 always reports mouse movement in relative mode and uses physical key codes, so any code that expects raw mouse coordinates or layout‑specific key codes must be updated.</Question>
+  <Question q="What should I do if I encounter a crash in exclusive fullscreen mode?">Switch to borderless fullscreen in the video settings, or run the game on a single‑monitor setup. Keep an eye on future snapshots for a fix.</Question>
+</FAQ>
