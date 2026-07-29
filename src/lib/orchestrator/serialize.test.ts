@@ -64,6 +64,16 @@ describe('sanitizeBody', () => {
     expect(sanitizeBody(body)).toBe(`<Callout type="takeaway">The point.</Callout>`);
   });
 
+  it('removes executable HTML tags from the generated body', () => {
+    const body = '<script>alert(1)</script><iframe src="https://evil.example"></iframe><Question q="Safe?">Yes.</Question>';
+    expect(sanitizeBody(body)).toBe('<Question q="Safe?">Yes.</Question>');
+  });
+
+  it('strips unsafe URL schemes and event handler attributes', () => {
+    const body = '<li onclick="alert(1)"><a href="javascript:alert(1)">bad</a></li>';
+    expect(sanitizeBody(body)).toBe('<li>bad</li>');
+  });
+
   it('leaves backslash escapes inside code fences alone', () => {
     const body = '```json\n{"a": "he said \\"hi\\""}\n```';
     expect(sanitizeBody(body)).toBe(body);
