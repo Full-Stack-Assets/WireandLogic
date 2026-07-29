@@ -56,6 +56,7 @@ export function serialize(post: GeneratedPost): string {
 const BLOCK_TAG_OPEN = /^([ \t]*<(Callout|ProsCons|Pros|Cons|FAQ|Question)(?:\s[^>\n]*)?>)[ \t]*(\S[^\n]*)$/gm;
 
 const KNOWN_COMPONENTS = new Set(['Callout', 'ProsCons', 'Pros', 'Cons', 'FAQ', 'Question']);
+const SAFE_HTML_TAGS = new Set(['li']);
 
 /** Apply a transform to the body, skipping code fences and inline code. */
 function outsideCode(body: string, transform: (segment: string) => string): string {
@@ -68,11 +69,18 @@ function outsideCode(body: string, transform: (segment: string) => string): stri
 function healTags(body: string): string {
   return outsideCode(body, (segment) =>
     segment
+      .replace(/<(script|style|iframe|object|embed|svg|math|form|textarea|select|button)\b[^>]*>[\s\S]*?<\/\1>/gi, '')
+      .replace(/<(meta|link|base|input)\b[^>]*\/?>/gi, '')
       .replace(/=\\"/g, '="')
       .replace(/\\">/g, '">')
       .replace(/\\(<\/?[A-Z])/g, '$1')
+      .replace(/\s(on[a-z]+)\s*=\s*(".*?"|'.*?'|[^\s>]+)/gi, '')
+      .replace(/\s(href|src)\s*=\s*(['"])\s*(javascript:|data:)[^'"]*\2/gi, '')
       .replace(/<\/?([A-Z][A-Za-z0-9]*)(?:\s[^<>\n]*)?\/?>/g, (match, tag: string) =>
         KNOWN_COMPONENTS.has(tag) ? match : ''
+      )
+      .replace(/<\/?([a-z][A-Za-z0-9-]*)(?:\s[^<>\n]*)?\/?>/g, (match, tag: string) =>
+        SAFE_HTML_TAGS.has(tag.toLowerCase()) ? match : ''
       )
   );
 }
