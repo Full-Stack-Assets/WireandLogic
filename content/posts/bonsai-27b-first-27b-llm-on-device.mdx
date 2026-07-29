@@ -32,7 +32,7 @@ The AI community woke up to a surprise on July 14: PrismML released Bonsai 27B, 
 <Callout type="takeaway">Bonsai 27B proves that 27B‑class intelligence can be deployed on‑device without sacrificing most of its capabilities.</Callout>
 
 ## What happened
-PrismML announced two low‑bit variants of Bonsai 27B, both built on the Qwen‑3.6 27B backbone. The ternary version uses `{-1, 0, +1}` weights with FP16 group‑wise scaling, yielding a 5.9 GB footprint that fits on a laptop while preserving 95% of full‑precision performance. The 1‑bit version uses binary `{-1, +1}` weights, achieving a 3.9 GB size that fits within the memory budget of an iPhone 17 Pro, delivering roughly 90% of the baseline accuracy.
+PrismML announced two low‑bit variants of Bonsai 27B, both built on the Qwen‑3.6 27B backbone. The ternary version uses `{-1,0,+1}` weights with FP16 group‑wise scaling, yielding a 5.9 GB footprint that fits on a laptop while preserving 95% of full‑precision performance. The 1‑bit version uses binary `{-1,+1}` weights, achieving a 3.9 GB size that fits within the memory budget of an iPhone 17 Pro, delivering roughly 90% of the baseline accuracy.
 
 Across a 15‑benchmark suite covering knowledge, reasoning, math, coding, instruction following, tool calling, and vision, the ternary model retained 95% and the 1‑bit model retained 90% of full‑precision scores. Both variants run end‑to‑end in low‑bit mode, including embeddings, attention, MLPs, and the LM head, and ship with a compact 4‑bit vision tower. The models are released under the Apache 2.0 license, enabling immediate experimentation.
 
