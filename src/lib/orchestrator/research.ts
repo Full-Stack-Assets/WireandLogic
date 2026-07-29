@@ -19,6 +19,7 @@ export function isPrivateIpAddress(address: string): boolean {
     const [a, b] = address.split('.').map((part) => Number(part));
     if ([a, b].some((n) => Number.isNaN(n))) return true;
     if (a === 10 || a === 127 || a === 0) return true;
+    if (a === 100 && b >= 64 && b <= 127) return true; // RFC6598 CGNAT
     if (a === 169 && b === 254) return true;
     if (a === 172 && b >= 16 && b <= 31) return true;
     if (a === 192 && b === 168) return true;
@@ -27,15 +28,27 @@ export function isPrivateIpAddress(address: string): boolean {
   }
   if (version === 6) {
     const lower = address.toLowerCase();
+    if (lower === '::' || lower === '::1' || lower === '0:0:0:0:0:0:0:1') return true;
+    if (lower.startsWith('::ffff:')) {
+      const mapped = lower.slice('::ffff:'.length);
+      if (isIP(mapped) === 4) return isPrivateIpAddress(mapped);
+      const mappedHex = mapped.match(/^([0-9a-f]{1,4}):([0-9a-f]{1,4})$/);
+      if (mappedHex) {
+        const high = Number.parseInt(mappedHex[1], 16);
+        const low = Number.parseInt(mappedHex[2], 16);
+        if (!Number.isNaN(high) && !Number.isNaN(low)) {
+          const mappedIpv4 = `${(high >> 8) & 0xff}.${high & 0xff}.${(low >> 8) & 0xff}.${low & 0xff}`;
+          return isPrivateIpAddress(mappedIpv4);
+        }
+      }
+    }
     return (
-      lower === '::1' ||
       lower.startsWith('fc') ||
       lower.startsWith('fd') ||
       lower.startsWith('fe8') ||
       lower.startsWith('fe9') ||
       lower.startsWith('fea') ||
-      lower.startsWith('feb') ||
-      lower.startsWith('::ffff:127.')
+      lower.startsWith('feb')
     );
   }
   return true;
@@ -52,9 +65,10 @@ export function isSafeUrlCandidate(url: string): boolean {
   if (!parsed.hostname) return false;
   if (parsed.username || parsed.password) return false;
   const host = parsed.hostname.toLowerCase();
+  const normalizedHost = host.startsWith('[') && host.endsWith(']') ? host.slice(1, -1) : host;
   if (BLOCKED_HOSTNAMES.has(host)) return false;
   if (BLOCKED_SUFFIXES.some((suffix) => host.endsWith(suffix))) return false;
-  if (isIP(host) && isPrivateIpAddress(host)) return false;
+  if (isIP(normalizedHost) && isPrivateIpAddress(normalizedHost)) return false;
   return true;
 }
 

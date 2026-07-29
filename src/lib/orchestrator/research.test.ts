@@ -5,6 +5,7 @@ describe('isPrivateIpAddress', () => {
   it('blocks private/loopback IPv4 ranges', () => {
     expect(isPrivateIpAddress('10.0.0.1')).toBe(true);
     expect(isPrivateIpAddress('127.0.0.1')).toBe(true);
+    expect(isPrivateIpAddress('100.64.0.1')).toBe(true);
     expect(isPrivateIpAddress('192.168.1.1')).toBe(true);
     expect(isPrivateIpAddress('172.16.0.5')).toBe(true);
   });
@@ -16,6 +17,8 @@ describe('isPrivateIpAddress', () => {
 
   it('blocks loopback and local IPv6 ranges', () => {
     expect(isPrivateIpAddress('::1')).toBe(true);
+    expect(isPrivateIpAddress('0:0:0:0:0:0:0:1')).toBe(true);
+    expect(isPrivateIpAddress('::')).toBe(true);
     expect(isPrivateIpAddress('fc00::1')).toBe(true);
     expect(isPrivateIpAddress('fd12:3456:789a::1')).toBe(true);
     expect(isPrivateIpAddress('fe80::1')).toBe(true);
@@ -33,6 +36,8 @@ describe('isSafeUrlCandidate', () => {
     expect(isSafeUrlCandidate('http://localhost:3000')).toBe(false);
     expect(isSafeUrlCandidate('http://127.0.0.1/admin')).toBe(false);
     expect(isSafeUrlCandidate('http://192.168.0.10')).toBe(false);
+    expect(isSafeUrlCandidate('http://100.64.0.10')).toBe(false);
+    expect(isSafeUrlCandidate('http://[::ffff:10.0.0.1]/')).toBe(false);
   });
 
   it('accepts public http(s) URL candidates', () => {
