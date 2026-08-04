@@ -7,7 +7,6 @@
  *   pnpm generate           # full run, writes to disk, does NOT commit
  *   pnpm generate --dry     # dry run, prints output only
  */
-import 'dotenv/config';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import matter from 'gray-matter';
@@ -18,6 +17,15 @@ import { syndicate } from '../src/lib/syndicate';
 
 const LOG_PATH = path.join(process.cwd(), 'content', '.topic-log.json');
 const POSTS_DIR = path.join(process.cwd(), 'content', 'posts');
+
+async function ensureDotenvLoaded(): Promise<void> {
+  try {
+    await import('dotenv/config');
+  } catch {
+    // CI image may omit optional dev dependencies; env files are optional for
+    // scheduled generation runs where secrets are already available in env.
+  }
+}
 
 async function loadLocalLog(): Promise<TopicLog> {
   try {
@@ -34,6 +42,7 @@ async function saveLocalLog(log: TopicLog): Promise<void> {
 }
 
 async function main() {
+  await ensureDotenvLoaded();
   const dryRun = process.argv.includes('--dry');
   const topicLog = await loadLocalLog();
 
