@@ -7,7 +7,6 @@
  *   pnpm generate           # full run, writes to disk, does NOT commit
  *   pnpm generate --dry     # dry run, prints output only
  */
-import 'dotenv/config';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import matter from 'gray-matter';
@@ -18,6 +17,27 @@ import { syndicate } from '../src/lib/syndicate';
 
 const LOG_PATH = path.join(process.cwd(), 'content', '.topic-log.json');
 const POSTS_DIR = path.join(process.cwd(), 'content', 'posts');
+
+async function ensureDotenvLoaded(): Promise<void> {
+  const envPaths = [path.join(process.cwd(), '.env.local'), path.join(process.cwd(), '.env')];
+
+  for (const envPath of envPaths) {
+    try {
+      const raw = await fs.readFile(envPath, 'utf8');
+      for (const line of raw.split('\n')) {
+        const clean = line.trim();
+        if (!clean || clean.startsWith('#')) continue;
+        const [rawKey, ...rawValueParts] = clean.split('=');
+        if (!rawKey || rawValueParts.length === 0) continue;
+        const value = rawValueParts.join('=').trim();
+        if (!value || process.env[rawKey]) continue;
+        process.env[rawKey] = value.replace(/^['"]|['"]$/g, '');
+      }
+    } catch {
+      // Optional env files. If missing, continue quietly.
+    }
+  }
+}
 
 async function loadLocalLog(): Promise<TopicLog> {
   try {
@@ -34,6 +54,7 @@ async function saveLocalLog(log: TopicLog): Promise<void> {
 }
 
 async function main() {
+  await ensureDotenvLoaded();
   const dryRun = process.argv.includes('--dry');
   const topicLog = await loadLocalLog();
 
