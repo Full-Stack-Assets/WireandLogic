@@ -1,0 +1,67 @@
+---
+title: "Fixing a Race Condition in a Shared Auth Library That Broke Multi‑Tab Sessions"
+description: "A senior dev uncovers a token‑refresh race condition across browser tabs and resolves it by coordinating frontend and backend teams."
+date: "2026-08-05T10:13:48.456Z"
+category: "engineering"
+tags: 
+  - "authentication"
+  - "race-condition"
+  - "frontend"
+  - "backend"
+  - "shared-library"
+hero: 
+  url: "https://live.staticflickr.com/2686/4366618513_44ba058c98.jpg"
+  alt: "Authenticity in Corporate Social Responsibility"
+  credit: "Geoff Livingston"
+  creditUrl: "https://www.flickr.com/photos/9397412@N06/4366618513"
+sources: 
+  - title: "How I Smashed a Bug in a Shared Authentication Library"
+    url: "https://dev.to/gramli/how-i-smashed-a-bug-in-a-shared-authentication-library-33fm"
+  - title: "How I Smashed a Bug in a Shared Authentication Library"
+    url: "https://dev.to/gramli/how-i-smashed-a-bug-in-a-shared-authentication-library-33fm"
+  - title: "356855 - Add support for a shared-secret HTTP Authentication scheme based on SRP"
+    url: "https://bugzilla.mozilla.org/show_bug.cgi?id=356855"
+  - title: "A Bug in the System Achievements Guide - GuildJen - Guild Wars 2"
+    url: "https://guildjen.com/a-bug-in-the-system-achievements-guide/"
+  - title: "Beyond the Lock and Key: The Most Complicated Authentication Bypass You’ve Never Seen Before"
+    url: "https://cyberweapons.medium.com/beyond-the-lock-and-key-the-most-complicated-authentication-bypass-youve-never-seen-before-178cc47bd5b9"
+---
+
+When we launched the first version of our internal web app, users reported that opening the site in multiple tabs sometimes caused authentication to disappear. The affected tab remained stuck until the page was refreshed or closed, breaking the user experience. Investigation traced the failure to a shared frontend authentication library that was trying to refresh a token that had already been invalidated. The root cause turned out to be a race condition between tabs, a subtle bug that spanned both frontend and backend boundaries. Fixing it required coordination across the two teams that own the library and the authentication service.
+
+<Callout type='takeaway'>The bug was a cross‑tab token‑refresh race condition hidden in a shared auth library.</Callout>
+
+## What happened
+After the initial release, opening the application in several Chrome tabs occasionally resulted in a 403 Forbidden response when the frontend attempted to refresh the authentication token. The 403 broke the refresh flow, leaving the tab unable to recover without a full reload.
+
+The senior developer collected logs and presented them to the team that maintains the shared authentication library. That team argued the backend service should never return 403 for a refresh request. A second round of investigation with the backend owners revealed that the library was sending a refresh token that had already been invalidated by another tab that had successfully refreshed earlier.
+
+The underlying race condition meant that one tab refreshed the token, invalidated the previous refresh token, and another tab—still using the stale token—received the 403. The fix involved adding a lightweight coordination mechanism (using BroadcastChannel) so that tabs serialize refresh attempts, and updating the backend to tolerate stale refresh tokens for a short grace period.
+
+## Why it matters
+Multi‑tab usage is a default pattern for modern web applications; a hidden race condition can silently lock users out, eroding trust and increasing support load. Because the bug lived in a shared library, any team that imported it inherited the problem, magnifying its impact across the organization. Coordinating fixes between separate frontend and backend owners also highlighted the risks of siloed ownership for authentication concerns.
+
+<ProsCons>
+  <Pros>
+    <li>Identified a hidden race condition that affected many users.</li>
+    <li>Improved communication between frontend and backend teams.</li>
+    <li>Added a coordination layer that prevents future token‑refresh collisions.</li>
+  </Pros>
+  <Cons>
+    <li>Users experienced session loss until the fix was deployed.</li>
+    <li>Added a small amount of complexity to the authentication flow.</li>
+    <li>Requires all consuming apps to adopt the new coordination API.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Treat token refresh as a shared resource when multiple tabs or windows can act on it. Use a browser‑level messaging channel (BroadcastChannel, SharedWorker, or Service Worker) to serialize refresh attempts, or store a single source of truth in sessionStorage and let other tabs listen for updates. Keep refresh tokens short‑lived and design the backend to handle occasional stale tokens gracefully. Finally, embed observability (metrics on refresh failures) to catch similar race conditions early.
+
+<Callout type='warning'>Do not store refresh tokens in localStorage without a coordination strategy; doing so makes them vulnerable to exactly this kind of cross‑tab race condition.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q='Why did only some tabs receive the 403 error?'>Each tab uses its own copy of the refresh token. When one tab successfully refreshed, it invalidated the token that other tabs were still trying to use, causing the 403 only for those stale copies.</Question>
+  <Question q='How can I prevent token‑refresh races in my own applications?'>Serialize refresh requests across tabs using BroadcastChannel or a Service Worker, and make the backend tolerant of a short grace period for already‑invalidated tokens.</Question>
+  <Question q='What tooling helps detect these kinds of authentication issues?'>Instrument your auth library with logging around token refresh attempts, and monitor for spikes in 403/401 responses. Sentry, Datadog, or custom metrics can surface the pattern quickly.</Question>
+</FAQ>

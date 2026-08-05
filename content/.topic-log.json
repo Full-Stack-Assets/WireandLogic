@@ -2260,6 +2260,13 @@
       "url": "https://pudding.cool/2026/06/mow/",
       "publishedAt": "2026-08-05T04:21:14.638Z",
       "signature": "d63812aba4c84ba7"
+    },
+    {
+      "slug": "fix-race-condition-shared-auth-library",
+      "title": "How I Smashed a Bug in a Shared Authentication Library",
+      "url": "https://dev.to/gramli/how-i-smashed-a-bug-in-a-shared-authentication-library-33fm",
+      "publishedAt": "2026-08-05T10:13:48.458Z",
+      "signature": "b83ec2023b8a1e68"
     }
   ]
 }
