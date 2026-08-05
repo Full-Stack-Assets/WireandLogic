@@ -2281,6 +2281,13 @@
       "url": "https://divingintheshallowend.com/three-six-mafia/",
       "publishedAt": "2026-08-05T14:59:07.401Z",
       "signature": "ea7c2dfdb4af456e"
+    },
+    {
+      "slug": "cloudflare-os-open-source-platform",
+      "title": "Cloudflare OS: an open platform for agents, apps, and work",
+      "url": "https://blog.cloudflare.com/cloudflare-os/",
+      "publishedAt": "2026-08-05T16:49:11.217Z",
+      "signature": "814aeece451d2c68"
     }
   ]
 }

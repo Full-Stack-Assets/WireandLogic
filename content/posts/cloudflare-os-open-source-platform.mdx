@@ -1,0 +1,65 @@
+---
+title: "Cloudflare OS 2.0 Open‑Source: An AI‑Powered Platform for Company Agents, Apps, and Secure Workflows"
+description: "Cloudflare releases version 2 of its open‑source Cloudflare OS, letting any organization deploy AI agents, sandboxed apps, and built‑in security guardrails."
+date: "2026-08-05T16:49:11.216Z"
+category: "tools"
+tags: 
+  - "cloudflare"
+  - "ai"
+  - "open-source"
+  - "productivity"
+  - "security"
+hero: 
+  url: "https://live.staticflickr.com/5821/22257104860_b257897781_b.jpg"
+  alt: "Matthew Prince, Founder CloudFlare"
+  credit: "Christopher.Michel"
+  creditUrl: "https://www.flickr.com/photos/50979393@N00/22257104860"
+sources: 
+  - title: "Cloudflare OS: an open platform for agents, apps, and work"
+    url: "https://blog.cloudflare.com/cloudflare-os/"
+  - title: "Cloudflare OS: an open platform for agents, apps, and work"
+    url: "https://blog.cloudflare.com/cloudflare-os/"
+  - title: "GitHub - cloudflare/cloudflare-os: Agent workspace built on Cloudflare Workers for creating documents, building apps, and running agents with your company’s context and systems."
+    url: "https://github.com/cloudflare/cloudflare-os"
+  - title: "Cloudflare Announces Open-Source Cloudflare OS As AI \"Operating System\" - Phoronix"
+    url: "https://www.phoronix.com/news/Cloudflare-OS"
+---
+
+Today Cloudflare announced the open‑source release of Cloudflare OS 2.0, its AI‑driven operating system for internal productivity. The platform bundles an agent chat UI, a sandbox for lightweight apps, and a security framework called Gatekeepers. After a year of internal rollout to thousands of employees across engineering, sales, and support, the code is now available on GitHub for any company to self‑host. By exposing the same context‑aware agents that power Cloudflare’s own workflows, the project promises to accelerate AI adoption while keeping security teams comfortable.
+
+<Callout type="takeaway">Cloudflare OS 2.0 gives organizations a ready‑made AI productivity stack with built‑in safety nets.</Callout>
+
+## What happened
+In May 2026 Cloudflare gave every employee access to the first version of Cloudflare OS, a workspace where agents could generate documents, slides, and simple data‑visualisation apps using company‑specific knowledge. Thousands of users across non‑engineering functions reported daily use, highlighting the demand for AI‑assisted routine work.
+
+The company now open‑sources a rewritten version 2, hosted on GitHub, that runs on Cloudflare Workers and the workerd runtime. The repo includes a quick‑start that spins up the full stack locally with pnpm and Wrangler, as well as deployment instructions for a production Cloudflare account. New features include live app connections to internal systems, a shared library of “skills” built by teams, and an expanded Gatekeeper security model.
+
+Version 2 also shifts from static apps to live, sandboxed applications that can call internal APIs while remaining isolated. The security framework enforces guardrails at both the agent and app level, aiming to let non‑technical users “go nuts” without exposing the organization to risk.
+
+## Why it matters
+Cloudflare OS bridges the gap between large‑language‑model assistants and enterprise‑grade tooling, offering a turnkey stack that many organizations would otherwise have to build from scratch. Its open‑source nature lowers the barrier for smaller companies to experiment with context‑aware AI, potentially reshaping internal productivity workflows. At the same time, the built‑in Gatekeeper model addresses a common concern: how to let AI act on sensitive systems without compromising security or compliance.
+
+<ProsCons>
+  <Pros>
+    <li>Provides a unified UI for AI agents that understand company‑specific terminology.</li>
+    <li>Sandboxed app development lets non‑engineers create and share tools safely.</li>
+    <li>Gatekeeper guardrails enforce policy and reduce risk of rogue model outputs.</li>
+  </Pros>
+  <Cons>
+    <li>Not yet hardened for production workloads; requires Cloudflare Workers environment.</li>
+    <li>Customization may need deep knowledge of internal APIs and data schemas.</li>
+    <li>Performance and cost depend on model token usage, which can be unpredictable.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Start by mapping a few repetitive, knowledge‑heavy tasks in your organization and prototype them with the local starter kit. Conduct a security review of the Gatekeeper policies before exposing any internal APIs, and iterate the skill library as teams discover better ways to automate. When the prototype proves reliable, transition to a managed Cloudflare Workers deployment, monitor token usage, and gradually expand the agent’s scope.
+
+<Callout type="warning">Do not expose Cloudflare OS directly to external users or sensitive data until you have audited the Gatekeeper policies and ensured compliance with your organization’s security standards.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="Can I run Cloudflare OS on premises?">You can spin up the full stack locally with pnpm and Wrangler, but the repo notes that this mode is intended for exploration, not production.</Question>
+  <Question q="What models does Cloudflare OS use for its agents?">The platform ships with a default LLM provided by Cloudflare’s AI offering, and you can configure alternative providers via the runtime settings.</Question>
+  <Question q="How does the Gatekeeper framework differ from typical AI content filters?">Gatekeepers are policy‑driven rules that run inside the Workers sandbox, allowing fine‑grained control over both agent actions and app behavior, not just output text.</Question>
+</FAQ>
