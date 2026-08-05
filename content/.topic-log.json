@@ -2267,6 +2267,13 @@
       "url": "https://dev.to/gramli/how-i-smashed-a-bug-in-a-shared-authentication-library-33fm",
       "publishedAt": "2026-08-05T10:13:48.458Z",
       "signature": "b83ec2023b8a1e68"
+    },
+    {
+      "slug": "debunking-eight-myths-software-engineering-genai",
+      "title": "Eight Myths on Software Engineering and GenAI",
+      "url": "https://queue.acm.org/detail.cfm?id=3807963",
+      "publishedAt": "2026-08-05T12:26:06.460Z",
+      "signature": "7942953dd311155c"
     }
   ]
 }
