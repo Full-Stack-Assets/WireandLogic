@@ -1,0 +1,67 @@
+---
+title: "Why I Replaced Android with SailfishOS on My Fairphone 4 and What It Means for Mobile Linux"
+description: "I swapped Android for SailfishOS on a Fairphone 4, detailing challenges, benefits, and the broader state of mobile Linux."
+date: "2026-08-06T04:23:32.136Z"
+category: "engineering"
+tags: 
+  - "android"
+  - "linux"
+  - "mobile"
+  - "sailfishos"
+  - "fairphone"
+hero: 
+  url: "https://live.staticflickr.com/2812/11940527775_37c000f29b_b.jpg"
+  alt: "​ Boeing 787 Dreamliner's entertainment system powered by Android/Linux/FOSS"
+  credit: "Nguyen Vu Hung (vuhung)"
+  creditUrl: "https://www.flickr.com/photos/77987497@N00/11940527775"
+sources: 
+  - title: "I'm switching my phone from Android to Linux"
+    url: "https://runarcn.no/android-to-linux/"
+  - title: "I'm switching my phone from Android to Linux."
+    url: "https://runarcn.no/android-to-linux/"
+  - title: "I'm switching my phone from Android to Linux | Hacker News"
+    url: "https://news.ycombinator.com/item?id=49188022"
+---
+
+After growing frustrated with Google’s tightening grip on Android, I decided to replace the OS on my Fairphone 4 with a Linux‑based system. I settled on SailfishOS, a community‑driven platform that runs natively on the device and offers full SSH access for tinkering. The switch exposed both the promise of a truly open mobile stack and the rough edges that still keep most users on Android. Understanding these trade‑offs is crucial for anyone considering a move to mobile Linux.
+
+<Callout type="takeaway">SailfishOS proves you can run a functional Linux phone, but you must accept missing features and occasional instability.</Callout>
+
+## What happened
+
+For months I have watched Google layer more proprietary services onto AOSP—mandatory Play Services, AI‑driven features, and the recent removal of user‑chosen app installation—turning Android into a series of “paper cuts.” The cumulative friction convinced me to look for a truly open alternative.
+
+I evaluated Ubuntu Touch, postmarketOS, and SailfishOS, checking each against the Fairphone 4’s hardware support. SailfishOS offered the most complete port, a gesture‑based UI, and the ability to SSH into the phone over USB or Wi‑Fi, which fit my tinkering workflow.
+
+The experience is solid overall, but the Fairphone port ships with outdated Python and glibc versions, and Waydroid and GPS are currently broken. Community‑built apps range from useful to half‑finished, such as a WhatsApp client that I still rely on.
+
+## Why it matters
+
+The switch highlights both the viability and the current limits of mobile Linux. A functional Linux phone gives users control over updates, privacy, and the software stack, challenging the OEM‑driven lock‑in that dominates smartphones. At the same time, missing hardware support and immature app ecosystems keep the majority of consumers on Android or iOS, slowing broader adoption of open mobile platforms.
+
+<ProsCons>
+  <Pros>
+    <li>Full Linux environment with SSH access for deep customization.</li>
+    <li>Gesture‑based UI and clean application framework.</li>
+    <li>Community‑driven updates extend device lifespan beyond stock Android.</li>
+  </Pros>
+  <Cons>
+    <li>Outdated core libraries (Python, glibc) limit modern app compatibility.</li>
+    <li>Key hardware features like GPS and Waydroid are broken on the Fairphone port.</li>
+    <li>Limited native app ecosystem forces reliance on imperfect community ports.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+
+Start by confirming that your device has a maintained Linux port and that the essential hardware—camera, GPS, cellular—works out of the box. List the apps you cannot live without and test their Linux equivalents or community ports before committing. Keep a fallback Android device for banking, GPS‑reliant services, and any proprietary peripherals. Use SSH for regular maintenance and consider dual‑booting if you need occasional Android functionality. Stay engaged with the distro’s forum to track fixes and contribute patches where possible.
+
+<Callout type="warning">Do not rely on this setup as your primary banking or navigation device until GPS and secure payment integrations are proven stable.</Callout>
+
+## FAQ
+
+<FAQ>
+  <Question q="Can I run Android apps on SailfishOS?">SailfishOS includes Waydroid, a container that can run many Android apps, but support varies by device and the Fairphone port currently has Waydroid broken.</Question>
+  <Question q="How stable is SSH access for daily tasks?">SSH works reliably over USB or Wi‑Fi and is a common way to manage the phone, but network interruptions can drop the session, so keep local tools as a backup.</Question>
+  <Question q="What’s the best way to back up data on a Linux phone?">Use the built‑in “sailfish‑backup” tool or rsync over SSH to copy the /home directory to a trusted computer, and encrypt the backup if it contains sensitive information.</Question>
+</FAQ>
