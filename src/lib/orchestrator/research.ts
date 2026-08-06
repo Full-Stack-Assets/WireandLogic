@@ -24,11 +24,11 @@ export function isPrivateIpAddress(address: string): boolean {
     if (octets.length !== 4 || octets.some((n) => !Number.isInteger(n) || n < 0 || n > 255)) return true;
     const [a, b] = octets;
     if (a === 10 || a === 127 || a === 0) return true;
-    if (a === 100 && b >= 64 && b <= 127) return true; // RFC6598 CGNAT
+    if (a === 100 && b >= 64 && b <= 127) return true;
     if (a === 169 && b === 254) return true;
     if (a === 172 && b >= 16 && b <= 31) return true;
     if (a === 192 && b === 168) return true;
-    if (a >= 224) return true; // multicast/reserved
+    if (a >= 224) return true;
     return false;
   }
   if (version === 6) {
@@ -95,6 +95,20 @@ async function resolvePublicAddress(host: string): Promise<{ address: string; fa
   }
 }
 
+export function createPinnedLookup(address: string, family: 4 | 6) {
+  return (
+    _hostname: string,
+    options: { all?: boolean },
+    callback: (...args: unknown[]) => void
+  ): void => {
+    if (options?.all) {
+      callback(null, [{ address, family }]);
+      return;
+    }
+    callback(null, address, family);
+  };
+}
+
 export async function fetchWithSsrfProtection(
   input: string,
   redirectsRemaining = MAX_REDIRECTS
@@ -113,7 +127,7 @@ export async function fetchWithSsrfProtection(
       {
         method: 'GET',
         headers: { 'user-agent': 'Mozilla/5.0 (compatible; trendblog/0.1)' },
-        lookup: (_hostname, _options, callback) => callback(null, resolved.address, resolved.family),
+        lookup: createPinnedLookup(resolved.address, resolved.family),
         signal: AbortSignal.timeout(8000),
       },
       (res) => {
