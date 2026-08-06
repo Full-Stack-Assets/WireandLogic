@@ -2330,6 +2330,13 @@
       "url": "https://blog.fogus.me/llm/born-against.html",
       "publishedAt": "2026-08-06T10:14:41.361Z",
       "signature": "76c1f775d4b5db41"
+    },
+    {
+      "slug": "django-middleware-base-model-leverage",
+      "title": "What I love about Django",
+      "url": "https://buttondown.com/blog/what-i-love-about-django",
+      "publishedAt": "2026-08-06T12:29:01.596Z",
+      "signature": "7140c39803bc01b0"
     }
   ]
 }
