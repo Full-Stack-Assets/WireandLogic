@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { isPrivateIpAddress, isSafeUrlCandidate } from './research';
+import { createPinnedLookup, isPrivateIpAddress, isSafeUrlCandidate } from './research';
 
 describe('isPrivateIpAddress', () => {
   it('blocks private, loopback, link-local, CGNAT, and reserved IPv4 ranges', () => {
@@ -44,6 +44,28 @@ describe('isPrivateIpAddress', () => {
   it('allows mapped public IPv4 addresses', () => {
     expect(isPrivateIpAddress('::ffff:8.8.8.8')).toBe(false);
     expect(isPrivateIpAddress('::ffff:808:808')).toBe(false);
+  });
+});
+
+describe('createPinnedLookup', () => {
+  it('returns the scalar callback form when all is false', () => {
+    const calls: unknown[][] = [];
+    createPinnedLookup('203.0.113.10', 4)(
+      'example.com',
+      { all: false },
+      (...args) => calls.push(args)
+    );
+    expect(calls).toEqual([[null, '203.0.113.10', 4]]);
+  });
+
+  it('returns an address array when Node requests all results', () => {
+    const calls: unknown[][] = [];
+    createPinnedLookup('2001:db8::10', 6)(
+      'example.com',
+      { all: true },
+      (...args) => calls.push(args)
+    );
+    expect(calls).toEqual([[null, [{ address: '2001:db8::10', family: 6 }]]]);
   });
 });
 
