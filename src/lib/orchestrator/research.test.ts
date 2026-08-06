@@ -2,12 +2,16 @@ import { describe, it, expect } from 'vitest';
 import { isPrivateIpAddress, isSafeUrlCandidate } from './research';
 
 describe('isPrivateIpAddress', () => {
-  it('blocks private/loopback IPv4 ranges', () => {
+  it('blocks private, loopback, link-local, CGNAT, and reserved IPv4 ranges', () => {
+    expect(isPrivateIpAddress('0.0.0.0')).toBe(true);
     expect(isPrivateIpAddress('10.0.0.1')).toBe(true);
     expect(isPrivateIpAddress('127.0.0.1')).toBe(true);
     expect(isPrivateIpAddress('100.64.0.1')).toBe(true);
-    expect(isPrivateIpAddress('192.168.1.1')).toBe(true);
+    expect(isPrivateIpAddress('100.127.255.254')).toBe(true);
+    expect(isPrivateIpAddress('169.254.1.1')).toBe(true);
     expect(isPrivateIpAddress('172.16.0.5')).toBe(true);
+    expect(isPrivateIpAddress('192.168.1.1')).toBe(true);
+    expect(isPrivateIpAddress('224.0.0.1')).toBe(true);
   });
 
   it('allows public IPv4 addresses', () => {
@@ -15,33 +19,59 @@ describe('isPrivateIpAddress', () => {
     expect(isPrivateIpAddress('8.8.8.8')).toBe(false);
   });
 
-  it('blocks loopback and local IPv6 ranges', () => {
+  it('fails closed for malformed addresses', () => {
+    expect(isPrivateIpAddress('')).toBe(true);
+    expect(isPrivateIpAddress('999.1.1.1')).toBe(true);
+    expect(isPrivateIpAddress('not-an-ip')).toBe(true);
+  });
+
+  it('blocks loopback, unspecified, local, link-local, and mapped IPv6 ranges', () => {
+    expect(isPrivateIpAddress('::')).toBe(true);
     expect(isPrivateIpAddress('::1')).toBe(true);
     expect(isPrivateIpAddress('0:0:0:0:0:0:0:1')).toBe(true);
-    expect(isPrivateIpAddress('::')).toBe(true);
     expect(isPrivateIpAddress('fc00::1')).toBe(true);
     expect(isPrivateIpAddress('fd12:3456:789a::1')).toBe(true);
     expect(isPrivateIpAddress('fe80::1')).toBe(true);
+    expect(isPrivateIpAddress('::ffff:10.0.0.1')).toBe(true);
+    expect(isPrivateIpAddress('::ffff:a00:1')).toBe(true);
+    expect(isPrivateIpAddress('::ffff:7f00:1')).toBe(true);
   });
 });
 
 describe('isSafeUrlCandidate', () => {
-  it('rejects non-http(s) protocols and credentialed URLs', () => {
+  it('rejects malformed URLs, non-http(s) protocols, and credentialed URLs', () => {
+    expect(isSafeUrlCandidate('')).toBe(false);
+    expect(isSafeUrlCandidate('not a url')).toBe(false);
+    expect(isSafeUrlCandidate('http://[::1')).toBe(false);
     expect(isSafeUrlCandidate('file:///etc/passwd')).toBe(false);
     expect(isSafeUrlCandidate('gopher://example.com')).toBe(false);
     expect(isSafeUrlCandidate('https://user@evil.example')).toBe(false);
+    expect(isSafeUrlCandidate('https://user:pass@evil.example')).toBe(false);
   });
 
-  it('rejects localhost and private IP hosts', () => {
+  it('rejects localhost, private, CGNAT, bracketed, mapped, and encoded IP hosts', () => {
     expect(isSafeUrlCandidate('http://localhost:3000')).toBe(false);
+    expect(isSafeUrlCandidate('http://foo.local')).toBe(false);
+    expect(isSafeUrlCandidate('http://service.internal')).toBe(false);
     expect(isSafeUrlCandidate('http://127.0.0.1/admin')).toBe(false);
     expect(isSafeUrlCandidate('http://192.168.0.10')).toBe(false);
     expect(isSafeUrlCandidate('http://100.64.0.10')).toBe(false);
+    expect(isSafeUrlCandidate('http://[::]/')).toBe(false);
+    expect(isSafeUrlCandidate('http://[::1]/')).toBe(false);
+    expect(isSafeUrlCandidate('http://[0:0:0:0:0:0:0:1]/')).toBe(false);
     expect(isSafeUrlCandidate('http://[::ffff:10.0.0.1]/')).toBe(false);
+    expect(isSafeUrlCandidate('http://[::ffff:a00:1]/')).toBe(false);
+
+    // WHATWG URL canonicalizes these legacy IPv4 forms to 127.0.0.1.
+    expect(isSafeUrlCandidate('http://2130706433/')).toBe(false);
+    expect(isSafeUrlCandidate('http://0x7f000001/')).toBe(false);
+    expect(isSafeUrlCandidate('http://0177.0.0.1/')).toBe(false);
+    expect(isSafeUrlCandidate('http://127.1/')).toBe(false);
   });
 
   it('accepts public http(s) URL candidates', () => {
     expect(isSafeUrlCandidate('https://example.com/article')).toBe(true);
     expect(isSafeUrlCandidate('http://8.8.8.8/status')).toBe(true);
+    expect(isSafeUrlCandidate('http://[2606:4700:4700::1111]/')).toBe(true);
   });
 });
