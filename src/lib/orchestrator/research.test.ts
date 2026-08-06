@@ -6,17 +6,21 @@ describe('isPrivateIpAddress', () => {
     expect(isPrivateIpAddress('0.0.0.0')).toBe(true);
     expect(isPrivateIpAddress('10.0.0.1')).toBe(true);
     expect(isPrivateIpAddress('127.0.0.1')).toBe(true);
+    expect(isPrivateIpAddress('100.64.0.0')).toBe(true);
     expect(isPrivateIpAddress('100.64.0.1')).toBe(true);
     expect(isPrivateIpAddress('100.127.255.254')).toBe(true);
+    expect(isPrivateIpAddress('100.127.255.255')).toBe(true);
     expect(isPrivateIpAddress('169.254.1.1')).toBe(true);
     expect(isPrivateIpAddress('172.16.0.5')).toBe(true);
     expect(isPrivateIpAddress('192.168.1.1')).toBe(true);
     expect(isPrivateIpAddress('224.0.0.1')).toBe(true);
   });
 
-  it('allows public IPv4 addresses', () => {
+  it('allows public IPv4 addresses immediately outside CGNAT and common public resolvers', () => {
     expect(isPrivateIpAddress('1.1.1.1')).toBe(false);
     expect(isPrivateIpAddress('8.8.8.8')).toBe(false);
+    expect(isPrivateIpAddress('100.63.255.255')).toBe(false);
+    expect(isPrivateIpAddress('100.128.0.0')).toBe(false);
   });
 
   it('fails closed for malformed addresses', () => {
@@ -35,6 +39,11 @@ describe('isPrivateIpAddress', () => {
     expect(isPrivateIpAddress('::ffff:10.0.0.1')).toBe(true);
     expect(isPrivateIpAddress('::ffff:a00:1')).toBe(true);
     expect(isPrivateIpAddress('::ffff:7f00:1')).toBe(true);
+  });
+
+  it('allows mapped public IPv4 addresses', () => {
+    expect(isPrivateIpAddress('::ffff:8.8.8.8')).toBe(false);
+    expect(isPrivateIpAddress('::ffff:808:808')).toBe(false);
   });
 });
 
@@ -73,5 +82,6 @@ describe('isSafeUrlCandidate', () => {
     expect(isSafeUrlCandidate('https://example.com/article')).toBe(true);
     expect(isSafeUrlCandidate('http://8.8.8.8/status')).toBe(true);
     expect(isSafeUrlCandidate('http://[2606:4700:4700::1111]/')).toBe(true);
+    expect(isSafeUrlCandidate('http://[::ffff:8.8.8.8]/')).toBe(true);
   });
 });
