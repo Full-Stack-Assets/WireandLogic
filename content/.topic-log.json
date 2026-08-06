@@ -2337,6 +2337,13 @@
       "url": "https://buttondown.com/blog/what-i-love-about-django",
       "publishedAt": "2026-08-06T12:29:01.596Z",
       "signature": "7140c39803bc01b0"
+    },
+    {
+      "slug": "real-time-blog-chat-harassment-lessons",
+      "title": "I added a real-time chat to my blog, people used it to attack me",
+      "url": "https://en.andros.dev/blog/b6c32a90/i-added-a-real-time-chat-to-my-blog-people-used-it-to-attack-me/",
+      "publishedAt": "2026-08-06T14:58:14.818Z",
+      "signature": "20a420f60c36d85f"
     }
   ]
 }
