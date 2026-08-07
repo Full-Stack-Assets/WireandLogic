@@ -2344,6 +2344,13 @@
       "url": "https://en.andros.dev/blog/b6c32a90/i-added-a-real-time-chat-to-my-blog-people-used-it-to-attack-me/",
       "publishedAt": "2026-08-06T14:58:14.818Z",
       "signature": "20a420f60c36d85f"
+    },
+    {
+      "slug": "amd-acquires-taalas-inference-silicon",
+      "title": "AMD acquires Taalas to boost inference performance by etching models in silicon",
+      "url": "https://www.theregister.com/systems/2026/08/06/amd-acquires-ai-chip-startup-taalas-to-boost-inference-performance-by-etching-models-into-silicon/5284344",
+      "publishedAt": "2026-08-07T00:44:15.291Z",
+      "signature": "ef2ccbed62cf6420"
     }
   ]
 }
