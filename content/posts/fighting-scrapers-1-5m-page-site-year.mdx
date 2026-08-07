@@ -1,0 +1,63 @@
+---
+title: "How a 1.5‑million‑page site spent a year battling bots and scrapers"
+description: "A deep dive into a year of bot traffic on a 1.5 M‑page site, its impact on analytics and practical steps to defend against scrapers."
+date: "2026-08-07T19:10:02.499Z"
+category: "security"
+tags: 
+  - "bots"
+  - "scraping"
+  - "web-traffic"
+  - "analytics"
+  - "mitigation"
+hero: 
+  url: "https://live.staticflickr.com/65535/52439314477_3b148a2c1e_b.jpg"
+  alt: "BOT 2022-10-03 Board Tour Ports-4"
+  credit: "NCDOTcommunications"
+  creditUrl: "https://www.flickr.com/photos/39320593@N03/52439314477"
+sources: 
+  - title: "A year of fighting scrapers on my 1.5 million-page website"
+    url: "https://patronview.com/news/99-percent-of-my-website-traffic-is-bots/"
+  - title: "Scraping By On $500,000 A Year: Why It's So Hard To Escape The Rat Race"
+    url: "https://www.financialsamurai.com/scraping-by-on-500000-a-year-high-income-earners-struggling/"
+  - title: "That couple ‘scraping by’ on $500,000 a year is actually socking away a ton of money"
+    url: "https://www.latimes.com/business/la-fi-couple-scraping-by-on-half-million-20190329-story.html"
+  - title: "Getting Fake Traffic from China? Here’s What’s Happen"
+    url: "https://www.surebright.com/blog/getting-a-lot-of-traffic-from-china-57-of-holiday-shoppers-werent-human-last-year"
+---
+
+When a 1.5 million‑page website started seeing a flood of traffic from unknown sources, the owner quickly realized most of it wasn’t human. Over the past year, bot activity has surged to the point where more than half of all visits are automated, overwhelming analytics and inflating ad spend. The scramble to differentiate real customers from scrapers has turned routine monitoring into a full‑time cat‑and‑mouse game. Understanding how these bots operate and what they cost is essential for anyone running large‑scale web properties.
+
+<Callout type="takeaway">Bots now account for the majority of traffic on large sites, eroding data quality and revenue.</Callout>
+
+## What happened
+The site’s 1.5 million pages began attracting bot traffic that, according to Radware’s 2025 Ecommerce Bot Threat Report, made up 57% of total ecommerce visits in 2024, with 31% classified as “bad bots” that scrape content, test stolen cards, or clog carts. Merchants on the same ecosystem reported conversion rates collapsing to 0.02% after a sudden surge from 20 k to 400 k monthly impressions, rendering reporting almost useless.
+
+Further analysis revealed that a single merchant monitoring over 200 stores found 73% of overall traffic to be fake, a figure echoed by Cloudflare data showing 29% of Black Friday 2024 traffic originated from bots and Akamai noting an 18% rise during Cyber Week. Geographic sources spanned China, Brazil, Vietnam, and Nigeria, and bots have become sophisticated enough to mimic real browsers using headless emulators, especially on mobile apps where activity jumped 160% year‑over‑year.
+
+## Why it matters
+When bots dominate the traffic stream, key metrics such as conversion rate, bounce rate, and average order value become meaningless, leading teams to make decisions based on polluted data. Advertising budgets are wasted on impressions that never convert, while SEO rankings can suffer if scrapers duplicate content or generate malicious requests. Moreover, the constant need to filter and block malicious traffic adds operational overhead and can expose the infrastructure to denial‑of‑service attacks if not managed properly.
+
+<ProsCons>
+  <Pros>
+    <li>Cleaner analytics enable data‑driven product decisions.</li>
+    <li>Reduced ad spend on non‑human impressions.</li>
+    <li>Lower risk of content theft and credential stuffing.</li>
+  </Pros>
+  <Cons>
+    <li>Over‑aggressive blocking may reject legitimate users.</li>
+    <li>Implementation adds latency and complexity.</li>
+    <li>Continuous tuning is required as bots evolve.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Start by instrumenting your traffic with a reputable bot‑detection service that tags requests as human, good bot, or bad bot. Layer rate‑limiting at the edge (CDN or WAF) to throttle suspicious IP ranges and enforce request caps per minute. For high‑risk endpoints—login, checkout, API—add challenge mechanisms such as CAPTCHAs or JavaScript challenges that only real browsers can solve. Continuously monitor key conversion funnels and compare bot‑filtered versus raw metrics to spot anomalies early. Finally, maintain an incident‑response playbook that outlines steps for rapid rule updates when new scraper patterns emerge.
+
+<Callout type="warning">Avoid blanket IP blocks; they can unintentionally cut off legitimate traffic from regions with shared cloud providers.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="How can I tell if traffic is from bots?">Look for abnormal patterns such as extremely low session duration, high bounce rates, impossible mouse movements, and mismatched user‑agent strings. Combine these signals with third‑party bot‑score services for a confidence rating.</Question>
+  <Question q="What are the most effective ways to block scrapers without hurting users?">Use a combination of rate limiting, behavior‑based challenges (e.g., reCAPTCHA), and allow‑list known good bots (search engine crawlers). Deploy these rules at the CDN/WAF layer to keep latency low.</Question>
+  <Question q="Is it worth investing in a paid bot mitigation service?">For sites with millions of pages and significant ad spend, the ROI can be substantial because paid services provide up‑to‑date threat intel, automated rule updates, and detailed reporting that reduce manual overhead.</Question>
+</FAQ>
