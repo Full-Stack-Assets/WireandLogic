@@ -2442,6 +2442,13 @@
       "url": "https://arcprize.org/results/deepseek-v4-flash-0731",
       "publishedAt": "2026-08-08T05:07:35.307Z",
       "signature": "967436ba53f50ea4"
+    },
+    {
+      "slug": "oracle-bans-ai-generated-code-openjdk",
+      "title": "Oracle bans AI-generated code from OpenJDK",
+      "url": "https://app.dealroom.co/news/feed/oracle-bans-ai-generated-code-from-openjdk-despite-ellison-s-claim-oracle-isn-t-writing-its-own-code",
+      "publishedAt": "2026-08-08T09:19:43.749Z",
+      "signature": "813fbff1686a8e07"
     }
   ]
 }
