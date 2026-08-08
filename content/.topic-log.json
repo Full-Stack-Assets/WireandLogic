@@ -2470,6 +2470,13 @@
       "url": "https://nate.spot/no-phone-while-poop/",
       "publishedAt": "2026-08-08T15:39:27.218Z",
       "signature": "42bd1d2979b2c960"
+    },
+    {
+      "slug": "openai-accidental-attack-huggingface-timeline",
+      "title": "Timeline of the OpenAI accidental attack against Hugging Face",
+      "url": "https://simonwillison.net/2026/Aug/7/openai-timeline/",
+      "publishedAt": "2026-08-08T18:53:12.859Z",
+      "signature": "eeb234ec4b7f8ed5"
     }
   ]
 }
