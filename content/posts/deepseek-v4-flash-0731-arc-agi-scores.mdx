@@ -1,0 +1,60 @@
+---
+title: "DeepSeek V4 Flash 0731 Sets New ARC-AGI Scores with Competitive Pricing and Speed"
+description: "DeepSeek V4 Flash 0731 achieves 89% on ARC-AGI-1 and 61% on ARC-AGI-2, while offering fast inference and low token pricing for developers."
+date: "2026-08-08T05:07:35.305Z"
+category: "news"
+tags: 
+  - "deepseek"
+  - "arc-agi"
+  - "model-performance"
+  - "pricing"
+  - "inference"
+hero: 
+  url: "https://upload.wikimedia.org/wikipedia/commons/9/9e/An_editor_explained_%22%28this_article%29_was_written_by_the_response_of_Deepseek%22_in_edit_summary_on_Chinese_Wikipedia.png"
+  alt: "An editor explained '(this article) was written by the response of Deepseek' in edit summary on Chinese Wikipedia"
+  credit: "維基百科編者，臨時賬戶 ~2025-40473-32​ 、維基媒體基金會"
+  creditUrl: "https://commons.wikimedia.org/w/index.php?curid=179922175"
+sources: 
+  - title: "DeepSeek V4 Flash 0731"
+    url: "https://arcprize.org/results/deepseek-v4-flash-0731"
+  - title: "DeepSeek V4 Flash 0731 - ARC-AGI Results"
+    url: "https://arcprize.org/results/deepseek-v4-flash-0731"
+  - title: "deepseek-ai/DeepSeek-V4-Flash-0731 · Hugging Face"
+    url: "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731"
+  - title: "DeepSeek V4 Flash 0731 - API Pricing & Benchmarks"
+    url: "https://openrouter.ai/deepseek/deepseek-v4-flash-0731"
+  - title: "DeepSeek V4 Flash 0731 (max) - Intelligence, Performance & Price Analysis"
+    url: "https://artificialanalysis.ai/models/deepseek-v4-flash"
+---
+
+DeepSeek’s latest open‑weight model, V4 Flash 0731, just posted its ARC‑AGI benchmark results. At max effort it hit 89.0% on ARC‑AGI‑1 Semi‑Private and 61.4% on ARC‑AGI‑2 Semi‑Private, with per‑task costs of $0.02 and $0.04 respectively. The model also scores 52 on the Artificial Analysis Intelligence Index, far above the median of 26 for comparable models. At 113 tokens per second it is among the fastest open‑weight reasoners, and its token pricing of $0.14 per 1M input tokens and $0.28 per 1M output tokens is well below the market median. For developers building reasoning‑heavy applications, those numbers translate into both higher capability and lower operating cost.
+<Callout type="takeaway">DeepSeek V4 Flash 0731 delivers top‑tier reasoning performance at a price point that undercuts most open‑weight competitors.</Callout>
+## What happened
+DeepSeek V4 Flash 0731 achieved 89.0% accuracy on the ARC‑AGI‑1 Semi‑Private benchmark and 61.4% on ARC‑AGI‑2 Semi‑Private when run at max effort, costing $0.02 and $0.04 per task respectively. The model’s pricing is $0.14 per 1M input tokens and $0.28 per 1M output tokens, compared with median market rates of $0.43 and $1.20.
+
+In addition to benchmark scores, the model earned a 52 on the Artificial Analysis Intelligence Index, well above the median score of 26 for similar models. During the index evaluation it generated 210 M tokens—more than double the median of 100 M—while processing at 113 tokens per second, indicating strong speed but high verbosity. The model supports a 1 M token context window and runs with reasoning‑focused weights.
+
+Overall evaluation of the model on the Intelligence Index cost $72.03, reflecting the combined compute and token usage under the stated pricing.
+## Why it matters
+The combination of high ARC‑AGI scores and low per‑task pricing means developers can access state‑of‑the‑art reasoning without the expense typically associated with proprietary APIs. Faster token throughput reduces latency for batch reasoning workloads, while the large context window enables more complex prompts. However, the model’s verbosity can inflate token counts, potentially offsetting cost advantages in scenarios that require concise output.
+<ProsCons>
+  <Pros>
+    <li>Top‑tier ARC‑AGI benchmark performance.</li>
+    <li>Token pricing well below market median.</li>
+    <li>Fast inference speed at 113 t/s.</li>
+  </Pros>
+  <Cons>
+    <li>Very verbose output (210 M tokens vs 100 M median).</li>
+    <li>Total evaluation cost $72.03 for benchmark suite.</li>
+    <li>Optimized for reasoning tasks; may be overkill for simple chat.</li>
+  </Cons>
+</ProsCons>
+## How to think about it
+When integrating DeepSeek V4 Flash 0731, start by profiling the token budget of your target use case. If your application benefits from deep reasoning and can tolerate higher token counts, the model’s superior accuracy and speed will likely outweigh the extra token cost. For latency‑sensitive or token‑constrained scenarios, consider limiting output length or post‑processing to trim verbosity. Compare the $0.14/1M input and $0.28/1M output rates against your projected traffic to ensure the total cost stays within budget.
+<Callout type="warning">Because the model generates roughly twice the median token volume, uncontrolled output length can quickly erode its pricing advantage.</Callout>
+## FAQ
+<FAQ>
+  <Question q="How does the $0.02 per task cost compare to other models?">At $0.02 for ARC‑AGI‑1 and $0.04 for ARC‑AGI‑2, DeepSeek V4 Flash 0731 is cheaper than most proprietary reasoning APIs, which often charge $0.05‑$0.10 per comparable task.</Question>
+  <Question q="Is the model suitable for real‑time applications?">Its 113 tokens‑per‑second throughput is fast, but the high verbosity means large responses can increase latency; it’s best for batch or semi‑real‑time workloads where output length can be managed.</Question>
+  <Question q="What does the Intelligence Index score represent?">The Artificial Analysis Intelligence Index aggregates performance across a suite of exams (GDPval‑AA, SciCode, GPQA Diamond, etc.). A score of 52 places DeepSeek V4 Flash 0731 well above the median of 26 for similar open‑weight models.</Question>
+</FAQ>
