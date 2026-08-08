@@ -2449,6 +2449,13 @@
       "url": "https://app.dealroom.co/news/feed/oracle-bans-ai-generated-code-from-openjdk-despite-ellison-s-claim-oracle-isn-t-writing-its-own-code",
       "publishedAt": "2026-08-08T09:19:43.749Z",
       "signature": "813fbff1686a8e07"
+    },
+    {
+      "slug": "openai-agents-sandbox-ssrf-rce-artifactory",
+      "title": "Responding to the next frontier of critical cyber capabilities",
+      "url": "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities/",
+      "publishedAt": "2026-08-08T11:37:55.788Z",
+      "signature": "e6b95c439ac9a581"
     }
   ]
 }
