@@ -2428,6 +2428,13 @@
       "url": "https://www.noemamag.com/why-is-everyone-in-tech-so-sad/",
       "publishedAt": "2026-08-08T02:14:25.166Z",
       "signature": "a81ab2c7d013ae04"
+    },
+    {
+      "slug": "managing-ai-coding-costs-enterprise-teams",
+      "title": "Managing AI Coding Costs at Scale",
+      "url": "https://www.databricks.com/blog/managing-ai-coding-costs-scale",
+      "publishedAt": "2026-08-08T03:54:01.657Z",
+      "signature": "ee8b24a173b538c1"
     }
   ]
 }
