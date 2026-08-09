@@ -1,0 +1,65 @@
+---
+title: "When AI‑Generated Code Cloned an Open‑Source App: A Developer’s Public Apology"
+description: "A developer used Claude to build a sky‑watching web app, unintentionally replicating the open‑source Dark Hours project, and issued a public apology."
+date: "2026-08-09T16:48:52.159Z"
+category: "news"
+tags: 
+  - "ai"
+  - "open-source"
+  - "ethics"
+  - "web-development"
+  - "licensing"
+hero: 
+  url: "https://live.staticflickr.com/5301/5573548657_d2e4e12956_b.jpg"
+  alt: "Displaced people crossing the border from Ivory Coast to Liberia"
+  credit: "DFID - UK Department for International Development"
+  creditUrl: "https://www.flickr.com/photos/14214150@N02/5573548657"
+sources: 
+  - title: "Mea Culpa – Dark Hours"
+    url: "https://blog.terrygodier.com/2026/08/09/mea-culpa-dark-hours.html"
+  - title: "Mea Culpa - Dark Hours"
+    url: "https://blog.terrygodier.com/2026/08/09/mea-culpa-dark-hours.html"
+  - title: "Mea Culpa – Dark Hours | Hacker News"
+    url: "https://news.ycombinator.com/item?id=49231154"
+  - title: "Watch Mea Culpa | Netflix Official Site"
+    url: "https://www.netflix.com/title/81577005"
+---
+
+Last week a developer launched a web utility called Dark Hours that shows the night sky. The app was built with Claude, an AI code generator, and within hours the creator realized it was almost identical to an existing open‑source project of the same name. After the similarity was pointed out, the developer redirected the domain, halted further development, and posted a public apology. This incident highlights the hidden risks of relying on AI to generate production‑ready code without proper review.
+
+<Callout type="takeaway">AI can unintentionally reproduce existing open‑source code, so developers must verify originality before release.</Callout>
+
+## What happened
+The author announced the launch of Dark Hours, a website that predicts what will be visible in the night sky. The project was generated primarily with Claude, and the resulting code included the same feature set, UI layout, and even a bug that had been fixed in the original open‑source repository.
+
+After a fellow developer highlighted the overlap on Bluesky, the author examined the code and confirmed the duplication. He redirected the darkhours.app domain to the original project, cancelled plans for an iOS version, and issued a blog post acknowledging the mistake.
+
+The incident was discussed on Hacker News, where additional context about a prior astrology‑app rejection and broader concerns about AI‑generated content were raised, underscoring the community’s unease with unchecked AI output.
+
+## Why it matters
+Copying an open‑source project without attribution can violate licenses, erode trust, and damage the collaborative ecosystem that powers much of modern software. When AI tools reproduce existing code, the responsibility falls on the human operator to detect and remediate the issue, otherwise legal and reputational risks arise. Moreover, such incidents fuel skepticism about AI’s role in development, potentially prompting stricter policies from platforms and employers.
+
+<ProsCons>
+  <Pros>
+    <li>Accelerates prototyping and reduces boilerplate.</li>
+    <li>Provides instant suggestions for syntax and API usage.</li>
+    <li>Lowers entry barriers for developers unfamiliar with a language.</li>
+  </Pros>
+  <Cons>
+    <li>May replicate copyrighted or licensed code without attribution.</li>
+    <li>Can introduce subtle bugs inherited from the source material.</li>
+    <li>Encourages over‑reliance, diminishing deep understanding.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Treat AI as a co‑pilot, not an autonomous author. Before committing AI‑generated files, run a similarity scan against known repositories, verify license compatibility, and perform a manual code review. Keep a clear provenance log of prompts and model outputs so you can trace decisions. If the generated code forms a substantial portion of a product, consider rewriting or heavily refactoring to ensure originality.
+
+<Callout type="warning">Do not ship AI‑generated applications without a thorough audit for plagiarism, licensing conflicts, and hidden bugs.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="Can AI code generators like Claude copy existing projects?">Yes, because they are trained on large codebases and can reproduce patterns that match publicly available repositories, especially when prompted to build a specific type of app.</Question>
+  <Question q="What steps should I take to ensure my AI‑generated code doesn’t infringe licenses?">Run automated similarity checks, review the generated code line‑by‑line, verify any reused snippets are compatible with your project's license, and add attribution where required.</Question>
+  <Question q="Is it safe to use AI for small snippets but not whole applications?">Using AI for isolated, non‑core snippets reduces risk, but you should still audit each insertion. Whole‑application generation magnifies the chance of undiscovered duplication and should be treated with extra caution.</Question>
+</FAQ>
