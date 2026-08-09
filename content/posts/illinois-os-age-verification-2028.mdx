@@ -1,0 +1,67 @@
+---
+title: "Illinois mandates OS-level age verification signals for all devices by 2028"
+description: "Illinois' new law requires operating systems to provide age brackets for child users, reshaping app safety and raising privacy concerns."
+date: "2026-08-09T10:50:58.227Z"
+category: "news"
+tags: 
+  - "privacy"
+  - "age-verification"
+  - "operating-systems"
+  - "legislation"
+  - "developers"
+hero: 
+  url: "https://live.staticflickr.com/4432/36662374434_7f1af7fc09_b.jpg"
+  alt: "Birgit Pfitzmann, IBM Research"
+  credit: "IBM Research"
+  creditUrl: "https://www.flickr.com/photos/40748696@N07/36662374434"
+sources: 
+  - title: "Illinois just told every operating system to start reporting your kid's age"
+    url: "https://itsfoss.com/news/illinois-age-verification-bill/"
+  - title: "Illinois Just Told Every Operating System to Start Reporting Your Kid's Age"
+    url: "https://itsfoss.com/news/illinois-age-verification-bill/"
+  - title: "Illinois just told every operating system to start reporting your kid's age | Hacker News"
+    url: "https://news.ycombinator.com/item?id=49228350"
+  - title: "Privacy News - Illinois Just Told Every Operating System to Start Reporting Your Kid's Age"
+    url: "https://malwaretips.com/threads/illinois-just-told-every-operating-system-to-start-reporting-your-kids-age.142686/"
+---
+
+Illinois has just enacted the Children's Online Social Media Safety Act, compelling every operating system sold or used in the state to report a child's age bracket at account creation. By January 1 2028, device manufacturers must present a birth‑date field and translate it into one of four brackets—under 13, 13‑15, 16‑17, or 18 and up. Apps can then query an OS‑provided API to receive that bracket and automatically enable safety settings for minors. The move promises uniform child‑safety controls but also raises significant privacy and implementation challenges for developers.
+
+<Callout type="takeaway">OS‑level age signals will become the default gatekeeper for child‑safety features, shifting compliance burdens onto platform providers.</Callout>
+
+## What happened
+Illinois Governor JB Pritzker signed HB5511, the Children’s Online Social Media Safety Act, into law after an 82‑27 House vote and a unanimous 57‑0 Senate vote. The statute obliges “covered manufacturers” – device makers, OS providers, and app stores – to add an age‑verification interface at account setup and to encrypt all related signals. By January 1 2028 the interface must collect a birth date, map it to one of four brackets, and expose the bracket via an API that apps can call after July 1 2028. Violations may incur fines up to $50,000 per infraction, though good‑faith errors are exempt.
+
+The approach mirrors earlier efforts in Colorado (SB26‑051) and California (AB‑1043), which also rely on OS‑level age signals. Those states initially excluded open‑source platforms, prompting pushback from Linux vendors; Colorado later adjusted its language after lobbying from System76. Illinois’ bill does not contain an explicit open‑source carve‑out, leaving developers of non‑proprietary OSes to interpret compliance.
+
+## Why it matters
+The law creates a uniform technical layer for child‑safety, meaning app developers can rely on a single API instead of implementing disparate age checks. However, it also introduces a new data‑collection point that could be exploited for profiling or targeted advertising, especially if signals are combined with other identifiers. Platform providers must redesign onboarding flows, update privacy policies, and ensure end‑to‑end encryption, while open‑source projects may face legal uncertainty without clear exemptions.
+
+<ProsCons>
+  <Pros>
+    <li>Standardized age data simplifies compliance for app developers.</li>
+    <li>Built‑in safety defaults (feed restrictions, location masking) protect minors out of the box.</li>
+    <li>State‑enforced encryption reduces risk of signal interception.</li>
+  </Pros>
+  <Cons>
+    <li>Creates a centralized repository of children’s age information, raising privacy concerns.</li>
+    <li>Open‑source operating systems may lack clear guidance, increasing legal risk.</li>
+    <li>Developers must update codebases to handle the new API and potential error states.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+1. **Audit your onboarding flow** – Ensure you can accept an optional age‑bracket from the OS and map it to your internal safety settings.
+2. **Implement graceful fallback** – If the OS signal is unavailable or erroneous, retain your existing age‑verification mechanism rather than assuming compliance.
+3. **Review data handling** – Store only the bracket, not the raw birth date, and treat it as sensitive personal information under state law.
+4. **Monitor open‑source discussions** – Follow any legislative clarifications or community‑driven implementations that address Linux and other non‑proprietary platforms.
+5. **Prepare for audits** – Log API calls securely and be ready to demonstrate good‑faith compliance if the Attorney General investigates.
+
+<Callout type="warning">Do not expose the raw birth‑date or combine the age bracket with persistent identifiers without explicit user consent; doing so could violate Illinois privacy statutes and attract hefty fines.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="How quickly must my app start requesting the OS age signal?">Apps must begin requesting the signal by July 1 2028, but you can integrate it earlier to stay ahead of the deadline.</Question>
+  <Question q="What if my app runs on a Linux distribution that doesn’t provide the API?">Treat the OS as non‑compliant, fall back to your own age‑verification flow, and document the decision to mitigate liability.</Question>
+  <Question q="Will the age‑bracket data be shared with third parties?">The law requires encryption of the signal in transit and does not authorize sharing with advertisers; any secondary use could be deemed a violation.</Question>
+</FAQ>
