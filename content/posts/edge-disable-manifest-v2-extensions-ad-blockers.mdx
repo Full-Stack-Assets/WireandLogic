@@ -1,0 +1,63 @@
+---
+title: "Edge to Disable Manifest V2 Extensions, Ending Support for uBlock Origin and Other Ad Blockers"
+description: "Microsoft Edge will phase out Manifest V2 extensions, cutting off uBlock Origin and similar ad blockers by the end of 2026."
+date: "2026-08-09T08:21:40.430Z"
+category: "news"
+tags: 
+  - "edge"
+  - "manifest-v2"
+  - "adblockers"
+  - "browser-extensions"
+  - "privacy"
+hero: 
+  url: "https://live.staticflickr.com/1103/667197825_3e4f7ef664.jpg"
+  alt: "This Sign has Sharp Edges"
+  credit: "Gustavo da Cunha Pimenta"
+  creditUrl: "https://www.flickr.com/photos/31512354@N00/667197825"
+sources: 
+  - title: "Microsoft Edge is about to lock out older ad blockers, just like Chrome did"
+    url: "https://www.theverge.com/tech/976880/microsoft-edge-extensions-ad-blockers-mv2-mv3"
+  - title: "Microsoft Edge is about to lock out older ad blockers, just like Chrome did"
+    url: "https://www.theverge.com/tech/976880/microsoft-edge-extensions-ad-blockers-mv2-mv3"
+  - title: "Microsoft Edge is about to lock out older ad blockers, just like Chrome did | Hacker News"
+    url: "https://news.ycombinator.com/item?id=49220392"
+  - title: "Microsoft Edge Is About to Break Older Ad Blockers, Just Like Chrome"
+    url: "https://thewincentral.com/microsoft-edge-ending-support-older-ad-blockers/"
+---
+
+Microsoft announced that Edge is ending support for Manifest V2 (MV2) extensions, a move that will affect popular ad‑blocking tools such as uBlock Origin. The change mirrors Google Chrome’s earlier shift to Manifest V3 (MV3) and is slated to finish for consumer users by the end of 2026, with enterprise deprecation in early 2027. Only 58 extensions on the Edge Add‑On Store still rely on MV2, and just three lack an MV3 counterpart. Users will see notifications as the older extensions are turned off by default, starting in the Canary, Dev, and Beta channels. This matters because many privacy‑focused users depend on the deeper request‑blocking capabilities that MV2 provides.
+
+<Callout type="takeaway">Edge’s MV2 shutdown will force users to migrate to MV3‑compatible blockers or switch browsers.</Callout>
+
+## What happened
+Microsoft confirmed that it will gradually disable MV2 extensions in Edge, beginning with experimental channels and rolling out to Stable over the next months. The company reports only 58 extensions with “meaningful usage” still use MV2, and three of those have no MV3 version available. Users will receive advance notices and be directed to MV3 alternatives where possible.
+
+The rollout aims to complete the consumer transition by the end of 2026. Managed devices are exempt during the initial phase, while enterprise deprecation is planned for early 2027. Microsoft encourages users to adopt MV3‑compatible extensions like uBlock Origin Lite or consider browsers such as Opera or Firefox that continue to support MV2.
+
+## Why it matters
+The shift removes powerful request‑interception APIs that many advanced ad blockers rely on, potentially weakening users’ ability to block trackers and intrusive ads. It also aligns Edge with Chrome’s extension ecosystem, simplifying cross‑browser development but reducing user choice. Organizations must plan for the change to avoid disruptions in security policies that depend on MV2 extensions.
+
+<ProsCons>
+  <Pros>
+    <li>Improved performance and security through newer APIs.</li>
+    <li>Better compatibility with Chrome’s extension ecosystem.</li>
+    <li>Encourages developers to modernize extensions.</li>
+  </Pros>
+  <Cons>
+    <li>Loss of advanced ad‑blocking features for MV2 extensions.</li>
+    <li>Users may need to switch browsers or find MV3 replacements.</li>
+    <li>Potential fragmentation as some browsers retain MV2 support.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Evaluate the extensions you rely on and check whether an MV3 version exists. If you use uBlock Origin, switch to uBlock Origin Lite or another MV3‑compatible blocker. Keep an eye on Edge notifications and test the MV3 replacement before the forced shutdown. Enterprises should audit internal policies that depend on MV2 extensions and schedule migration or alternative solutions well before early 2027.
+
+<Callout type="warning">Do not ignore Edge’s deprecation notices; continuing to use disabled MV2 extensions will leave you unprotected and may break site functionality.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="When will MV2 extensions stop working in Edge?">Microsoft plans to complete the consumer shutdown of MV2 extensions by the end of 2026, with enterprise deprecation scheduled for early 2027.</Question>
+  <Question q="Can I keep using uBlock Origin on Edge?">The full uBlock Origin extension is MV2 only, so it will be disabled. You can use uBlock Origin Lite, which is built for MV3, or switch to another browser that still supports MV2.</Question>
+  <Question q="What alternatives exist if my preferred extension isn’t available in MV3?">Look for MV3‑compatible forks, use lighter versions like uBlock Origin Lite, or consider browsers such as Opera or Firefox that continue to support MV2 extensions for the foreseeable future.</Question>
+</FAQ>

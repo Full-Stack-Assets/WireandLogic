@@ -2498,6 +2498,13 @@
       "url": "https://www.bloomberg.com/news/articles/2026-08-06/us-military-s-cyber-command-unit-grapples-with-cluster-of-deaths-by-suicide",
       "publishedAt": "2026-08-09T04:02:43.659Z",
       "signature": "9fe75c1d4893f7fd"
+    },
+    {
+      "slug": "edge-disable-manifest-v2-extensions-ad-blockers",
+      "title": "Microsoft Edge is about to lock out older ad blockers, just like Chrome did",
+      "url": "https://www.theverge.com/tech/976880/microsoft-edge-extensions-ad-blockers-mv2-mv3",
+      "publishedAt": "2026-08-09T08:21:40.432Z",
+      "signature": "8fb5c2da4260d0f3"
     }
   ]
 }
