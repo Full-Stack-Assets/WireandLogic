@@ -2568,6 +2568,13 @@
       "url": "https://claude.com/blog/auto-mode-default-in-claude-code",
       "publishedAt": "2026-08-10T07:59:31.359Z",
       "signature": "4f4024e09acf093b"
+    },
+    {
+      "slug": "meta-muse-glimmer-30b-open-weights",
+      "title": "Meta Muse Glimmer – open weights 30B local coding model",
+      "url": "https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model",
+      "publishedAt": "2026-08-10T15:10:31.006Z",
+      "signature": "dfdfce7d98142f6f"
     }
   ]
 }
