@@ -2561,6 +2561,13 @@
       "url": "https://www.wtoc.com/2026/08/07/savannah-police-department-fires-6-employees-over-flock-safety-system-misuse/",
       "publishedAt": "2026-08-10T05:59:19.302Z",
       "signature": "48d33003da77f52b"
+    },
+    {
+      "slug": "claude-code-auto-mode-default",
+      "title": "Auto mode is now the default in Claude Code",
+      "url": "https://claude.com/blog/auto-mode-default-in-claude-code",
+      "publishedAt": "2026-08-10T07:59:31.359Z",
+      "signature": "4f4024e09acf093b"
     }
   ]
 }
