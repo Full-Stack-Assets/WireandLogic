@@ -1,0 +1,74 @@
+---
+title: "Building Low‑Poly Simulations with LLMs to Master Complex Topics"
+description: "Learn how to turn LLM‑generated knowledge into interactive low‑poly simulations, boosting retention and reducing hallucinations."
+date: "2026-08-10T04:16:52.236Z"
+category: "tools"
+tags: 
+  - "llms"
+  - "learning"
+  - "simulation"
+  - "low-poly"
+  - "github-pages"
+  - "prompt-engineering"
+hero: 
+  url: "https://live.staticflickr.com/65535/54026860120_06be6e118b_b.jpg"
+  alt: "Study for Self-Portrait"
+  credit: "Kyle McDonald"
+  creditUrl: "https://www.flickr.com/photos/28622838@N00/54026860120"
+sources: 
+  - title: "How I use LLMs to learn complex topics"
+    url: "https://laurentiugabriel.github.io/blog/articles/how-i-use-llms-to-learn/"
+  - title: "How I use LLMs to learn complex topics · Laurentiu Raducu"
+    url: "https://laurentiugabriel.github.io/blog/articles/how-i-use-llms-to-learn/"
+  - title: "How I use LLMs to learn complex topics | Hacker News"
+    url: "https://news.ycombinator.com/item?id=49234675"
+  - title: "How I use LLMs to learn new subjects"
+    url: "https://www.seangoedecke.com/learning-from-llms/"
+  - title: "CMU LibGuides: Best Practices for Large Language Models: Home"
+    url: "https://guides.library.cmu.edu/LLM_best_practices"
+---
+
+When I needed to understand the end‑to‑end flow of chip fabrication, a traditional Google search left me with a wall of articles and vague diagrams. I turned to a large language model, not just for explanations but to generate a low‑poly, RollerCoaster‑Tycoon‑style animation that walks a cart through each manufacturing step. The resulting interactive visual stayed on GitHub Pages, was easy to tweak, and forced the model to stay grounded because the animation had to be internally consistent. This approach turned abstract concepts into concrete, memorable experiences and revealed a repeatable pattern for learning any complex subject.
+
+<Callout type="takeaway">LLM‑driven simulations turn dense theory into interactive, verifiable experiences that boost retention.</Callout>
+
+## What happened
+I started by prompting an LLM to assemble a concise knowledge base for chip fabrication, then asked the model to self‑review the facts for internal consistency. With that vetted foundation I instructed the model to produce a low‑poly, web‑ready animation—think RollerCoaster Tycoon—that visualizes each step, from sand collection to final silicon wafer, and to add simple UI controls for pausing and zooming. After the code was generated I pushed it to a new GitHub repository, enabled GitHub Pages, and published the site as *ChipTycoon*.
+
+The live demo proved surprisingly accurate; because the animation had to follow a deterministic sequence, the model could not hide hallucinations behind vague narration. Viewers can watch a cart traverse the fab, see material transformations, and interact with the timeline, turning a static textbook chapter into an exploratory playground.
+
+Beyond visualizations, I experimented with LLM‑generated quizzes and targeted summarizations of reference books. The model produced multiple‑choice questions that pinpointed my weak spots, and concise summaries that helped me decide which chapters to read in depth, confirming that the same workflow extends to other domains.
+
+## Why it matters
+Interactive, model‑driven simulations give engineers a tangible mental model that static text often fails to provide, shortening the learning curve for high‑cost domains like semiconductor manufacturing. By forcing the LLM to generate code that must run correctly, we obtain a built‑in sanity check that reduces hallucinations and encourages fact‑checking. The workflow is reproducible with any subject that has enough training data, making advanced learning accessible without costly courses or specialized software.
+
+<ProsCons>
+  <Pros>
+    <li>Transforms abstract concepts into memorable visual narratives.</li>
+    <li>Self‑review step catches many factual errors before deployment.</li>
+    <li>Free hosting on GitHub Pages lowers barriers to sharing.</li>
+  </Pros>
+  <Cons>
+    <li>Requires careful prompt engineering and iterative refinement.</li>
+    <li>Initial setup time can be longer than reading a single article.</li>
+    <li>Low‑poly graphics may omit critical fine‑grained details.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+1. **Define the learning goal** – pick a bounded topic (e.g., “photolithography in chip fabs”).
+2. **Prompt for a knowledge base** – ask the model to list key steps, terminology, and common pitfalls.
+3. **Ask for a self‑audit** – request the model to cite sources or flag uncertain statements.
+4. **Generate a low‑poly prototype** – specify the target framework (HTML + Three.js, p5.js, etc.) and ask for runnable code with UI controls.
+5. **Iterate locally** – run the code, fix syntax errors, and ask the model to explain any failures.
+6. **Version and host** – commit to a GitHub repo, enable GitHub Pages, and share the link.
+7. **Extend** – add quizzes, alternate views, or deeper layers once the core simulation is stable.
+
+<Callout type="warning">Never treat the generated content as authoritative; always cross‑check critical facts with trusted sources before relying on them for production decisions.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="Can this workflow be used for non‑technical subjects?">Yes. The same steps—knowledge base, self‑review, visual prototype—apply to history timelines, biological pathways, or any domain where a visual flow aids comprehension.</Question>
+  <Question q="What tools are best for the low‑poly animation?">Lightweight JavaScript libraries such as Three.js, p5.js, or even plain Canvas work well; they keep the bundle small and run directly from GitHub Pages.</Question>
+  <Question q="How do I mitigate hallucinations during the process?">Include an explicit review prompt, ask the model to cite sources, and verify any claim that influences the simulation logic before committing code.</Question>
+</FAQ>

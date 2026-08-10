@@ -2547,6 +2547,13 @@
       "url": "https://news.ycombinator.com/item?id=49233423",
       "publishedAt": "2026-08-09T22:43:07.912Z",
       "signature": "f7343db43db7a914"
+    },
+    {
+      "slug": "llm-low-poly-simulations-learn-complex-topics",
+      "title": "How I use LLMs to learn complex topics",
+      "url": "https://laurentiugabriel.github.io/blog/articles/how-i-use-llms-to-learn/",
+      "publishedAt": "2026-08-10T04:16:52.238Z",
+      "signature": "3364ed9d6c07c917"
     }
   ]
 }
