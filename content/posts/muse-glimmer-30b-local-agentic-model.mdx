@@ -1,0 +1,67 @@
+---
+title: "Muse Glimmer: 30B Open-Weight Model for Always-On Local Agentic Workflows"
+description: "Meta releases Muse Glimmer, a 30B open-weight model with a 120K+ context window, optimized for always-on local agents on a single GPU."
+date: "2026-08-10T20:20:41.848Z"
+category: "tools"
+tags: 
+  - "local-ai"
+  - "agentic"
+  - "open-source"
+  - "meta"
+  - "30b"
+hero: 
+  url: ""
+  alt: ""
+  credit: ""
+  creditUrl: ""
+sources: 
+  - title: "Muse Glimmer: 30B-parameter model optimized for always-on local agent workflows"
+    url: "https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model"
+  - title: "Introducing Muse Glimmer: An Open Agentic Model That Runs on Your Device"
+    url: "https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model"
+  - title: "AI at Meta (@AIatMeta) on X"
+    url: "https://x.com/AIatMeta/status/2086757844544811485"
+  - title: "Muse Glimmer: 30B-parameter model optimized for always-on local agent workflows | Hacker News"
+    url: "https://news.ycombinator.com/item?id=49241679"
+  - title: "Run Local Agentic AI Workflows with Meta’s Muse Glimmer on NVIDIA | NVIDIA Technical Blog"
+    url: "https://developer.nvidia.com/blog/run-local-agentic-ai-workflows-with-metas-muse-glimmer-on-nvidia/"
+---
+
+Meta’s Superintelligence Labs just open‑sourced Muse Glimmer, a 30‑billion‑parameter model built for always‑on local agentic workflows. The model runs on a single consumer GPU, fitting on a Mac, PC, or any NVIDIA card with a 120K+ context window. By keeping inference on‑device, developers can run multi‑step agents without relying on cloud services. This release signals a shift toward privacy‑preserving, low‑latency AI assistants that can operate offline.
+
+<Callout type="takeaway">Muse Glimmer proves that high‑performance, always‑on agents can run locally on consumer hardware.</Callout>
+
+## What happened
+Muse Glimmer was announced on August 10, 2026 and released with open weights under an Apache 2.0 license, accompanied by documentation for quick integration. Meta highlights that the dense 30‑billion‑parameter model can be downloaded from Hugging Face and run on a single consumer GPU, making it accessible to developers on Mac or PC.
+
+The model features a 120K+ context window and delivers roughly 20 K tokens per second on a single NVIDIA GPU such as an RTX 5090. Optimized integrations for llama.cpp, MLX, ExecuTorch, NVIDIA NIM containers, SGLang, and vLLM are slated to arrive, allowing end‑to‑end agent pipelines in minutes.
+
+Training leveraged a novel distillation pipeline that transferred agentic reasoning from the larger Muse Spark teacher, combined with quantization and inference optimizations to meet latency expectations for always‑on workloads.
+
+## Why it matters
+Running powerful agents locally removes dependence on cloud APIs, reducing latency, cost, and data‑exfiltration risk. Developers can embed AI assistants directly into personal tools, IDEs, or edge devices while keeping proprietary data on‑device. The open‑weight release also invites community contributions, potentially accelerating innovation in compact, agent‑centric architectures.
+
+<ProsCons>
+  <Pros>
+    <li>Runs on a single GPU, eliminating recurring cloud expenses.</li>
+    <li>120K+ context window supports long‑running, multi‑step tasks.</li>
+    <li>Apache 2.0 license encourages community extensions and transparency.</li>
+  </Pros>
+  <Cons>
+    <li>Requires a relatively powerful GPU (e.g., RTX 5090) for optimal throughput.</li>
+    <li>Dense architecture consumes more VRAM than mixture‑of‑experts alternatives.</li>
+    <li>Ecosystem tooling is still maturing, with limited out‑of‑the‑box integrations.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Start by confirming your hardware meets the VRAM requirements—typically 24 GB or more for full‑precision inference, or use the provided quantized checkpoints for lower memory footprints. Use llama.cpp or MLX for quick prototyping, then migrate to NVIDIA NIM or vLLM for production‑grade throughput. Treat the model as a private inference service: keep prompts and outputs on‑device, audit tool‑calling behavior, and version‑control any fine‑tuning data.
+
+<Callout type="warning">Do not deploy Muse Glimmer on machines without sufficient GPU memory; out‑of‑memory errors can cause silent failures in long‑running agents.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="Can Muse Glimmer run on a laptop without a discrete GPU?">The model can run on CPUs in theory, but performance is impractically slow; a modest discrete GPU or integrated GPU with quantized weights is recommended for interactive use.</Question>
+  <Question q="How does Muse Glimmer’s performance compare to other 30B models?">Benchmarks show Muse Glimmer matches or exceeds peer 30B models on agentic tasks while offering higher token throughput (≈20 K t/s) on a single NVIDIA GPU.</Question>
+  <Question q="Is the model safe to run with private data?">Since inference stays on‑device, data never leaves the machine, but developers should still sandbox tool calls and validate outputs to mitigate hallucinations or unintended actions.</Question>
+</FAQ>

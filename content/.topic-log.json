@@ -2589,6 +2589,13 @@
       "url": "https://www.seattletimes.com/business/technology/pervert-glasses-backlash-against-metas-smart-glasses-grows/",
       "publishedAt": "2026-08-10T18:28:37.071Z",
       "signature": "6650ccd6c6845167"
+    },
+    {
+      "slug": "muse-glimmer-30b-local-agentic-model",
+      "title": "Muse Glimmer: 30B-parameter model optimized for always-on local agent workflows",
+      "url": "https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model",
+      "publishedAt": "2026-08-10T20:20:41.851Z",
+      "signature": "dc9de2d85c0474b0"
     }
   ]
 }
