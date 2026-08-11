@@ -1,0 +1,65 @@
+---
+title: "France’s New Opt‑In Law Bans Unsolicited Telemarketing Calls Starting Aug 11, 2026"
+description: "From August 11, 2026 France will outlaw unsolicited telemarketing calls, imposing fines up to €375,000 per violation."
+date: "2026-08-11T11:25:13.828Z"
+category: "news"
+tags: 
+  - "france"
+  - "telemarketing"
+  - "privacy"
+  - "regulation"
+  - "compliance"
+hero: 
+  url: "https://live.staticflickr.com/4832/45813049191_ebbb85f9a6_b.jpg"
+  alt: "President Trump and First Lady Melania Trump's Visit to France"
+  credit: "The White House"
+  creditUrl: "https://www.flickr.com/photos/148748355@N05/45813049191"
+sources: 
+  - title: "France to ban unsolicited telemarketing calls"
+    url: "https://www.lemonde.fr/en/france/article/2026/08/06/france-to-ban-unsolicited-telemarketing-calls-from-august-11_6756208_7.html"
+  - title: "France to ban unsolicited telemarketing calls from next week"
+    url: "https://www.euronews.com/business/2026/08/06/france-to-ban-cold-calling-from-11-august"
+  - title: "France bans unsolicited telemarketing calls, with hefty fines for violators"
+    url: "https://apnews.com/article/france-unsolicited-telemarketing-ban-4c946192a1e0d611fd80eacc708aa7da"
+---
+
+On August 11, 2026 France enacted a sweeping opt‑in rule that makes any unsolicited telemarketing call illegal. The measure, backed by President Emmanuel Macron’s government, requires businesses to obtain explicit, withdrawable consent before dialing a consumer. Authorities estimate three‑quarters of French residents receive at least one unwanted sales call each week, so the law targets a pervasive nuisance. For developers of outbound‑call platforms and CRM systems, the change reshapes how contact lists are built and validated. Non‑compliance now carries steep fines, making rapid technical adaptation essential.
+
+<Callout type="takeaway">Unsolicited telemarketing calls are now illegal in France unless the consumer has given explicit, withdrawable consent.</Callout>
+
+## What happened
+The law entered force on Tuesday, August 11, 2026, prohibiting businesses from contacting consumers without prior consent that can be withdrawn at any time, according to Alice Vilcot of the Directorate‑General for Competition, Consumer Affairs and Fraud Prevention. Violations carry fines of up to €75,000 per individual call and €375,000 per call for companies.
+
+Two exceptions remain: a company may call if the consumer has already given consent during a purchase, a shop visit, or by checking a box on a form, and if the call relates to an existing contractual relationship. The measure builds on earlier restrictions that limited cold calls to certain sectors and time windows, but now covers almost all commercial activities.
+
+## Why it matters
+For developers, the rule forces a shift from opt‑out to opt‑in architectures, requiring explicit consent capture, secure storage, and easy withdrawal mechanisms. Telecom APIs and dialing services must integrate consent checks before each outbound call, or risk triggering multi‑hundred‑thousand‑euro penalties. Consumers benefit from reduced harassment and lower fraud exposure, while legitimate marketers must invest in compliant data pipelines.
+
+<ProsCons>
+  <Pros>
+    <li>Stronger consumer protection reduces complaints and fraud.</li>
+    <li>Creates a level playing field for businesses that respect consent.</li>
+    <li>Encourages investment in high‑quality, permission‑based data.</li>
+  </Pros>
+  <Cons>
+    <li>Implementation costs for consent management systems.</li>
+    <li>Risk of hefty fines for accidental non‑compliance.</li>
+    <li>Potential short‑term disruption to outbound sales campaigns.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+1. **Capture explicit consent**: Use clear opt‑in checkboxes and record the timestamp, channel, and purpose.
+2. **Store consent centrally**: Maintain a consent ledger that can be queried in real time by your dialing service.
+3. **Enable easy withdrawal**: Provide a simple “opt‑out” link in every call‑related communication and honor withdrawals immediately.
+4. **Integrate with the French Do‑Not‑Call registry**: Before each call, verify the number against the government‑run list via the provided API.
+5. **Audit and log**: Keep detailed logs of each outbound call, including the consent reference used, to demonstrate compliance if audited.
+
+<Callout type="warning">Do not assume that a prior purchase automatically grants marketing consent; explicit opt‑in is required for each outbound campaign.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="What constitutes prior consent under the new French law?">Prior consent must be an explicit, affirmative action by the consumer—such as checking an unchecked box—clearly linked to the specific type of marketing contact, and it must be revocable at any time.</Question>
+  <Question q="How can businesses verify that a number is not on the Do Not Call list?">France provides a public API where firms can submit a phone number and receive a real‑time response indicating whether the number is registered on the national opt‑out list.</Question>
+  <Question q="What are the penalties for accidental violations?">Individuals face fines up to €75,000 per illegal call, while companies can be fined up to €375,000 per call; repeated breaches may trigger additional administrative sanctions.</Question>
+</FAQ>
