@@ -2673,6 +2673,13 @@
       "url": "https://economist.com/science-and-technology/2026/08/11/the-brain-may-be-about-to-have-its-ozempic-moment",
       "publishedAt": "2026-08-12T06:02:51.267Z",
       "signature": "c2c8a548f8423180"
+    },
+    {
+      "slug": "compression-is-prediction-prediction-models",
+      "title": "Compression is prediction",
+      "url": "https://ngrok.com/blog/compression-is-prediction",
+      "publishedAt": "2026-08-12T07:46:15.114Z",
+      "signature": "82a15bc9ca894520"
     }
   ]
 }
