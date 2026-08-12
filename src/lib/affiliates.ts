@@ -1,17 +1,15 @@
 /**
  * Affiliate / referral programs surfaced in a tasteful "Tools we recommend" box
- * on every post, matched to the post's topic. This box renders on ALL posts
- * (existing and future) at render time — no need to edit individual posts.
+ * on every post, matched to the post's topic. This box renders on all posts at
+ * render time, so individual content files do not need affiliate edits.
  *
  * To go live:
- *   1. Join the programs you actually want (only keep those below).
+ *   1. Join only the programs you actually want to recommend.
  *   2. Replace each `YOUR_ID` in the `url`s with your real referral/affiliate id.
- *   3. Set NEXT_PUBLIC_AFFILIATES_ENABLED=1 (Vercel env var) to turn the box on.
+ *   3. Set NEXT_PUBLIC_AFFILIATES_ENABLED=1 in your deployment environment.
  *
- * Until enabled it renders nothing, so placeholder links never ship to prod.
- * The FTC disclosure is rendered automatically with the box — it's legally
- * required and keeps you on the right side of ad/content policies. Links use
- * rel="sponsored" per Google's guidance for paid/affiliate links.
+ * Until enabled it renders nothing, so placeholder links never ship to production.
+ * The FTC disclosure is rendered automatically. Links use rel="sponsored".
  */
 export const AFFILIATES_ENABLED = process.env.NEXT_PUBLIC_AFFILIATES_ENABLED === '1';
 
@@ -30,13 +28,6 @@ export interface AffiliateProgram {
 
 // Example developer-audience programs. Replace ids, prune to what you've joined.
 export const AFFILIATE_PROGRAMS: AffiliateProgram[] = [
-  {
-    id: 'vercel',
-    name: 'Vercel',
-    blurb: 'Ship frontends and serverless functions with a generous free tier.',
-    url: 'https://vercel.com/?utm_source=YOUR_ID',
-    match: ['engineering', 'tools', 'news', 'ai'],
-  },
   {
     id: 'digitalocean',
     name: 'DigitalOcean',
@@ -68,7 +59,7 @@ export const AFFILIATE_PROGRAMS: AffiliateProgram[] = [
 ];
 
 /** Programs shown when a post matches none by topic. */
-const DEFAULT_IDS = ['vercel', 'frontendmasters'];
+const DEFAULT_IDS = ['frontendmasters'];
 
 /** Pick up to `limit` programs relevant to a post's category/tags. */
 export function affiliatesFor(category: string, tags: string[] = [], limit = 3): AffiliateProgram[] {
