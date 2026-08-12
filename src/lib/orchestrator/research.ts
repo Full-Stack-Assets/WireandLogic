@@ -95,17 +95,24 @@ async function resolvePublicAddress(host: string): Promise<{ address: string; fa
   }
 }
 
+type PinnedLookupCallback =
+  | ((err: NodeJS.ErrnoException | null, address: string, family: number) => void)
+  | ((err: NodeJS.ErrnoException | null, addresses: Array<{ address: string; family: number }>) => void);
+
 export function createPinnedLookup(address: string, family: 4 | 6) {
   return (
     _hostname: string,
     options: { all?: boolean },
-    callback: (...args: unknown[]) => void
+    callback: PinnedLookupCallback
   ): void => {
     if (options?.all) {
-      callback(null, [{ address, family }]);
+      (callback as (err: NodeJS.ErrnoException | null, addresses: Array<{ address: string; family: number }>) => void)(
+        null,
+        [{ address, family }]
+      );
       return;
     }
-    callback(null, address, family);
+    (callback as (err: NodeJS.ErrnoException | null, address: string, family: number) => void)(null, address, family);
   };
 }
 
