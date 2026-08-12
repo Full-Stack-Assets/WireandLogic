@@ -1,0 +1,63 @@
+---
+title: "uBlock Origin Stops Blocking Facebook Ads After Years of Cat‑and‑Mouse Battle"
+description: "uBlock Origin announced it will stop filtering Facebook ads, citing Meta’s relentless evasion tactics. The change forces privacy‑focused users to rethink ad‑blocking on the platform."
+date: "2026-08-12T14:42:09.308Z"
+category: "news"
+tags: 
+  - "adblock"
+  - "facebook"
+  - "privacy"
+  - "ublock-origin"
+  - "web"
+hero: 
+  url: "https://live.staticflickr.com/3494/3821216754_343971072e.jpg"
+  alt: "Facebook Adblocked"
+  credit: "yonghokim"
+  creditUrl: "https://www.flickr.com/photos/33793692@N00/3821216754"
+sources: 
+  - title: "Facebook ads are so hard to block that uBlock Origin stopped filtering them"
+    url: "https://www.neowin.net/news/facebook-ads-are-so-hard-to-block-that-ublock-origin-stopped-filtering-them/"
+  - title: "Facebook ads are so hard to block that uBlock Origin stopped filtering them"
+    url: "https://www.neowin.net/news/facebook-ads-are-so-hard-to-block-that-ublock-origin-stopped-filtering-them/"
+  - title: "Seeing ads on Facebook even with uBlock Origin? Here's why - PiunikaWeb"
+    url: "https://piunikaweb.com/2026/08/10/ublock-origin-facebook-ads-not-blocking/"
+  - title: "Facebook ads are so hard to block that uBlock Origin stopped filtering them | Hacker News"
+    url: "https://news.ycombinator.com/item?id=49271126"
+---
+
+Earlier this week the uBlock Origin team announced on Reddit that the extension will no longer attempt to filter Facebook ads. After years of repeatedly updating filter lists to keep up with Meta’s evasive tactics, the developers concluded the cat‑and‑mouse game was unsustainable. The decision means that users who rely on uBlock Origin will see ads reappear in their Facebook feed. This shift highlights the growing technical arms race between ad‑blocking communities and large platforms. Understanding the change helps developers and privacy‑focused users adjust their tooling.
+
+<Callout type="takeaway">uBlock Origin has officially stopped blocking Facebook ads, marking a turning point in the ad‑blocker vs. Meta battle.</Callout>
+
+## What happened
+The uBlock Origin developers posted on the subreddit that they will no longer maintain filters for Facebook ads. They explained that Meta continuously modifies its ad delivery code, rendering static filter lists ineffective. One long‑standing technique involves splitting the word “Sponsored” into individual letters wrapped in separate elements, a method the team said has been used for roughly five years.
+
+The announcement also invited community volunteers to submit pull requests for any new filter fixes, but the core project will not actively chase Facebook’s changes. The move is unrelated to broader browser shifts such as Chrome and Edge dropping support for Manifest V2 extensions.
+
+## Why it matters
+For users, the immediate impact is a resurgence of ads in the Facebook experience despite having uBlock Origin enabled. Developers of privacy tools must now consider alternative strategies, such as custom scripts or server‑side content filtering, if they still want to mitigate Facebook ads. The broader implication is that large platforms can effectively neutralize community‑driven ad‑blocking efforts, raising questions about the long‑term viability of open‑source blockers against well‑funded adversaries.
+
+<ProsCons>
+  <Pros>
+    <li>Reduces maintenance burden for uBlock Origin developers.</li>
+    <li>Encourages community contributions and innovation.</li>
+    <li>Highlights the need for more robust, adaptive blocking techniques.</li>
+  </Pros>
+  <Cons>
+    <li>Facebook ads return for the majority of uBlock Origin users.</li>
+    <li>Sets a precedent that may embolden other platforms to bypass blockers.</li>
+    <li>Privacy‑focused users must seek less convenient workarounds.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Treat Facebook as a platform where traditional filter‑list blocking is no longer reliable. Evaluate whether you need to block Facebook ads at all, or if you can mitigate exposure by using alternative feeds, browser‑level content‑security policies, or dedicated privacy extensions that employ heuristic or AI‑driven detection. When building tools, design for rapid rule updates and consider exposing an easy contribution pipeline for volunteers.
+
+<Callout type="warning">Do not assume other ad‑blocking extensions will automatically fill the gap; many share the same technical limitations against Meta’s evasive tactics.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="Can I still block Facebook ads with custom filters?">Yes, you can write your own filter rules or use community‑maintained lists, but they require frequent updates and may break as Meta changes its code.</Question>
+  <Question q="Will the change affect uBlock Origin on other sites?">No, the decision only applies to Facebook‑specific filters; uBlock Origin continues to block ads on the rest of the web as usual.</Question>
+  <Question q="What alternatives exist for privacy‑focused users?">Consider using script‑based blockers like Greasemonkey/Tampermonkey, privacy‑focused browsers that isolate social media, or third‑party services that transform Facebook feeds into RSS without ads.</Question>
+</FAQ>

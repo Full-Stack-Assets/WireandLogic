@@ -2701,6 +2701,13 @@
       "url": "https://www.abc.net.au/news/2026-08-06/ragebait-how-facebook-is-paying-controversial-creators/106940696",
       "publishedAt": "2026-08-12T11:55:37.235Z",
       "signature": "2b60c40cdfaf39bb"
+    },
+    {
+      "slug": "ublock-origin-stops-blocking-facebook-ads",
+      "title": "Facebook ads are so hard to block that uBlock Origin stopped filtering them",
+      "url": "https://www.neowin.net/news/facebook-ads-are-so-hard-to-block-that-ublock-origin-stopped-filtering-them/",
+      "publishedAt": "2026-08-12T14:42:09.309Z",
+      "signature": "ff2426c0c2c37c58"
     }
   ]
 }
