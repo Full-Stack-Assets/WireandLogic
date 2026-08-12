@@ -1,0 +1,55 @@
+---
+title: "Grok 4.6 scores 61 on the Analysis Intelligence Index, matching GPT‑5.6 Sol in performance and cost"
+description: "Grok 4.6 hits a 61 on the Artificial Analysis Intelligence Index, delivering frontier‑level performance at a fraction of the cost of leading rivals."
+date: "2026-08-12T23:53:49.464Z"
+category: "news"
+tags: 
+  - "grok"
+  - "ai"
+  - "benchmark"
+  - "cost-efficiency"
+  - "developer"
+hero: 
+  url: "https://upload.wikimedia.org/wikipedia/commons/2/2d/Artificial_intelligence_Psychology_study_fe_IA_psychom%C3%A9trie.png"
+  alt: "Artificial intelligence Psychology study fe IA psychométrie"
+  credit: "Afshin Khadangi, Hanna Marxen, Amir Sartipi, Igor Tchappi, Gilbert Fridgen (from SnT, University of Luxembourg)"
+  creditUrl: "https://commons.wikimedia.org/w/index.php?curid=189221012"
+sources: 
+  - title: "Grok 4.6 scores 61 on the Artificial Analysis Intelligence Index"
+    url: "https://artificialanalysis.ai/articles/grok-4-6-benchmarks-and-analysis"
+  - title: "Grok 4.6 returns SpaceXAI to the intelligence frontier and leads on cost efficiency"
+    url: "https://artificialanalysis.ai/articles/grok-4-6-benchmarks-and-analysis"
+  - title: "Artificial Analysis (@ArtificialAnlys) on X"
+    url: "https://x.com/ArtificialAnlys/status/2087564648325530099"
+  - title: "Grok 4.6 scores 61 on the Artificial Analysis Intelligence Index | Hacker News"
+    url: "https://news.ycombinator.com/item?id=49275385"
+---
+
+Grok 4.6 has just been released by SpaceXAI and achieved a score of 61 on the Artificial Analysis Intelligence Index, putting it on the same tier as GPT‑5.6 Sol. The new model improves its predecessor by five points on the index and adds 23 points over Grok 4.3, all within a month of launch. At the same time, its pricing remains $2/$6 per million input/output tokens, more than 60 % cheaper than Claude Opus 5 and GPT‑5.6 Sol. For developers focused on agentic workloads, the combination of higher performance and lower cost is immediately relevant.
+<Callout type="takeaway">Grok 4.6 reaches frontier‑level intelligence while keeping costs well below the leading competitors.</Callout>
+## What happened
+Grok 4.6 scored 61 on the Artificial Analysis Intelligence Index, aligning it with GPT‑5.6 Sol (max) and placing it just behind Claude Opus 5 (63) and Claude Fable 5 (62). The model gained five points over Grok 4.5 and 23 points over Grok 4.3, re‑establishing SpaceXAI on the intelligence frontier alongside OpenAI and ahead of most alternatives.
+On agentic benchmarks, Grok 4.6 posted a GDPval‑AA v2 Elo of 1753, trailing only Claude Opus 5 and statistically indistinguishable from Claude Fable 5 and Qwen3.8 Max. It achieved 50.7 % on τ³‑Banking and 88.4 % on Terminal‑Bench v2.1, both top‑two results. Cost per task is $0.84, identical to Kimi K3, and the model operates on a 500k‑token context window. Turn efficiency improved dramatically, averaging ~53 turns and ~0.5 B input tokens versus ~103 turns and ~2.0 B tokens for Claude Opus 5.
+## Why it matters
+Developers can now access near‑state‑of‑the‑art agentic performance without the premium price tags of Claude Opus 5 or GPT‑5.6 Sol. The lower per‑task cost and reduced token consumption translate directly into cheaper API bills for long‑running workflows such as autonomous agents, multi‑turn customer‑service bots, and complex data‑processing pipelines. At the same time, the model’s strong scores on real‑world benchmarks suggest it can handle sophisticated tool‑use and reasoning tasks that many static‑reasoning models struggle with.
+<ProsCons>
+  <Pros>
+    <li>Frontier‑level intelligence comparable to GPT‑5.6 Sol.</li>
+    <li>More than 60 % cheaper than top competitors on token pricing.</li>
+    <li>Significant turn‑efficiency gains reduce latency and compute usage.</li>
+  </Pros>
+  <Cons>
+    <li>Static reasoning benchmarks still lag behind Claude Opus 5.</li>
+    <li>Cache‑hit discount reduced from $0.3 to $0.5 per million tokens.</li>
+    <li>Context window unchanged, so no advantage over Grok 4.5 for ultra‑long inputs.</li>
+  </Cons>
+</ProsCons>
+## How to think about it
+When evaluating LLM providers, weigh the model’s agentic Elo and task‑specific scores against its token pricing and turn efficiency. For workloads that involve multi‑turn planning, tool integration, or long‑horizon knowledge work, Grok 4.6 offers a cost‑effective sweet spot. Conversely, if your primary need is raw static reasoning accuracy, benchmark Claude Opus 5 or similar models before committing. Start with a small pilot, measure per‑task cost and latency, and iterate based on real‑world performance.
+<Callout type="warning">Do not assume Grok 4.6 will outperform Claude Opus 5 on every static reasoning benchmark; test your target workloads first.</Callout>
+## FAQ
+<FAQ>
+  <Question q="How does Grok 4.6's pricing compare to other leading models?">Grok 4.6 costs $2/$6 per million input/output tokens, which is more than 60 % lower than Claude Opus 5 ($5/$25) and GPT‑5.6 Sol ($5/$30). The per‑task cost is $0.84, matching Kimi K3.</Question>
+  <Question q="Is the 61 index score meaningful for my specific use case?">The index aggregates performance across agentic and static benchmarks. If your applications rely heavily on multi‑turn tool use or real‑world decision making, the high agentic Elo (1753) and turn efficiency are directly relevant.</Question>
+  <Question q="What should I watch out for when switching to Grok 4.6?">Watch the reduced cache‑hit discount and verify that the 500k token context window meets your input size needs. Also, run side‑by‑side tests against Claude Opus 5 for static reasoning tasks where it still leads.</Question>
+</FAQ>
