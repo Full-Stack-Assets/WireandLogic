@@ -1,0 +1,55 @@
+---
+title: "How AI is flattening the software engineering middle class and raising costs"
+description: "AI tools let less-experienced engineers generate massive code changes, eroding the middle tier of software developers and inflating infrastructure costs."
+date: "2026-08-12T16:06:08.816Z"
+category: "ai"
+tags: 
+  - "ai"
+  - "software-engineering"
+  - "devops"
+  - "productivity"
+hero: 
+  url: "https://live.staticflickr.com/4185/34598607295_4f3586ccbb_b.jpg"
+  alt: "BNSF 5425 E 1-13-17"
+  credit: "THE Holy Hand Grenade!"
+  creditUrl: "https://www.flickr.com/photos/27572989@N02/34598607295"
+sources: 
+  - title: "AI is removing the middle class of software engineering"
+    url: "https://blog.florianherrengt.com/ai-removing-middle-class-software-engineering.html"
+  - title: "AI is removing the middle class of software engineering"
+    url: "https://blog.florianherrengt.com/ai-removing-middle-class-software-engineering.html"
+  - title: "AI is removing the middle class of software engineering | Hacker News"
+    url: "https://news.ycombinator.com/item?id=49271994"
+  - title: "The disappearing AI middle class"
+    url: "https://thenewstack.io/disappearing-ai-middle-class/"
+---
+
+In 2020 senior engineers guarded code quality with rigorous reviews. Fast‑forward to 2026, AI‑generated pull requests now flood inboxes with tens of thousands of lines, while the same teams ship far more code than before. The speed and volume come at the cost of architectural decay and exploding infrastructure bills. This shift is reshaping the middle tier of software engineers—those who once bridged senior guidance and junior output. Understanding the trend is essential for anyone building sustainable systems.
+<Callout type="takeaway">AI‑driven code generation is compressing the software engineering middle class and inflating operational costs.</Callout>
+## What happened
+The original article describes a senior engineer who, after a vacation in 2020, returns to a well‑maintained codebase. By 2026 the same engineer opens a morning inbox to find seven pull requests totaling +24506 and -3938 lines, each accompanied by AI‑generated descriptions, illustrating how AI now produces the bulk of daily changes.
+Comments on Hacker News echo this pattern, noting that “bad” engineers can now amplify poor practices tenfold. Teams are seeing exponential CPU usage as AI‑generated code is shipped without performance checks, with commit rates climbing to roughly 300 commits per week and resource‑hungry patterns such as per‑request client creation.
+A NewStack analysis adds a market dimension: the pricing curve for coding models has split. OpenAI’s GPT‑5.5 now costs $5 per million input tokens (up from $2.50) and $30 per million output tokens, while DeepSeek’s V4‑Flash is priced at $0.14/$0.28. The once‑smooth middle tier of affordable, capable models is thinning, forcing developers to choose between expensive high‑end services or low‑cost, open alternatives.
+## Why it matters
+When AI‑generated code bypasses disciplined review, architectural debt accumulates faster than teams can comprehend, leading to fragile systems that break under load. The surge in commit volume directly inflates cloud spend, as demonstrated by rising CPU usage and unnecessary resource allocation. Moreover, the erosion of the middle class reduces opportunities for engineers to grow from junior to senior roles, concentrating expertise in a thin senior layer and widening skill gaps across organizations.
+<ProsCons>
+  <Pros>
+    <li>Rapid prototyping for low‑risk tasks.</li>
+    <li>Lower entry barrier for generating boilerplate code.</li>
+    <li>Potential cost savings when using efficient open‑source models.</li>
+  </Pros>
+  <Cons>
+    <li>Architectural decay from unchecked AI changes.</li>
+    <li>Uncontrolled cloud spend due to inefficient code.</li>
+    <li>Skill atrophy as engineers rely on AI instead of mastering fundamentals.</li>
+  </Cons>
+</ProsCons>
+## How to think about it
+Treat AI as an assistant, not a replacement. Enforce strict contract testing and automated linting before any AI‑generated pull request lands in the main branch. Monitor resource usage per service and set budget alerts to catch runaway patterns early. Invest in upskilling programs that teach engineers how to prompt, review, and refactor AI output responsibly. Finally, evaluate model pricing versus token efficiency to keep operational costs predictable.
+<Callout type="warning">Do not merge AI‑generated code without human review; doing so can introduce hidden bugs and massive infrastructure waste.</Callout>
+## FAQ
+<FAQ>
+  <Question q="Why are we seeing more commits but lower code quality?">AI can produce large volumes of code quickly, but without the contextual understanding and design discipline that human reviewers provide, the resulting changes often lack cohesion and introduce hidden defects.</Question>
+  <Question q="How can we control rising cloud costs caused by AI‑generated code?">Implement usage‑based alerts, enforce performance benchmarks in CI, and prefer open‑source models with lower token prices when they meet quality thresholds.</Question>
+  <Question q="What steps can junior engineers take to avoid becoming part of a shrinking middle class?">Focus on mastering core concepts, learn how to audit AI output, and contribute to architectural discussions rather than relying solely on generated snippets.</Question>
+</FAQ>
