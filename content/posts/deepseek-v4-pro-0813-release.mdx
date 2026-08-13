@@ -1,0 +1,63 @@
+---
+title: "DeepSeek V4 Pro 0813 Leaves Preview: Specs, Pricing, and Benchmark Position"
+description: "DeepSeek's flagship V4 Pro 0813 model is now GA, offering 1.6 trillion‑parameter MoE architecture, 49 B active tokens, and pricing that carries over from preview."
+date: "2026-08-13T02:39:24.692Z"
+category: "news"
+tags: 
+  - "deepseek"
+  - "moe"
+  - "llm"
+  - "pricing"
+  - "benchmarks"
+hero: 
+  url: "https://upload.wikimedia.org/wikipedia/commons/3/35/The_multistage_pipeline_of_DeepSeek-R1.png"
+  alt: "The multistage pipeline of DeepSeek-R1"
+  credit: "Daya Guo, Dejian Yang, Haowei Zhang, Junxiao Song, Peiyi Wang, Qihao Zhu, Runxin Xu, Ruoyu Zhang, Shirong Ma, Xiao Bi, Xiaokang Zhang, Xingkai Yu, Yu Wu, Z. F. Wu, Zhibin Gou, Zhihong Shao, Zhuoshu Li, Ziyi Gao, Aixin Liu, Bing Xue, Bingxuan Wang, Bochao Wu, Bei Feng, Chengda Lu, Chenggang Zhao, Chengqi Deng, Chong Ruan, Damai Dai, Deli Chen, Dongjie Ji, Erhang Li, Fangyun Lin, Fucong Dai, Fuli Luo, Guangbo Hao, Guanting Chen, Guowei Li, H. Zhang, Hanwei Xu, Honghui Ding, Huazuo Gao, Hui Qu, Hui Li, Jianzhong Guo, Jiashi Li, Jingchang Chen, Jingyang Yuan, Jinhao Tu, Junjie Qiu, Junlong Li, J. L. Cai, Jiaqi Ni, Jian Liang, Jin Chen, Kai Dong, Kai Hu, Kaichao You, Kaige Gao, Kang Guan, Kexin Huang, Kuai Yu, Lean Wang, Lecong Zhang, Liang Zhao, Litong Wang, Liyue Zhang, Lei Xu, Leyi Xia, Mingchuan Zhang, Minghua Zhang, Minghui Tang, Mingxu Zhou, Meng Li, Miaojun Wang, Mingming Li, Ning Tian, Panpan Huang, Peng Zhang, Qiancheng Wang, Qinyu Chen, Qiushi Du, Ruiqi Ge, Ruisong Zhang, Ruizhe Pan, Runji Wang, R. J. Chen, R. L. Jin, Ruyi Chen, Shanghao Lu, Shangyan Zhou, Shanhuang Chen, Shengfeng Ye, Shiyu Wang, Shuiping Yu, Shunfeng Zhou, Shuting Pan, S. S. Li, Shuang Zhou, Shaoqing Wu, Tao Yun, Tian Pei, Tianyu Sun, T. Wang, Wangding Zeng, Wen Liu, Wenfeng Liang, Wenjun Gao, Wenqin Yu, Wentao Zhang, W. L. Xiao, Wei An, Xiaodong Liu, Xiaohan Wang, Xiaokang Chen, Xiaotao Nie, Xin Cheng, Xin Liu, Xin Xie, Xingchao Liu, Xinyu Yang, Xinyuan Li, Xuecheng Su, Xuheng Lin, X. Q. Li, Xiangyue Jin, Xiaojin Shen, Xiaosha Chen, Xiaowen Sun, Xiaoxiang Wang, Xinnan Song, Xinyi Zhou, Xianzu Wang, Xinxia Shan, Y. K. Li, Y. Q. Wang, Y. X. Wei, Yang Zhang, Yanhong Xu, Yao Li, Yao Zhao, Yaofeng Sun, Yaohui Wang, Yi Yu, Yichao Zhang, Yifan Shi, Yiliang Xiong, Ying He, Yishi Piao, Yisong Wang, Yixuan Tan, Yiyang Ma, Yiyuan Liu, Yongqiang Guo, Yuan Ou, Yuduan Wang, Yue Gong, Yuheng Zou, Yujia He, Yunfan Xiong, Yuxiang Luo, Yuxiang You, Yuxuan Liu, Yuyang Zhou, Y. X. Zhu, Yanping Huang, Yaohui Li,"
+  creditUrl: "https://commons.wikimedia.org/w/index.php?curid=175246933"
+sources: 
+  - title: "DeepSeek V4 Pro 0813"
+    url: "https://openrouter.ai/deepseek/deepseek-v4-pro-0813"
+  - title: "DeepSeek V4 Pro 0813 - API Pricing & Benchmarks"
+    url: "https://openrouter.ai/deepseek/deepseek-v4-pro-0813"
+  - title: "DeepSeek V4 Pro Steps Out of Preview: The 0813 Build Is Live"
+    url: "https://www.gmicloud.ai/en/blog/deepseek-v4-pro-steps-out-of-preview-the-0813-build-is-live"
+  - title: "DeepSeek Ships V4 Pro as Its Flagship Model Leaves Preview"
+    url: "https://www.unite.ai/deepseek-ships-v4-pro-as-its-flagship-model-leaves-preview/"
+---
+
+DeepSeek announced that its flagship V4 Pro model has left preview and is now available as the 0813 build. The GA release appears on OpenRouter and DeepSeek’s own API docs, pointing the deepseek‑v4‑pro endpoint to the new version. V4 Pro is a mixture‑of‑experts system with 1.6 trillion total parameters and about 49 billion active parameters per token. The move matters because it gives developers access to a high‑capacity model with long‑context capabilities at the same pricing terms that were offered during preview.
+
+<Callout type="takeaway">DeepSeek V4 Pro 0813 brings a trillion‑parameter MoE LLM to production with the same preview pricing, but its high cost and limited concurrency make it a niche choice for heavy‑reasoning workloads.</Callout>
+
+## What happened
+As of August 12 2026 the deepseek‑v4‑pro endpoint on DeepSeek’s official API now resolves to DeepSeek‑V4‑Pro‑0813, ending a four‑month preview that began on April 24 2026. The model card on Hugging Face confirms a 1.6 trillion‑parameter MoE architecture, 49 B active parameters per token, and hybrid attention variants that cut single‑token compute to 27 % and KV‑cache usage to 10 % of the previous V3.2 generation.
+
+Pricing carries over unchanged: $0.435 per million input tokens on a cache miss, $0.003625 per million on a cache hit, and $0.87–$0.93 per million output tokens. Concurrency is limited to 500 requests for the Pro endpoint, with a one‑million‑token context window and a maximum output length of 384 k tokens. Benchmark results released by DeepSeek place V4 Pro Max at 80.6 % on SWE‑bench Verified and ahead of Anthropic’s Claude Opus 4.8 on Terminal Bench 2.1.
+
+## Why it matters
+The release gives developers a production‑grade, long‑context LLM that can handle heavyweight reasoning tasks such as code generation or complex planning, positioning DeepSeek as a direct competitor to Anthropic and OpenAI’s top models. However, the high per‑token cost and the 500‑request concurrency cap mean that only workloads that truly need the 49 B active‑parameter capacity will see a net benefit, while high‑throughput services may still prefer the cheaper Flash variant.
+
+<ProsCons>
+  <Pros>
+    <li>Massive 1.6 trillion‑parameter MoE architecture with 49 B active tokens.</li>
+    <li>Hybrid attention reduces compute to 27 % and KV cache to 10 % of prior generation.</li>
+    <li>Strong benchmark scores (80.6 % SWE‑bench, beats Claude Opus 4.8 on Terminal Bench).</li>
+  </Pros>
+  <Cons>
+    <li>Per‑token pricing remains high compared to lower‑tier models.</li>
+    <li>Concurrency limited to 500 requests, restricting high‑throughput use.</li>
+    <li>Benchmark claims are vendor‑reported and not independently verified.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+When evaluating V4 Pro for a project, first quantify the token volume and reasoning intensity of your workload. If you need million‑token context windows or complex tool‑calling chains, the reduced compute per token can offset the higher price. For batch‑oriented or latency‑sensitive services, consider the cheaper Flash model or alternative providers. Also, prototype with the non‑thinking or high‑effort modes before moving to V4‑Pro‑Max to control costs.
+
+<Callout type="warning">Do not assume the advertised benchmark scores will translate directly to your domain without independent testing; the high cost and concurrency limits can quickly become bottlenecks for production workloads.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="What is the difference between the preview and GA pricing for V4 Pro?">The GA release keeps the same pricing as the preview: $0.435 per million input tokens on a cache miss, $0.003625 per million on a cache hit, and $0.87–$0.93 per million output tokens.</Question>
+  <Question q="Can I run V4 Pro locally with the same context window?">The model card recommends a 384 k token context window for local inference, but the API offers a one‑million-token window; hardware requirements for the full 1 M token window are substantial.</Question>
+  <Question q="Is V4 Pro suitable for high‑throughput API services?">Because the Pro endpoint is capped at 500 concurrent requests, it is better suited for heavy‑reasoning, low‑throughput tasks rather than high‑volume traffic.</Question>
+</FAQ>

@@ -2736,6 +2736,13 @@
       "url": "https://artificialanalysis.ai/articles/grok-4-6-benchmarks-and-analysis",
       "publishedAt": "2026-08-12T23:53:49.466Z",
       "signature": "ccf05fb954c9a5f1"
+    },
+    {
+      "slug": "deepseek-v4-pro-0813-release",
+      "title": "DeepSeek V4 Pro 0813",
+      "url": "https://openrouter.ai/deepseek/deepseek-v4-pro-0813",
+      "publishedAt": "2026-08-13T02:39:24.694Z",
+      "signature": "c5389c031a48bd24"
     }
   ]
 }
