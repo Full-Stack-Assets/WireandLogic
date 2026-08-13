@@ -2771,6 +2771,13 @@
       "url": "https://support.claude.com/en/articles/12326764-can-i-use-my-outputs-to-train-an-ai-model",
       "publishedAt": "2026-08-13T10:40:28.148Z",
       "signature": "f4d0ef82bc4e1019"
+    },
+    {
+      "slug": "anthropic-claude-watermark-backlash",
+      "title": "Claude users are mad that Anthropic's new watermarks will catch them using it",
+      "url": "https://techcrunch.com/2026/08/12/some-claude-users-are-mad-that-anthropics-new-watermarks-will-catch-them-cheating-at-their-jobs-classes/",
+      "publishedAt": "2026-08-13T11:55:48.696Z",
+      "signature": "d64104c7ee57a440"
     }
   ]
 }
