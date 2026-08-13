@@ -2764,6 +2764,13 @@
       "url": "https://blog.google/products-and-platforms/devices/pixel/pixel-watch-5/",
       "publishedAt": "2026-08-13T08:03:10.473Z",
       "signature": "fbfc9b9507385467"
+    },
+    {
+      "slug": "claude-output-ownership-model-training",
+      "title": "If I own Claude's outputs why can't I train my own model on them?",
+      "url": "https://support.claude.com/en/articles/12326764-can-i-use-my-outputs-to-train-an-ai-model",
+      "publishedAt": "2026-08-13T10:40:28.148Z",
+      "signature": "f4d0ef82bc4e1019"
     }
   ]
 }
