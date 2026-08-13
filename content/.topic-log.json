@@ -2813,6 +2813,13 @@
       "url": "https://www.wired.com/story/mcdonalds-built-a-515-page-dossier-on-me-it-says-ill-never-leave/",
       "publishedAt": "2026-08-13T21:56:33.507Z",
       "signature": "316a1a14f6adf761"
+    },
+    {
+      "slug": "openai-ultrafast-gpt-5-6-sol-speed",
+      "title": "Accelerating GPT-5.6 Sol Ultrafast",
+      "url": "https://www.cerebras.ai/blog/accelerating-gpt-5-6-sol-ultrafast-with-openai",
+      "publishedAt": "2026-08-13T22:55:58.131Z",
+      "signature": "565f96afc4cbf16d"
     }
   ]
 }

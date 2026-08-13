@@ -1,0 +1,63 @@
+---
+title: "OpenAI’s Ultrafast Mode pushes GPT‑5.6 Sol to 14× speed, 750 tokens/sec, and 7× faster benchmarks"
+description: "OpenAI’s new Ultrafast tier runs GPT‑5.6 Sol at up to 750 tokens per second, delivering 14× speed gains with benchmark‑tested quality."
+date: "2026-08-13T22:55:58.129Z"
+category: "news"
+tags: 
+  - "openai"
+  - "gpt-5.6"
+  - "ultrafast"
+  - "cerebras"
+  - "benchmark"
+hero: 
+  url: "https://upload.wikimedia.org/wikipedia/commons/f/fa/OpenAI_corporate_structure.svg"
+  alt: "OpenAI corporate structure"
+  credit: "Domdomegg"
+  creditUrl: "https://commons.wikimedia.org/w/index.php?curid=163918699"
+sources: 
+  - title: "Accelerating GPT-5.6 Sol Ultrafast"
+    url: "https://www.cerebras.ai/blog/accelerating-gpt-5-6-sol-ultrafast-with-openai"
+  - title: "Accelerating GPT-5.6 Sol Ultrafast with OpenAI"
+    url: "https://www.cerebras.ai/blog/accelerating-gpt-5-6-sol-ultrafast-with-openai"
+  - title: "OpenAI introduces 'Ultrafast,' a new mode that makes GPT-5.6 Sol work at 14x the speed | TechCrunch"
+    url: "https://techcrunch.com/2026/08/13/openai-introduces-ultrafast-a-new-mode-that-makes-gpt-5-6-sol-work-at-14x-the-speed/"
+  - title: "OpenAI previews 'Ultrafast' GPT-5.6 Sol running up to 14 times faster - 9to5Mac"
+    url: "https://9to5mac.com/2026/08/13/openai-previews-ultrafast-gpt-5-6-sol-running-up-to-14-times-faster/"
+---
+
+OpenAI has just unveiled Ultrafast mode for its flagship GPT‑5.6 Sol model, promising up to 750 output tokens per second. The new tier, built on Cerebras’ wafer‑scale hardware, claims a 14× speed boost over standard processing while maintaining comparable quality. Early benchmarks show the model completing the 2,500‑question Humanity’s Last Exam in just over 11 hours, a seven‑fold improvement on Claude Fable 5. For developers who have been forced to trade latency for intelligence, the announcement could reshape how real‑time AI services are built.
+
+<Callout type="takeaway">Ultrafast mode delivers order‑of‑magnitude speed gains without sacrificing answer quality.</Callout>
+
+## What happened
+Ultrafast mode launches first through the OpenAI API and is powered by Cerebras’ custom chip, delivering up to 750 output tokens per second—roughly 14× faster than the standard GPT‑5.6 Sol processing speed. The service tier is initially available to a small group of customers, with broader rollout planned as capacity grows.
+
+In Cerebras’ internal benchmark, GPT‑5.6 Sol on Ultrafast answered all 2,500 Humanity’s Last Exam questions in 11 hours 11 minutes, while Claude Fable 5 required 78 hours 27 minutes, making Ultrafast nearly 7× faster. On the GDP‑Val economically valuable knowledge work benchmark, Ultrafast achieved a 5.6× end‑to‑end speedup with no measurable quality loss.
+
+## Why it matters
+The speed‑quality trade‑off has long limited AI‑driven workflows that need both deep reasoning and low latency, such as incident response, financial modeling, and legal drafting. By collapsing that gap, Ultrafast opens the door to near‑real‑time applications that previously required batch processing or smaller models. Enterprises can now iterate faster, reduce time‑to‑insight, and potentially lower overall compute spend despite the higher per‑second throughput.
+
+<ProsCons>
+  <Pros>
+    <li>Up to 14× faster inference (750 tokens/sec).</li>
+    <li>Benchmark‑proven quality parity on complex exams.</li>
+    <li>Enables new real‑time use cases (incident response, finance, legal).</li>
+  </Pros>
+  <Cons>
+    <li>Access limited to a preview cohort.</li>
+    <li>Higher per‑second compute demand may raise costs.</li>
+    <li>Long‑term stability and scaling still untested.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Start by profiling your existing workloads to identify latency bottlenecks that still require high‑quality reasoning. If a task fits the “seconds‑to‑minutes” latency window, experiment with Ultrafast in a sandbox to measure end‑to‑end speed and cost. Pair the mode with caching or asynchronous pipelines for bursty traffic, and monitor quality metrics against your baseline to ensure the speed boost does not introduce regressions.
+
+<Callout type="warning">Ultrafast is currently in preview and only available to a limited set of customers; attempting to rely on it for production without a confirmed access path may cause integration delays.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="How does Ultrafast achieve its speed?">Ultrafast runs GPT‑5.6 Sol on Cerebras’ wafer‑scale processor, which reduces data movement and parallelizes token generation, allowing up to 750 tokens per second.</Question>
+  <Question q="Is the answer quality really unchanged?">Cerebras’ internal tests on the Humanity’s Last Exam and GDP‑Val benchmarks report comparable accuracy to the standard model despite the speed increase.</Question>
+  <Question q="When will broader access be available?">OpenAI says access will expand as capacity grows, but no specific timeline has been announced beyond the current preview cohort.</Question>
+</FAQ>
