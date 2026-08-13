@@ -2785,6 +2785,13 @@
       "url": "https://tradersunion.com/news/central-banks/show/2973571-deutsche-bank-becomes/",
       "publishedAt": "2026-08-13T13:38:18.353Z",
       "signature": "be138c4dca793871"
+    },
+    {
+      "slug": "openai-chatgpt-desktop-linux-preview",
+      "title": "ChatGPT Desktop (Codex Desktop) for Linux",
+      "url": "https://openai.com/codex/",
+      "publishedAt": "2026-08-13T15:08:21.380Z",
+      "signature": "9f48740d95c78ac9"
     }
   ]
 }

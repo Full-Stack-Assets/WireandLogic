@@ -1,0 +1,63 @@
+---
+title: "OpenAI’s ChatGPT Desktop for Linux launches in preview with Codex, but missing native computer use"
+description: "OpenAI released a preview of its ChatGPT desktop app for Linux, bundling ChatGPT, Work, and Codex, but omits native computer‑use features."
+date: "2026-08-13T15:08:21.378Z"
+category: "news"
+tags: 
+  - "chatgpt"
+  - "linux"
+  - "desktop"
+  - "codex"
+  - "preview"
+hero: 
+  url: "https://upload.wikimedia.org/wikipedia/commons/5/51/ChatGPT.png"
+  alt: "ChatGPT"
+  credit: "Nið ricsað"
+  creditUrl: "https://commons.wikimedia.org/w/index.php?curid=126514649"
+sources: 
+  - title: "ChatGPT Desktop (Codex Desktop) for Linux"
+    url: "https://openai.com/codex/"
+  - title: "GitHub - ilysenko/codex-desktop-linux: Unofficial ChatGPT desktop app for Linux (formerly the Codex app), built locally from OpenAI’s official macOS app. Includes Chat, Work, and Codex. Packages for Debian/Ubuntu (.deb), Fedora/openSUSE (.rpm), Arch (pacman), Nix/NixOS, and AppImage, with Wayland and X11 support."
+    url: "https://github.com/ilysenko/codex-desktop-linux"
+  - title: "Codex in ChatGPT desktop app for Linux is now in preview 🐧"
+    url: "https://community.openai.com/t/codex-in-chatgpt-desktop-app-for-linux-is-now-in-preview/1390027"
+  - title: "OpenAI's ChatGPT/Codex desktop app is now on Linux"
+    url: "https://thenewstack.io/openais-chatgpt-desktop-linux/"
+---
+
+OpenAI just released a preview of its long‑awaited ChatGPT desktop application for Linux. The app bundles the core ChatGPT chat, the new ChatGPT Work workspace, and the Codex code‑assistant into a single Electron‑based client. It ships as native .deb and .rpm packages for Ubuntu, Debian, Fedora and also supports ARM64, with community‑maintained builds offering AppImage and pacman variants. While the launch brings a first‑class Linux experience, several key features from the macOS/Windows versions are still missing. For developers and power users, the availability—and the gaps—shape how they can integrate AI into their local workflows.
+
+<Callout type="takeaway">The Linux preview delivers core ChatGPT and Codex functionality but lacks native computer‑use features.</Callout>
+
+## What happened
+On Tuesday OpenAI announced the preview, stating Linux was “one of the most‑requested platforms” and listing supported distributions (Ubuntu 24.04/26.04 LTS, Debian 13, Fedora 43/44) and architectures (x64, arm64). The official package reuses the same Electron runtime and bundled resources as the macOS app, with the .deb signed by OpenAI; community projects such as ilysenko/codex-desktop-linux verify the upstream payload and repack it for additional formats (rpm, pacman, AppImage, Nix).
+
+Early adopters reported functional parity for ChatGPT and Codex, but noted that Linux cannot yet perform “computer use” – the ability for the model to control external desktop applications – and some users experienced Japanese IME issues on Fedora KDE.
+
+## Why it matters
+For developers, having a native client means lower latency, offline token storage, and tighter integration with local tooling such as editors and terminals. The inclusion of Codex opens the door to on‑device code generation workflows without switching browsers. However, the missing computer‑use capability limits automation scenarios that rely on AI‑driven UI interactions, a feature that powers many enterprise use‑cases on macOS and Windows. Additionally, preview‑stage software can introduce breaking changes, so teams must plan for version churn.
+
+<ProsCons>
+  <Pros>
+    <li>Native Linux packages simplify installation and updates.</li>
+    <li>Integrated ChatGPT, Work, and Codex in a single client.</li>
+    <li>OpenAI‑signed payload ensures authenticity and security.</li>
+  </Pros>
+  <Cons>
+    <li>No native computer‑use or Appshots, restricting automation.</li>
+    <li>Input‑method (IME) incompatibilities observed on some Wayland setups.</li>
+    <li>Preview status may bring UI and API changes that require frequent adjustments.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Evaluate whether your workflow relies on core chat and code assistance only; if so, the Linux preview is ready for production use. If you need AI‑driven desktop automation, keep a fallback to the web version or wait for a future update. Leverage the community‑maintained packages when you run a distro without official .deb/.rpm support, but verify the upstream signature before installing. Test your input method configuration early, especially on Wayland, and consider running the app under XWayland if IME issues arise. Finally, monitor OpenAI’s release notes for the upcoming computer‑use feature roadmap.
+
+<Callout type="warning">Do not assume the Linux client offers the same desktop‑automation capabilities as the macOS/Windows versions; using it for tasks that require native computer‑use will fail until the feature is added.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="Can I install the Linux desktop app on a distro that isn’t officially supported?">Official .deb and .rpm packages work on the listed Ubuntu, Debian, and Fedora releases. For other distributions, you can use the community‑provided AppImage, pacman, or Nix packages, or build from source after cloning the repository.</Question>
+  <Question q="Will native computer‑use be added to the Linux client?">OpenAI confirmed that computer‑use is not available at launch. The team has indicated it’s on the roadmap, but no timeline has been published.</Question>
+  <Question q="Is it safe to use the unofficial codex‑desktop‑linux packages?">The community project verifies the signed OpenAI .deb before repackaging, which mitigates supply‑chain risk. Nevertheless, if security is critical, review the source code and build the package yourself.</Question>
+</FAQ>
