@@ -2918,6 +2918,13 @@
       "url": "https://www.reuters.com/world/frances-top-court-rules-social-media-ban-curtails-freedom-expression-2026-08-14/",
       "publishedAt": "2026-08-14T20:39:03.529Z",
       "signature": "3607c1555898bc88"
+    },
+    {
+      "slug": "google-heir-homomorphic-encryption-private-ai",
+      "title": "Google is making private AI practical with homomorphic encryption",
+      "url": "https://blog.google/security/how-google-is-making-private-ai-practical-with-homomorphic-encryption/",
+      "publishedAt": "2026-08-14T21:35:17.823Z",
+      "signature": "7e51819d607fc9ef"
     }
   ]
 }
