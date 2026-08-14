@@ -2834,6 +2834,13 @@
       "url": "https://declaude.org/watermarking/",
       "publishedAt": "2026-08-14T04:57:01.621Z",
       "signature": "b1b08ef8a5c67405"
+    },
+    {
+      "slug": "eu-ai-act-watermark-trivial-removal",
+      "title": "Text AI watermarks will always be trivial to remove",
+      "url": "https://www.seangoedecke.com/text-ai-watermarks/",
+      "publishedAt": "2026-08-14T06:23:11.769Z",
+      "signature": "82b88c18cbadc2d7"
     }
   ]
 }
