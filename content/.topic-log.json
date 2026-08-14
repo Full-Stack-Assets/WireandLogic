@@ -2827,6 +2827,13 @@
       "url": "https://0.mk/blog/link-rot",
       "publishedAt": "2026-08-14T02:38:13.140Z",
       "signature": "f7b0bf8d6c43f7f8"
+    },
+    {
+      "slug": "ai-text-watermarking-how-models-hide-signals",
+      "title": "How AI text watermarking works",
+      "url": "https://declaude.org/watermarking/",
+      "publishedAt": "2026-08-14T04:57:01.621Z",
+      "signature": "b1b08ef8a5c67405"
     }
   ]
 }
