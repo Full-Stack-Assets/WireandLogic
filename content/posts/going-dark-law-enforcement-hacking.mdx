@@ -1,0 +1,67 @@
+---
+title: "Why law‑enforcement agencies risk losing capability as encryption goes dark"
+description: "Encryption’s rise threatens law‑enforcement access, sparking debate over lawful hacking and policy solutions."
+date: "2026-08-14T23:31:30.242Z"
+category: "security"
+tags: 
+  - "encryption"
+  - "law-enforcement"
+  - "privacy"
+  - "policy"
+hero: 
+  url: "https://live.staticflickr.com/2900/33920907041_eed2925972_b.jpg"
+  alt: "Hacking di stato: legittimazione necessaria o squilibrio di potere? - Lawful state hacking: necessary investigative upgrade or privacy nightmare? #ijf17"
+  credit: "International Journalism Festival"
+  creditUrl: "https://www.flickr.com/photos/25911336@N06/33920907041"
+sources: 
+  - title: "Going Dark, and the era of law enforcement hacking"
+    url: "https://blog.cryptographyengineering.com/2026/08/14/everything-is-about-to-go-dark/"
+  - title: "Everything is about to “go dark”"
+    url: "https://blog.cryptographyengineering.com/2026/08/14/everything-is-about-to-go-dark/"
+  - title: "Revisit The Case for Lawful Hacking: A Path to the Going Dark Debate"
+    url: "https://georgetownsecuritystudiesreview.org/2019/12/13/revisit-the-case-for-lawful-hacking-a-path-to-the-going-dark-debate/"
+  - title: "Lawful Hacking: Toward a Middle Ground Solution to the Going Dark Problem - Homeland Security Affairs"
+    url: "https://www.hsaj.org/articles/13956"
+---
+
+In the past decade, end‑to‑end encryption has moved from a niche feature to the default on billions of devices. This shift has left U.S. intelligence and law‑enforcement agencies with dramatically reduced ability to intercept communications—a situation commonly called “going dark.” As the debate intensifies, policymakers are proposing “lawful hacking” as a way to regain access without undermining security. The outcome will shape the balance between privacy, public safety, and the future of digital investigations.
+
+<Callout type="takeaway">Lawful hacking may restore investigative reach, but it risks eroding the very security encryption provides.</Callout>
+
+## What happened
+
+The transition began in the late 2000s with smartphones that store data as well as transmit it. Apple introduced passcode‑derived encryption in 2010 and rolled out end‑to‑end encrypted iMessage in 2011; Android followed shortly after. By 2014 WhatsApp reached 600 million users, and by 2016 nearly a billion were using default end‑to‑end encrypted messaging, making bulk interception virtually impossible.
+
+Law‑enforcement officials have responded by pushing for “lawful access” measures. At a 2024 INTERPOL meeting, U.S. DOJ and FBI officials presented a draft resolution urging providers to enable access via vulnerabilities. Parallel proposals in the U.S. Congress call for “lawful hacking,” allowing agencies to exploit existing software flaws under strict warrants.
+
+The debate was reignited after the 2013 Snowden disclosures revealed extensive NSA metadata collection, prompting tech giants to adopt stronger encryption that even they cannot bypass, cementing the “going dark” dilemma.
+
+## Why it matters
+
+If agencies cannot obtain critical evidence, investigations of serious crimes—from terrorism to child exploitation—may stall, raising public‑safety concerns. Conversely, granting authorities the ability to hack devices creates systemic vulnerabilities that could be discovered and weaponized by malicious actors, eroding trust in digital services and potentially harming the broader ecosystem of privacy‑preserving technology.
+
+<ProsCons>
+  <Pros>
+    <li>Restores ability to investigate serious crimes.</li>
+    <li>Provides a legal avenue to access data in emergencies.</li>
+    <li>Can be targeted to specific cases with warrants.</li>
+  </Pros>
+  <Cons>
+    <li>Creates systemic vulnerabilities that can be exploited.</li>
+    <li>Undermines user trust in secure platforms.</li>
+    <li>May trigger an escalation of encryption arms race.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+
+Developers should adopt a threat‑modeling mindset that separates legitimate investigative needs from broad backdoor designs. Implement transparent vulnerability‑disclosure programs, limit data collection to what is essential, and design audit‑ready architectures that can be examined under court order without embedding permanent access points. Policymakers, meanwhile, must define narrow, warrant‑based criteria and enforce strict oversight to prevent mission creep.
+
+<Callout type="warning">Do not implement hidden backdoors without rigorous oversight; they can be discovered and weaponized.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="What is the “going dark” problem?">It refers to law‑enforcement’s loss of access to communications because strong encryption prevents interception, even with a court order.</Question>
+  <Question q="How does lawful hacking differ from a backdoor?">Lawful hacking relies on exploiting existing software vulnerabilities under a warrant, whereas a backdoor is a deliberately built secret entry point.</Question>
+  <Question q="What can developers do to protect users while complying with law?">Adopt transparent vulnerability‑disclosure programs, limit data collection, and design systems that can be audited without embedding permanent access mechanisms.</Question>
+</FAQ>
