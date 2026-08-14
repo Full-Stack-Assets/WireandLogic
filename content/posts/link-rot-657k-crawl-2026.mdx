@@ -1,0 +1,67 @@
+---
+title: "76% of pre‑2015 links are dead: insights from a 657k‑link crawl"
+description: "A 2026 crawl of 657,607 historic links shows 76.7% no longer load, highlighting the scale of link rot and its impact on web preservation."
+date: "2026-08-14T02:38:13.138Z"
+category: "engineering"
+tags: 
+  - "link-rot"
+  - "web-archiving"
+  - "crawling"
+  - "data-analysis"
+  - "preservation"
+hero: 
+  url: "https://live.staticflickr.com/4094/4859138371_1d312718c6_b.jpg"
+  alt: "Abandoned Boat"
+  credit: "wwarby"
+  creditUrl: "https://www.flickr.com/photos/26782864@N00/4859138371"
+sources: 
+  - title: "Where did the old web go? We followed 657,607 links to find out"
+    url: "https://0.mk/blog/link-rot"
+  - title: "Where did the old web go? We followed 657,607 links to find out."
+    url: "https://0.mk/blog/link-rot"
+  - title: "Where did the old web go? We followed 657,607 links to find out | Hacker News"
+    url: "https://news.ycombinator.com/item?id=49289532"
+  - title: "Wayback MachineSearch iconDonate icon"
+    url: "https://web.archive.org/"
+  - title: "Wayback Machine - Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Wayback_Machine"
+---
+
+In August 2026 we resurrected a 2009‑2014 backup of 0.mk, a Macedonian link‑sharing service, and programmatically followed every one of its 657,607 recorded URLs. After filtering out malformed and blocked targets, we successfully crawled 655,178 links and checked whether they still returned a page. The results were stark: 76.7 % of the safe, crawlable links failed to load, and only about one‑fifth of distinct URLs resolved to a live page. This massive decay illustrates how quickly web content vanishes, even within a relatively narrow community.
+
+<Callout type="takeaway">Most pre‑2015 links from this community are now dead, underscoring the relentless pace of link rot.</Callout>
+
+## What happened
+The restored dataset contained 657,607 link records dated through December 2014. After discarding 2,429 malformed, internal, credentialed or policy‑blocked entries, 655,178 links were deemed crawlable. Those links pointed to 494,781 distinct URLs, of which 492,620 could be reached by the crawler.
+
+At the unique‑URL level only 21.3 % loaded successfully; 78.7 % did not. Network‑layer failures accounted for 55.0 % of the dead URLs, while 23.7 % returned explicit HTTP errors, the most common being 404 (76,403 URLs). An additional 29,663 URLs returned 403 or 429, indicating possible crawler blocks rather than missing content.
+
+Domain‑level analysis showed a similar pattern: of 133,605 hostnames, only 34,827 had at least one URL that loaded. The remaining 98,778 domains contributed no live pages at all.
+
+## Why it matters
+For developers, broken links erode user trust, hurt SEO, and increase maintenance overhead. The study provides a concrete baseline for how quickly content can disappear, reinforcing the need for proactive link management. Archivists and platform owners can use these numbers to prioritize preservation efforts, especially for niche communities whose histories are otherwise undocumented. The findings also remind us that even recent content (under a decade old) is far from permanent.
+
+<ProsCons>
+  <Pros>
+    <li>Provides a real‑world measurement of link decay over a multi‑year period.</li>
+    <li>Highlights which failure modes (network vs. HTTP errors) dominate.</li>
+    <li>Offers a baseline for developers to benchmark their own link‑maintenance tools.</li>
+  </Pros>
+  <Cons>
+    <li>Dataset is geographically and culturally biased toward Macedonian users.</li>
+    <li>Crawler may label pages behind login walls or ad‑heavy portals as dead.</li>
+    <li>Only a single snapshot in time; trends may have shifted since 2014.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Treat link rot as an expected failure mode rather than an exception. Integrate automated link‑checking into CI pipelines and schedule regular re‑crawls of external references. When a link fails, first attempt to locate an archived version via the Wayback Machine before removing or replacing it. For critical resources, store a copy in a version‑controlled repository or a durable object store. Finally, design your own content platforms with exportable data formats so future migrations are feasible.
+
+<Callout type="warning">Do not assume the 76.7 % failure rate applies to the entire web; the sample reflects a specific community and a particular time window.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="How reliable is the 76.7% figure for the whole internet?">The figure comes from a single Macedonian community’s link history and should be viewed as a lower‑bound illustration of link rot, not a universal statistic.</Question>
+  <Question q="What practical steps can developers take to protect their own links?">Automate periodic link validation, use archival services like the Wayback Machine for backups, and store essential assets in stable, version‑controlled locations.</Question>
+  <Question q="Can the Wayback Machine fill the gaps left by link rot?">Often, yes—many dead URLs have snapshots in the Wayback Machine, but coverage is uneven, especially for low‑traffic or region‑specific sites.</Question>
+</FAQ>
