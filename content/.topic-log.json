@@ -2939,6 +2939,13 @@
       "url": "https://blog.cryptographyengineering.com/2026/08/14/everything-is-about-to-go-dark/",
       "publishedAt": "2026-08-14T23:31:30.243Z",
       "signature": "02a5c16d5c9f8108"
+    },
+    {
+      "slug": "riscv-why-it-cannot-dominate-all-use-cases",
+      "title": "RISC-V: They should have known better",
+      "url": "https://dmitry.gr/?r=06.%20Thoughts&proj=12.%20RV",
+      "publishedAt": "2026-08-15T03:49:29.888Z",
+      "signature": "76cd539b23d8571a"
     }
   ]
 }

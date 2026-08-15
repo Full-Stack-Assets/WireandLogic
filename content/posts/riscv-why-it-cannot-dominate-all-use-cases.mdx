@@ -1,0 +1,59 @@
+---
+title: "Why RISC‑V Won’t Dominate Both Supercomputers and Tiny Microcontrollers"
+description: "A critical look at RISC‑V’s claim to fit every market, from high‑end servers to low‑cost microcontrollers, and what that means for developers."
+date: "2026-08-15T03:49:29.886Z"
+category: "opinion"
+tags: 
+  - "riscv"
+  - "isa"
+  - "microcontrollers"
+  - "supercomputers"
+  - "architecture"
+hero: 
+  url: ""
+  alt: ""
+  credit: ""
+  creditUrl: ""
+sources: 
+  - title: "RISC-V: They should have known better"
+    url: "https://dmitry.gr/?r=06.%20Thoughts&proj=12.%20RV"
+  - title: "RISC-V: They Should Have Known Better - Dmitry.GR"
+    url: "https://dmitry.gr/?r=06.%20Thoughts&proj=12.%20RV"
+---
+
+The RISC‑V community has been buzzing with claims that the open ISA will soon power everything from the world’s fastest supercomputers to the cheapest single‑chip microcontrollers. In a recent essay, Dmitry Gr posted a detailed rebuttal, arguing that a single instruction set cannot optimally serve such divergent workloads. He points out concrete architectural mismatches and highlights why the hype may mislead engineers planning new silicon. Understanding these limits is crucial for anyone deciding whether to adopt RISC‑V for a new product.
+
+<Callout type="takeaway">RISC‑V is unlikely to be the best ISA for both high‑performance servers and ultra‑low‑cost microcontrollers.</Callout>
+
+## What happened
+RISC‑V advocates often promise that the open ISA will eventually dominate every segment of the computing market, from exascale supercomputers to tiny 8‑bit microcontrollers. Dmitry’s essay counters this narrative by emphasizing that the design trade‑offs required for high‑end CPUs—deep pipelines, aggressive out‑of‑order execution, large caches—are fundamentally at odds with the constraints of low‑power, minimal‑silicon microcontrollers, which prioritize interrupt latency, tiny code footprints, and deterministic behavior.
+
+Microcontroller cores typically run without external ROM, rely on limited RAM, and must fit within a few kilobytes of silicon. Their workloads involve simple register configuration and occasional I/O handling, not heavy floating‑point or vector math. While a RISC‑V core can be stripped down to meet size goals, the ISA’s flexibility comes with overhead that can make the smallest implementations less efficient than purpose‑built architectures like the 8051 or ARM Cortex‑M series.
+
+## Why it matters
+If chip designers adopt RISC‑V under the assumption that it will excel in both domains, they risk over‑engineering microcontroller products, inflating silicon cost and power consumption. Conversely, ignoring RISC‑V’s strengths in modularity and ecosystem could forfeit benefits such as open tooling and custom extensions for specialized accelerators. The decision directly impacts time‑to‑market, bill‑of‑materials, and the ability to leverage community‑driven IP.
+
+<ProsCons>
+  <Pros>
+    <li>Open ISA encourages innovation and custom extensions.</li>
+    <li>Broad ecosystem of tools, simulators, and software support.</li>
+    <li>Potential for shared IP across diverse product lines.</li>
+  </Pros>
+  <Cons>
+    <li>Base ISA may be too heavyweight for ultra‑low‑cost microcontrollers.</li>
+    <li>Performance‑critical server designs still favor mature, highly‑optimized ISAs.</li>
+    <li>Fragmentation risk if extensions diverge without coordination.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Start by classifying the target workload: high‑throughput compute versus deterministic, low‑power control. For server‑class or accelerator‑heavy designs, evaluate RISC‑V’s extensibility against the proven performance of established ISAs. For cost‑sensitive embedded parts, benchmark stripped‑down RISC‑V cores against legacy MCUs to see if the area and power penalties are acceptable. Use a decision matrix that weighs silicon area, power budget, software ecosystem, and long‑term maintenance before committing.
+
+<Callout type="warning">Do not assume that a single RISC‑V implementation will meet the extreme size and power constraints of all microcontroller applications without thorough silicon‑level validation.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="Can RISC‑V replace ARM Cortex‑M in cheap IoT devices?">It can, but only if the stripped‑down core meets the same area and power envelope; otherwise a purpose‑built MCU may be more efficient.</Question>
+  <Question q="What are the biggest architectural gaps between server‑grade CPUs and microcontrollers?">Server CPUs need deep pipelines, large caches, and out‑of‑order execution, while microcontrollers prioritize minimal latency, tiny code size, and deterministic behavior.</Question>
+  <Question q="How should a team evaluate RISC‑V extensions for a new product?">Prototype with open‑source cores, run silicon‑area and power simulations, and compare against existing IP to ensure the extension justifies its cost.</Question>
+</FAQ>
