@@ -1,0 +1,65 @@
+---
+title: "Firefox Remains the Only Major Browser Supporting uBlock Origin After Chromium Shift to Manifest V3"
+description: "Firefox pledges continued support for uBlock Origin as Chrome and Edge move to Manifest V3, leaving it the sole major browser for full-featured ad blocking."
+date: "2026-08-15T04:40:56.992Z"
+category: "news"
+tags: 
+  - "firefox"
+  - "ublock-origin"
+  - "manifest-v3"
+  - "ad-blocking"
+  - "browser"
+hero: 
+  url: "https://live.staticflickr.com/3151/3012555934_7675ffb9dc_b.jpg"
+  alt: "Netflix now works in FireFox."
+  credit: "scanner771"
+  creditUrl: "https://www.flickr.com/photos/24789834@N08/3012555934"
+sources: 
+  - title: "Firefox is now the last major browser that still supports uBlock Origin"
+    url: "https://www.pcworld.com/article/3212428/firefox-is-now-the-last-major-browser-that-still-supports-ublock-origin.html"
+  - title: "Firefox is now the last major browser that still supports uBlock Origin"
+    url: "https://www.pcworld.com/article/3212428/firefox-is-now-the-last-major-browser-that-still-supports-ublock-origin.html"
+---
+
+Firefox just confirmed it will keep uBlock Origin alive, even as Chrome and Edge abandon the extension under Manifest V3. The shift means most Chromium‑based browsers will lose the full‑feature ad‑blocker that many users rely on. With Edge's upcoming move, Firefox becomes the only major browser still offering the original uBlock Origin. This matters for developers and privacy‑focused users who depend on granular blocking without compromise. The decision also highlights the growing divergence between Chromium and non‑Chromium ecosystems.
+
+<Callout type="takeaway">Firefox is now the sole major browser that fully supports uBlock Origin.</Callout>
+
+## What happened
+
+Firefox announced via a Bluesky post that its support for uBlock Origin “isn’t going anywhere.” The statement came as Microsoft confirmed Edge will soon enforce Manifest V3, a platform that removes the APIs uBlock Origin needs to function.
+
+Google has already migrated Chrome to Manifest V3, and Edge is following suit. The change forces ad‑blocking extensions to rely on less effective, built‑in filters or on stripped‑down versions like uBlock Origin Lite.
+
+Safari and DuckDuckGo, the other notable non‑Chromium browsers, never supported the full uBlock Origin extension. As a result, Firefox now stands alone among major browsers in offering the unmodified ad‑blocker.
+
+## Why it matters
+
+The loss of full‑feature ad blocking on Chromium browsers reduces user control over tracking scripts and intrusive ads, pushing many to seek alternatives. Developers lose a common testing target for content‑blocking behavior, and privacy‑focused sites may see higher bounce rates on browsers without uBlock Origin. Firefox’s continued support therefore becomes a strategic advantage for users who value customizable blocking and for developers who need a reliable baseline.
+
+<ProsCons>
+  <Pros>
+    <li>Full‑feature ad blocking without compromises.</li>
+    <li>Strong privacy stance differentiates Firefox.</li>
+    <li>Provides a consistent testing environment for developers.</li>
+  </Pros>
+  <Cons>
+    <li>Firefox’s market share is smaller than Chromium browsers.</li>
+    <li>Potential performance overhead from heavy extensions.</li>
+    <li>Limited ecosystem of complementary extensions.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+
+If ad blocking is a core requirement, prioritize Firefox for personal use and for testing web‑app behavior under strict content policies. Keep an eye on Firefox’s roadmap; any future shift away from legacy APIs could affect uBlock Origin again. For teams building extensions, consider supporting both uBlock Origin on Firefox and the newer Manifest V3‑compatible alternatives on Chromium browsers.
+
+<Callout type="warning">Do not assume uBlock Origin’s support is permanent; policy or API changes in Firefox could still deprecate the extension.</Callout>
+
+## FAQ
+
+<FAQ>
+  <Question q="Will Chrome ever bring back full uBlock Origin support?">Chrome has committed to Manifest V3, which does not provide the necessary APIs for the original uBlock Origin. A full return is unlikely without a major policy reversal.</Question>
+  <Question q="Can I use uBlock Origin on mobile browsers?">Firefox for Android still supports the desktop version of uBlock Origin, while Chromium‑based mobile browsers only offer the Lite variant or built‑in blocking.</Question>
+  <Question q="What alternatives exist if Firefox drops uBlock Origin?">Users can switch to other non‑Chromium browsers that support similar extensions, or adopt Manifest V3‑compatible blockers like uBlock Origin Lite, though they offer reduced functionality.</Question>
+</FAQ>
