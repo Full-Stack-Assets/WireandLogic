@@ -1,0 +1,59 @@
+---
+title: "Why Some Companies Are Abandoning AI‑Generated Code for Hand‑Written Software"
+description: "Developers explain why a growing number of firms are dropping LLM‑generated code in favor of pure human‑written software."
+date: "2026-08-16T12:56:30.353Z"
+category: "engineering"
+tags: 
+  - "ai"
+  - "code"
+  - "software-development"
+  - "productivity"
+  - "llm"
+hero: 
+  url: "https://live.staticflickr.com/5545/9576455335_29380148da_b.jpg"
+  alt: "Beriev Be-12. Самолет КБ Бериева Бе-12."
+  credit: "Peer.Gynt"
+  creditUrl: "https://www.flickr.com/photos/25554263@N04/9576455335"
+sources: 
+  - title: "Ask HN: Do you know of any company that went back to hand-written code?"
+    url: "https://news.ycombinator.com/item?id=49318906"
+  - title: "Ask HN: Do you know of any company that went back to hand-written code? | Hacker News"
+    url: "https://news.ycombinator.com/item?id=49318906"
+---
+
+Developers on Hacker News have observed a shift from aggressive AI‑assisted coding back to manual, hand‑written implementations. The discussion highlights teams that once embraced large‑language‑model (LLM) code generation but now limit or remove it from core development. Participants cite workflow disruption, code quality concerns, and the difficulty of maintaining mental models when AI suggestions intervene. This reversal matters because it challenges the assumption that AI will dominate all layers of software creation.
+
+<Callout type="takeaway">Some organizations are deliberately reverting to hand‑written code to preserve developer flow and long‑term code quality.</Callout>
+
+## What happened
+Several commenters reported that their startups initially used Claude or similar models for rapid prototyping and commoditized UI components. After a few cycles they experienced friction: AI suggestions broke flow state, masked architectural problems, and performed poorly on spatial‑reasoning tasks such as graphics code. One developer noted that rewriting core functionality without AI restored simplicity and understandability.
+
+Another thread participant described a policy change where the company limited LLM usage to non‑core services, reserving human‑authored code for performance‑critical or security‑sensitive modules. The shift was motivated by the belief that the mental model built during design constitutes the majority of effort, while the generated artifact adds little value.
+
+## Why it matters
+When teams abandon AI‑generated code, they trade speed for predictability, potentially reducing technical debt and improving maintainability. The move also signals that AI tools are not a universal solution; their limitations can outweigh benefits in domains requiring precise reasoning or deep domain knowledge. Companies that recognize these trade‑offs may achieve more stable release cycles and clearer ownership of critical systems.
+
+<ProsCons>
+  <Pros>
+    <li>Improved developer focus and flow state.</li>
+    <li>Greater transparency and easier debugging of core modules.</li>
+    <li>Reduced reliance on external AI services and associated costs.</li>
+  </Pros>
+  <Cons>
+    <li>Longer initial development cycles for new features.</li>
+    <li>Loss of rapid prototyping advantages that LLMs provide.</li>
+    <li>Potential skill bottlenecks if the team lacks deep expertise.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Evaluate each codebase tier separately: keep AI assistance for low‑risk, repetitive tasks, but require human authorship for performance‑critical, security‑sensitive, or highly complex components. Establish clear guidelines that define when AI suggestions must be reviewed or discarded. Invest in tooling that preserves the developer's mental model, such as inline documentation and pair‑programming sessions, to mitigate the loss of speed.
+
+<Callout type="warning">Do not assume that removing AI will automatically improve code quality; disciplined review processes remain essential.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="Do any large enterprises actually revert to hand‑written code?">Public statements are rare, but several mid‑size firms have announced policies that restrict LLM usage to non‑core services, effectively reverting core development to manual coding.</Question>
+  <Question q="What kinds of projects benefit most from abandoning AI‑generated code?">Projects with heavy spatial reasoning, real‑time graphics, or strict performance constraints tend to suffer the most from current LLM limitations.</Question>
+  <Question q="How can teams measure whether the switch is worthwhile?">Track metrics such as mean time to resolve bugs, code review cycle length, and developer satisfaction before and after policy changes to assess impact.</Question>
+</FAQ>
