@@ -1,0 +1,58 @@
+---
+title: "Abdominal Fat Measures Outperform BMI in Predicting Heart Disease Risk"
+description: "A large cohort study finds waist circumference and waist‑to‑hip ratio predict cardiovascular events better than BMI, reclassifying risk for many."
+date: "2026-08-16T09:36:38.936Z"
+category: "news"
+tags: 
+  - "cardiology"
+  - "obesity"
+  - "risk-assessment"
+  - "epidemiology"
+hero: 
+  url: "https://live.staticflickr.com/116/287234251_00337e6b3c_b.jpg"
+  alt: "Canadian Cardiovascular Congress"
+  credit: "colros"
+  creditUrl: "https://www.flickr.com/photos/73416633@N00/287234251"
+sources: 
+  - title: "Abdominal fat predicts heart disease risk better than BMI"
+    url: "https://www.acc.org/about-acc/press-releases/2026/08/11/14/59/abdominal-fat-predicts-heart-disease-risk-better-than-bmi"
+  - title: "Abdominal Fat Predicts Heart Disease Risk Better Than BMI - American College of Cardiology"
+    url: "https://www.acc.org/about-acc/press-releases/2026/08/11/14/59/abdominal-fat-predicts-heart-disease-risk-better-than-bmi"
+---
+
+Recent research published in JACC shows that simple measures of abdominal size—waist circumference (WC) and waist‑to‑hip ratio (WHR)—outperform the widely used body‑mass index (BMI) at forecasting heart disease. The investigators followed more than 260,000 adults for an average of 20 years, recording WC, WHR, and nine cardiovascular outcomes. Participants with a normal BMI but elevated central adiposity faced a markedly higher risk of myocardial infarction, stroke, and heart failure. These findings call into question the reliance on BMI alone for cardiovascular risk stratification. For clinicians and developers of health‑tech tools, the data suggest a low‑cost metric that can improve risk algorithms.
+
+<Callout type="takeaway">Waist circumference and waist‑to‑hip ratio predict cardiovascular events more accurately than BMI.</Callout>
+
+## What happened
+The Cross Cohort Collaboration pooled data from over 260,000 individuals who had baseline measurements of WC or WHR and were followed for roughly two decades. Researchers linked these anthropometric data to nine outcomes, including fatal and non‑fatal myocardial infarction, stroke, heart failure, atrial fibrillation, total coronary heart disease, total cardiovascular disease, and mortality.
+
+Analysis revealed that adding WC and WHR to traditional BMI models significantly improved discrimination for all outcomes. In the subset of participants classified as normal‑weight by BMI, about 5 % displayed high central adiposity, and this group experienced a substantially higher incidence of cardiovascular events compared with their low‑WC peers.
+
+## Why it matters
+BMI captures overall mass but ignores where fat is stored; abdominal fat is metabolically active and drives inflammation, a key pathway to atherosclerosis. By missing this nuance, BMI‑based screening can underestimate risk in people who appear “normal weight” yet carry excess visceral fat. Incorporating WC or WHR can therefore identify a hidden high‑risk population, enabling earlier intervention and more precise allocation of preventive resources.
+
+<ProsCons>
+  <Pros>
+    <li>Improves risk prediction for multiple cardiovascular outcomes.</li>
+    <li>Requires only a tape measure—cost‑effective and easy to implement.</li>
+    <li>Reclassifies risk for normal‑BMI individuals with hidden central adiposity.</li>
+  </Pros>
+  <Cons>
+    <li>Adds an extra measurement step in busy clinical workflows.</li>
+    <li>WC/WHR can vary with measurement technique, leading to potential error.</li>
+    <li>Current guidelines and electronic health records are heavily BMI‑centric.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Start by training staff to take waist circumference at the midpoint between the lowest rib and the iliac crest and to calculate WHR using hip circumference. Update risk‑assessment algorithms to include these values alongside BMI, or replace BMI thresholds with WC‑based cut‑offs where evidence supports it. For health‑tech developers, expose WC and WHR as optional inputs in APIs and provide default risk‑adjustment coefficients derived from the study. Finally, validate any new thresholds in your target population before full deployment.
+
+<Callout type="warning">Do not replace BMI entirely without first validating WC/WHR thresholds for your specific population.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="How much does adding waist circumference improve risk prediction?">Including WC or WHR modestly raises the C‑statistic for cardiovascular outcomes, indicating better discrimination than BMI alone.</Question>
+  <Question q="Is waist‑to‑hip ratio more useful than waist circumference?">Both metrics add value; WHR captures body shape, while WC is simpler to measure. The study found similar improvements for each.</Question>
+  <Question q="Can I rely on self‑reported waist measurements?">Self‑report introduces error; for clinical decision‑making, trained staff should obtain the measurement using a standardized protocol.</Question>
+</FAQ>
