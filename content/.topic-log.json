@@ -3051,6 +3051,13 @@
       "url": "https://platform.claude.com/docs/en/release-notes/system-prompts",
       "publishedAt": "2026-08-16T15:31:34.298Z",
       "signature": "eb07c540925d4e29"
+    },
+    {
+      "slug": "firefox-ios-native-adblocker",
+      "title": "Firefox for iOS now has a native adblocker",
+      "url": "https://support.mozilla.org/en-US/kb/block-ads-firefox-ios",
+      "publishedAt": "2026-08-16T16:36:54.613Z",
+      "signature": "17dba9704eaf0a0c"
     }
   ]
 }
