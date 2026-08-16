@@ -3058,6 +3058,13 @@
       "url": "https://support.mozilla.org/en-US/kb/block-ads-firefox-ios",
       "publishedAt": "2026-08-16T16:36:54.613Z",
       "signature": "17dba9704eaf0a0c"
+    },
+    {
+      "slug": "riscv-shipping-costs-trinidad-engineers",
+      "title": "A 3rd World Embedded Engineer Responds to \"RISC-V They Should Have Known Better\"",
+      "url": "https://rvembedded.com/blog_post/12/",
+      "publishedAt": "2026-08-16T19:49:27.967Z",
+      "signature": "d457368aff2d9cd3"
     }
   ]
 }
