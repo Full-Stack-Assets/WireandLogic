@@ -3093,6 +3093,13 @@
       "url": "https://futurism.com/artificial-intelligence/young-people-ai-ceos-executives-poll",
       "publishedAt": "2026-08-17T08:10:21.678Z",
       "signature": "596a3f48de424e7b"
+    },
+    {
+      "slug": "qwen-3-8-27b-overthinking-default",
+      "title": "Qwen 3.8 27B is excellent, but it defaults to overthinking things",
+      "url": "https://simonwillison.net/2026/Aug/16/qwen-38-27b/",
+      "publishedAt": "2026-08-17T10:46:41.018Z",
+      "signature": "b6297897865dc937"
     }
   ]
 }

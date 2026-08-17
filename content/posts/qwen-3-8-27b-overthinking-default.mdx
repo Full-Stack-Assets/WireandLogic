@@ -1,0 +1,64 @@
+---
+title: "Qwen 3.8 27B delivers strong results but its default high reasoning effort can waste resources"
+description: "Qwen 3.8 27B is a powerful, locally runnable LLM, but its default xhigh reasoning setting can cause excessive token use and slow performance."
+date: "2026-08-17T10:46:41.015Z"
+category: "ai"
+tags: 
+  - "qwen"
+  - "llm"
+  - "reasoning"
+  - "local-ml"
+  - "performance"
+hero: 
+  url: "https://upload.wikimedia.org/wikipedia/commons/b/b7/Prestaties_van_grote_taalmodellen_%28LLMs%29_in_het_Nederlands.png"
+  alt: "Prestaties van grote taalmodellen (LLMs) in het Nederlands"
+  credit: "WikiEwout"
+  creditUrl: "https://commons.wikimedia.org/w/index.php?curid=172450781"
+sources: 
+  - title: "Qwen 3.8 27B is excellent, but it defaults to overthinking things"
+    url: "https://simonwillison.net/2026/Aug/16/qwen-38-27b/"
+  - title: "Qwen 3.8 27B is excellent, but it defaults to wildly overthinking things"
+    url: "https://simonwillison.net/2026/Aug/16/qwen-38-27b/"
+---
+
+On August 16, Alibaba’s Qwen research lab released Qwen 3.8 27B, a 27‑billion‑parameter vision‑capable LLM under the Apache 2 license. The model fits comfortably on a laptop or modest workstation, and early tests show it can generate high‑quality images and text. However, the default “xhigh” reasoning_effort setting pushes the model to perform exhaustive analysis on even trivial prompts. This behavior consumes the full context window, inflates token counts, and can turn a quick query into a multi‑minute job. Understanding and adjusting this default is essential for anyone planning to run the model locally.
+
+<Callout type="takeaway">The model’s default high‑effort reasoning dramatically increases token usage and latency, so you should lower the reasoning_effort for most tasks.</Callout>
+
+## What happened
+
+The release introduced a 27 billion‑parameter model that can run from a 17 GB GGUF file, making it feasible on a 128 GB‑RAM MacBook Pro or an NVIDIA DGX Spark. Qwen 3.8 ships with an official `reasoning_effort` parameter that defaults to `xhigh`, which is intended for complex tasks that need thorough analysis.
+
+When the author ran the model in LM Studio with the default settings, the system quickly hit the 8,192‑token context limit because the model spent the majority of its budget on internal reasoning. Switching to the model’s maximum 262,144‑token context eliminated the bottleneck, but a single generation of a pelican‑on‑a‑bicycle SVG still consumed 22,276 reasoning tokens and took 21 minutes to produce 3,223 output tokens.
+
+Self‑reported benchmarks show a performance boost over the previous Qwen 3.6 27B and the closed‑weight Qwen 3.7‑Plus, but independent benchmarking is still pending. The model’s small disk footprint and open license are praised, while the default reasoning behavior is flagged as a major usability issue.
+
+## Why it matters
+
+Developers eager to run powerful vision‑enabled LLMs locally are attracted to Qwen 3.8’s size and licensing. Yet the default `xhigh` setting can dramatically increase inference cost, memory pressure, and latency, especially on consumer hardware. In production or interactive applications, wasted tokens translate directly into higher compute bills and poorer user experience. Adjusting the reasoning effort is therefore a prerequisite for making the model practical outside of exploratory experiments.
+
+<ProsCons>
+  <Pros>
+    <li>High‑quality multimodal output comparable to larger closed models.</li>
+    <li>Runs on a 17 GB GGUF file, fitting modest laptops.</li>
+    <li>Apache 2 license encourages unrestricted use and fine‑tuning.</li>
+  </Pros>
+  <Cons>
+    <li>Default `xhigh` reasoning exhausts context and inflates token usage.</li>
+    <li>Long generation times on consumer GPUs when left unchanged.</li>
+    <li>Requires manual context‑length configuration to avoid truncation.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+
+Treat the `reasoning_effort` flag as a performance knob rather than a static setting. For most everyday prompts, set it to `low` or `medium` to keep token consumption in check while still getting solid answers. If you need deep analysis, raise it selectively and be prepared for longer runtimes. Always configure the context window to match your workload; the 262,144‑token limit is safe but may increase memory usage. When using LM Studio, switch to the quantized GGUF build for faster inference, and consider running the model via `llama-server` for more granular control over parameters.
+
+<Callout type="warning">Do not leave the default xhigh reasoning_effort on laptops or low‑end GPUs; it can exhaust memory and dramatically increase inference time.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="How can I change the reasoning_effort setting in LM Studio?">Open the model settings panel, locate the `reasoning_effort` dropdown, and choose `low`, `medium`, or `high`. Save the configuration before starting a new generation.</Question>
+  <Question q="Is the 27B model suitable for production workloads?">Yes, if you tune the reasoning_effort and context length to fit your latency and cost targets. The open license also makes it viable for commercial deployment.</Question>
+  <Question q="What are the trade‑offs of using the 262,144 token context length?">A larger context prevents premature truncation of reasoning tokens, but it raises RAM requirements and may slightly increase per‑token latency. Choose the size that balances memory availability with the need for deep reasoning.</Question>
+</FAQ>
