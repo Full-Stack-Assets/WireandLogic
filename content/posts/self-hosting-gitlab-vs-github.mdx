@@ -1,0 +1,61 @@
+---
+title: "Self‑hosting GitLab vs GitHub: Downtime, Costs, and Operational Trade‑offs"
+description: "A look at why teams choose self‑hosted GitLab over GitHub, covering downtime, resource needs, and maintenance overhead."
+date: "2026-08-17T19:56:17.763Z"
+category: "engineering"
+tags: 
+  - "gitlab"
+  - "github"
+  - "self-hosting"
+  - "ci-cd"
+  - "devops"
+hero: 
+  url: "https://upload.wikimedia.org/wikipedia/commons/d/db/Lingua_Libre-activity-2016-2026.03-all-top12.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+  alt: "Lingua Libre-activity-2016-2026.03-all-top12"
+  credit: "Yug"
+  creditUrl: "https://commons.wikimedia.org/w/index.php?curid=188323928"
+sources: 
+  - title: "Ask HN: Alternatives to GitHub"
+    url: "https://news.ycombinator.com/item?id=49331033"
+  - title: "Ask HN: Alternatives to GitHub | Hacker News"
+    url: "https://news.ycombinator.com/item?id=49331033"
+---
+
+When a mid‑size team recently migrated from a self‑hosted GitLab instance to GitHub, they quickly discovered higher downtime and less control over upgrades. The move sparked a lively discussion on Hacker News about the real costs and benefits of each platform. While GitHub offers a polished SaaS experience, many engineers still value the predictability and configurability of a self‑hosted solution. Understanding these trade‑offs helps teams decide whether the convenience of GitHub outweighs the operational overhead of managing GitLab themselves.
+
+<Callout type="takeaway">Self‑hosting GitLab can deliver lower downtime and finer control, but it demands dedicated resources and ongoing maintenance.</Callout>
+
+## What happened
+Self‑hosted GitLab was praised for having "WAY less downtime" compared to GitHub, even though the instance could be a bit slower and required more manual effort to keep running. Commenters noted that GitHub felt like a downgrade in enterprise readiness, lacking the granular access controls and polished UI that GitLab provides.
+
+Deploying a self‑hosted GitLab for a team of 50‑100 people typically requires at least a 16 GB machine (32 GB preferred), four CPU cores, and a fast SSD. Teams also need a small dedicated group (1‑3 engineers) to maintain the instance and handle upgrades on their own schedule. For CI/CD, a lightweight k3s cluster is often used to run GitLab‑Runner workloads efficiently.
+
+GitHub’s hosted runners lack built‑in support for custom cache locations, forcing users to patch the runner image. In contrast, GitLab runners let you choose the cache location as a standard feature, simplifying large build pipelines and reducing storage friction.
+
+## Why it matters
+Downtime directly impacts developer productivity and release velocity, so a more reliable Git service can translate into faster feature delivery. However, the operational burden of self‑hosting—hardware provisioning, security patches, and on‑call responsibilities—adds cost and requires skilled staff. Teams must weigh the value of control and lower outage risk against the expense of maintaining their own infrastructure.
+
+<ProsCons>
+  <Pros>
+    <li>Lower downtime and faster incident response.</li>
+    <li>Fine‑grained access controls, richer docs, and tighter integrations.</li>
+    <li>Full visibility into code and ability to patch the platform.</li>
+  </Pros>
+  <Cons>
+    <li>Additional hardware and cloud costs (e.g., 16 GB+ VM, SSD).</li>
+    <li>Ongoing maintenance workload and on‑call duty.</li>
+    <li>Requires a dedicated ops team to manage upgrades and security.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+Start by mapping your team's tolerance for downtime against the resources you can allocate for ops. If you have 1‑2 engineers who can reliably manage a server, self‑hosting GitLab may pay off in uptime and customization. For larger orgs or those lacking dedicated staff, the managed GitHub experience reduces operational risk, even if it means accepting occasional outages. Evaluate CI/CD cache needs: if custom caching is critical, GitLab’s runner flexibility may tip the scales. Finally, run a short proof‑of‑concept on a modest VM to measure performance and maintenance overhead before committing.
+
+<Callout type="warning">Do not underestimate the on‑call burden; insufficient staffing can turn a self‑hosted GitLab into a source of outages rather than a reliability gain.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="When is self‑hosting GitLab worth the extra effort?">If your organization cannot tolerate frequent SaaS outages, needs custom access policies, or requires full control over runner caching, the benefits often outweigh the operational cost.</Question>
+  <Question q="What minimum hardware should we provision for a small team?">A VM with at least 16 GB RAM (32 GB preferred), four CPU cores, and a fast SSD provides a comfortable baseline for 50‑100 users.</Question>
+  <Question q="Can we mitigate the maintenance load with managed GitLab?">Yes—GitLab offers a hosted SaaS tier that retains many of the platform’s features while offloading hardware and patch management to the provider.</Question>
+</FAQ>
