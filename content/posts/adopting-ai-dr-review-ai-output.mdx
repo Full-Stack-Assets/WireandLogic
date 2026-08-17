@@ -1,0 +1,55 @@
+---
+title: "Adopting AI;DR: Why Developers Must Review Every AI‑Generated Message Before Sharing"
+description: "AI;DR urges developers to edit AI‑generated output before publishing, preserving quality and credibility."
+date: "2026-08-17T21:35:21.461Z"
+category: "opinion"
+tags: 
+  - "ai"
+  - "productivity"
+  - "communication"
+  - "best-practices"
+hero: 
+  url: "https://live.staticflickr.com/8115/8648645615_a54a914448_b.jpg"
+  alt: "AI | production notes"
+  credit: "William Beutler"
+  creditUrl: "https://www.flickr.com/photos/23993156@N00/8648645615"
+sources: 
+  - title: "AI;DR (AI; Didn't Read)"
+    url: "https://www.rickmanelius.com/p/aidr-ai-didnt-read"
+  - title: "AI;DR (AI; Didn’t Read)"
+    url: "https://www.rickmanelius.com/p/aidr-ai-didnt-read"
+---
+
+Developers are increasingly dumping raw AI‑generated text into Slack, newsletters, and code comments without a second glance. The AI;DR movement, coined by a recent Hacker News post, calls for a simple rule: if you didn’t edit the output, don’t share it. This pushback reflects a growing fatigue with AI‑slop that can erode trust and waste teammates’ time. Adopting the policy forces us to treat AI as a tool, not a replacement for human judgment.
+<Callout type="takeaway">The only safe way to use AI at work is to edit before you publish.</Callout>
+## What happened
+The author, a self‑identified pro‑AI developer, introduced the AI;DR acronym after repeatedly encountering unedited AI output that caused physical discomfort and miscommunication in professional channels. He credits a tweet from @seclilc for sparking the idea and frames AI;DR as a cultural antidote to “AI slop.”
+
+While acknowledging that AI usage is inevitable in Q3 2026, the post argues that raw, unfiltered AI copy in collaborative spaces—Slack threads, newsletters, social posts—creates ambiguity and erodes the author’s voice. Only narrowly scoped scenarios, such as fully scripted customer‑support replies, may safely remain 100 % AI‑generated.
+
+The solution proposed is simple: prepend AI;DR to any piece of content that hasn’t been reviewed, signaling that the recipient should not trust it without verification. This shorthand aims to restore a human touch without banning AI outright.
+## Why it matters
+Unedited AI output can introduce factual errors, awkward phrasing, and brand‑inconsistent language, forcing teammates to spend time correcting mistakes that could have been avoided. For developers, this translates to wasted debugging cycles, misaligned documentation, and potential security oversights when AI‑generated code snippets are accepted verbatim. The broader implication is a loss of credibility—both personal and organizational—when audiences repeatedly encounter low‑quality AI prose.
+
+Teams that adopt AI;DR signal a commitment to quality control, reinforcing trust among engineers, product managers, and customers. The policy also creates a feedback loop: AI tools improve when humans consistently edit and correct their suggestions, leading to better future outputs.
+<ProsCons>
+  <Pros>
+    <li>Higher signal‑to‑noise ratio in team communications.</li>
+    <li>Preserves personal brand and professional credibility.</li>
+    <li>Reduces downstream rework caused by AI‑generated errors.</li>
+  </Pros>
+  <Cons>
+    <li>Introduces an extra manual step that can slow rapid prototyping.</li>
+    <li>May discourage experimentation with emerging AI tools.</li>
+    <li>Risk of over‑policing leading to resentment or reduced morale.</li>
+  </Cons>
+</ProsCons>
+## How to think about it
+Treat AI as a draft assistant, not a final author. Establish a lightweight checklist: generate, review for factual accuracy, edit for tone, then publish. Embed the checklist in your team's definition of done and automate reminders in Slack bots or CI pipelines. Encourage developers to add a short comment like “AI‑draft” in pull requests, then replace it with a proper review before merging. Finally, periodically revisit the policy to balance speed and quality as AI models improve.
+<Callout type="warning">Do not interpret AI;DR as a ban on AI—use it to enforce human review, not to eliminate AI assistance entirely.</Callout>
+## FAQ
+<FAQ>
+  <Question q="What counts as ‘editing’ an AI output?">Any change that adds factual verification, corrects grammar, or aligns the tone with your brand qualifies as editing. Even a brief pass to remove obvious AI‑isms satisfies the rule.</Question>
+  <Question q="How can I enforce AI;DR without slowing down the team?">Integrate the policy into existing workflows: add a checkbox in pull‑request templates, use a Slack bot to flag messages without the AI;DR tag, and keep the review step lightweight—focus on high‑impact errors.</Question>
+  <Question q="Is AI;DR relevant for code as well as prose?">Yes. Before committing AI‑generated code, run linters, unit tests, and a manual sanity check. Tag snippets that haven’t been reviewed so reviewers know to scrutinize them closely.</Question>
+</FAQ>
