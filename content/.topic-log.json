@@ -3072,6 +3072,13 @@
       "url": "https://w4g1.dev/blog/models-are-getting-dumber-on-purpose",
       "publishedAt": "2026-08-16T21:50:44.634Z",
       "signature": "6856e36bdd67bf4b"
+    },
+    {
+      "slug": "anthropic-claude-watermark-controversy",
+      "title": "Anthropic's 'Watermark' Text Adulteration in Claude Is a Perversion of Writing",
+      "url": "https://daringfireball.net/2026/08/anthropics_watermark_text_adulteration_in_claude_is_a_perversion_of_writing",
+      "publishedAt": "2026-08-17T01:51:03.425Z",
+      "signature": "d154cad9a02c9665"
     }
   ]
 }
