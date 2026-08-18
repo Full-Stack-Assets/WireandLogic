@@ -85,7 +85,6 @@ npx tsx scripts/smoke-test.ts   # hit every source fetcher against live APIs
 `npm run build` goes through **`scripts/build.sh`**, which skips the TinaCMS
 cloud build when `NEXT_PUBLIC_TINA_CLIENT_ID` / `TINA_TOKEN` are unset
 (self-hosted/local-filesystem mode) and then runs `next build`. Don't replace it
-with a bare `next build` — Vercel's `buildCommand` (`vercel.json`) calls
 `npm run build` on purpose.
 
 **Vitest** covers the pure/high-risk logic (`src/**/*.test.ts`, colocated with
@@ -221,9 +220,7 @@ override — note the empty-string guard, since unset CI secrets arrive as `""`)
   (`scripts/merge-topic-log.mjs`, mapped in `.gitattributes`) so concurrent
   appends to `content/.topic-log.json` auto-merge instead of conflicting. A
   `concurrency` group prevents overlapping ticks. Optional
-  `VERCEL_DEPLOY_HOOK_URL` fires a redeploy.
 - **`.github/workflows/newsletter.yml`** runs the weekly digest.
-- Hosting: Vercel (auto-deploys on push) or Cloudflare Pages as a static host.
   **Do not run the pipeline inside a Cloudflare Pages Function** — its ~30s CPU
   limit is below the pipeline's 30–90s runtime; let the Action generate.
 

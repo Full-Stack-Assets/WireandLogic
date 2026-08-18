@@ -8,7 +8,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 // Lightweight in-memory rate limit. Serverless instances are ephemeral and not
 // shared, so this throttles bursts per-instance rather than globally — a durable
-// store (Vercel KV / Redis) is the production-grade upgrade. It still raises the
+// store (a durable KV or Redis store) is the production-grade upgrade. It still raises the
 // cost of naive scripted abuse against this public, write-triggering endpoint.
 const RATE_LIMIT = 5;
 const WINDOW_MS = 60_000;

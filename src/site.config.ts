@@ -3,7 +3,7 @@
  *
  * Everything site-specific lives here: branding, the audience/voice, the
  * categories, the sources the hourly pipeline pulls from, and the AdSense id.
- * Change these values (plus the per-site secrets and a Vercel project/domain)
+ * Change these values (plus the per-site secrets and a configured domain)
  * and you have a new auto-blog running the same engine. See CREATE-A-SITE.md.
  *
  * URLs and the AdSense id can also be overridden per-deploy via env vars

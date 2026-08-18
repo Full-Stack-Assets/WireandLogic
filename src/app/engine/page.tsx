@@ -25,7 +25,7 @@ const tiers = [
     price: 'from $129',
     cadence: 'one-time',
     blurb: 'The full repo plus setup docs. You configure, deploy, and own it.',
-    features: ['Complete source + license', 'Step-by-step setup guide', 'Deploy to Vercel in an afternoon'],
+    features: ['Complete source + license', 'Step-by-step setup guide', 'Deploy in an afternoon'],
     featured: false,
   },
   {
