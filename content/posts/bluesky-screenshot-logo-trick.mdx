@@ -1,0 +1,62 @@
+---
+title: "Inside Bluesky’s Screenshot Trick: Using Secure Text Fields to Hide the Logo"
+description: "Explore how Bluesky uses iOS secure text fields to mask its logo in screenshots, a technique also used by Telegram and Signal."
+date: "2026-08-18T03:05:01.532Z"
+category: "engineering"
+tags: 
+  - "bluesky"
+  - "ios"
+  - "react-native"
+  - "privacy"
+  - "expo"
+  - "screenshots"
+hero: 
+  url: "https://live.staticflickr.com/2781/4407293195_bf6fcd3afc_b.jpg"
+  alt: "Sun Set in IO"
+  credit: "Howard TJ"
+  creditUrl: "https://www.flickr.com/photos/25925838@N00/4407293195"
+sources: 
+  - title: "How Bluesky draws its logo on screenshots"
+    url: "https://timmarinin.net/2026/bluesky-screenshots/"
+  - title: "How Bluesky draws its logo on screenshots"
+    url: "https://timmarinin.net/2026/bluesky-screenshots/"
+---
+
+Developers often discover that the Bluesky iOS app shows its logo only when a screenshot is taken. In the live UI the logo is replaced by a “Follow” button, but a cropped screenshot reveals the brand in the corner. The behavior is implemented in the open‑source GrowthHack.tsx component using a secure text field trick. Understanding the mechanism matters because it leverages a privacy‑oriented API to alter visual output, a pattern also seen in Telegram and Signal. The technique raises questions about platform compliance and future maintenance.
+
+<Callout type="takeaway">Bluesky hides its logo in normal UI by rendering it inside a secure text field that iOS blanks during screenshot capture.</Callout>
+
+## What happened
+The author noticed that a screenshot of a Bluesky post contained the company logo in the right corner, while the live app displayed a “Follow” button instead. Investigation of the repository led to a file named GrowthHack.tsx, added in January 2026, which imports the expo-privacy-sensitive package.
+
+The package creates a `UITextField` with `isSecureTextEntry` set to true and renders the button into that field’s layer. iOS treats secure text entry fields as privacy‑sensitive content and blanks their layers when a screenshot is captured, allowing the underlying logo to become visible. On non‑iOS platforms the component renders the button normally, without any masking.
+
+The author also observed that the trick does not work when switching apps mid‑gesture, likely because iOS takes an early snapshot of the UI before the secure field can react, leaving only a static image for the screenshot.
+
+## Why it matters
+The approach demonstrates how developers can repurpose privacy‑focused APIs to modify visual output without adding extra assets. It also highlights a gray area in App Store policy, where UI manipulation for branding could be interpreted as deceptive. Because the behavior depends on undocumented iOS handling of secure fields, future OS updates could break it, affecting brand consistency and user trust.
+
+<ProsCons>
+  <Pros>
+    <li>Zero additional image assets; the logo is revealed automatically.</li>
+    <li>Leverages an existing API, keeping the codebase small.</li>
+    <li>Shows creative reuse of platform features, inspiring similar solutions.</li>
+  </Pros>
+  <Cons>
+    <li>Relies on undocumented iOS behavior that may change without notice.</li>
+    <li>Potentially violates App Store guidelines on UI manipulation.</li>
+    <li>Can be perceived as deceptive by users who notice the logo only in screenshots.</li>
+  </Cons>
+</ProsCons>
+
+## How to think about it
+When considering a similar technique, first evaluate whether the visual change is essential to the product experience or merely a branding flourish. Verify that the API you plan to use is officially documented for the intended purpose; otherwise, prepare for possible breakage in future OS releases. Test the behavior across all target platforms, and document the fallback for environments where the trick does not apply. Finally, review App Store and Play Store policies to ensure that dynamic UI alterations do not conflict with disclosure requirements.
+
+<Callout type="warning">Because the method hinges on iOS treating secure text fields as private, Apple could reject the app or silently change the behavior in a future update, removing the logo from screenshots without warning.</Callout>
+
+## FAQ
+<FAQ>
+  <Question q="How does isSecureTextEntry cause iOS to blank the layer?">When a text field is marked as secure, iOS masks its visual representation during screen capture to protect sensitive data, which results in the layer being cleared in a screenshot.</Question>
+  <Question q="Can I use the same technique in my own React Native app?">Yes, you can import a similar package or implement a native module that creates a secure UITextField and renders custom content, but you should weigh the maintenance and policy risks.</Question>
+  <Question q="What are the App Store implications of masking UI elements for screenshots?">Apple’s guidelines require that apps do not mislead users; hiding or altering UI elements only for screenshots could be seen as deceptive and may lead to rejection during review.</Question>
+</FAQ>
