@@ -3219,6 +3219,13 @@
       "url": "https://www.theregister.com/ai-and-ml/2026/08/18/google-buys-crashed-airline-spirits-data-at-auction-because-ai/5288962",
       "publishedAt": "2026-08-18T16:43:52.422Z",
       "signature": "d3b502d424cc3193"
+    },
+    {
+      "slug": "claude-api-degraded-performance-multiple-models",
+      "title": "Degraded performance for multiple models",
+      "url": "https://status.claude.com/incidents/q7txxvbsftgq",
+      "publishedAt": "2026-08-18T17:37:12.683Z",
+      "signature": "3b37c1f6b19660d3"
     }
   ]
 }
