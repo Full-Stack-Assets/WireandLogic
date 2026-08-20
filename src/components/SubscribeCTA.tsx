@@ -2,8 +2,8 @@ import { SubscribeForm } from './SubscribeForm';
 
 /**
  * Prominent end-of-post subscribe call-to-action. Reuses the shared
- * SubscribeForm (which posts to /api/subscribe), so there's one source of truth
- * for the signup logic.
+ * SubscribeForm links to the deployment-configured newsletter provider, so the
+ * static Pages build never exposes a non-existent server route.
  */
 export function SubscribeCTA() {
   return (

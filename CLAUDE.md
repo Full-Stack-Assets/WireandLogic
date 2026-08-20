@@ -39,7 +39,7 @@ scraper UA in `src/lib/orchestrator/research.ts`
 
 ## Tech stack
 
-- **Next.js 15** (App Router, React 19, RSC) — static-ish blog with ISR.
+- **Next.js 15** (App Router, React 19, RSC) — statically exported for GitHub Pages.
 - **TypeScript** throughout, `strict: true`. Path alias `@/*` → `src/*`,
   `@/content/*` → `content/*`.
 - **TailwindCSS 3** + a custom `.prose-editorial` style in `globals.css`.
@@ -53,9 +53,8 @@ scraper UA in `src/lib/orchestrator/research.ts`
   (`content/.topic-log.json`) is the only piece of mutable state.
 - **Zod** validates the LLM's JSON output.
 - **LLM writer**: OpenAI-compatible endpoint; default **Groq**
-  (`openai/gpt-oss-120b`, with `meta-llama/llama-4-scout-17b-16e-instruct` as
-  the in-run fallback model on the same key — Scout's 30K-TPM free tier gives
-  failover real headroom over the primary's 8K-TPM cap). Groq replaced Gemini,
+  (`openai/gpt-oss-120b`, with `openai/gpt-oss-20b` as the current in-run
+  fallback on the same key). Groq replaced Gemini,
   whose free tier kept returning 503 "model overloaded" and failing the hourly
   run. Any OpenAI-compatible provider works via `site.config.ts`.
 - Package manager: the repo ships `package-lock.json`, and CI uses `npm ci`.
@@ -192,11 +191,8 @@ App Router. Notable routes:
   related posts, sources, ads). `categories/[category]`, `tags/[tag]` — taxonomy.
 - `about`, `stats` (reads the topic log), `vaporloop` (a standalone demo page).
 - `feed.xml/route.ts` (RSS), `sitemap.ts`, `robots.ts`, `ads.txt/route.ts`.
-- `api/cron/generate/route.ts` — `GET`/`POST` that runs the pipeline; authorized
-  via `Authorization: Bearer $CRON_SECRET` (or `?secret=`). `nodejs` runtime,
-  `maxDuration = 300`. This is the serverless alternative to the GitHub Action.
-- `api/subscribe/route.ts` — newsletter signup (per-instance in-memory rate
-  limit, origin check).
+- Newsletter signup links to `NEXT_PUBLIC_NEWSLETTER_SUBSCRIBE_URL`; the static
+  site does not expose write-capable API routes.
 
 Other libs: `src/lib/syndicate/` (Bluesky/Mastodon/DEV.to cross-posting),
 `src/lib/newsletter/` (Buttondown digest), `src/lib/ads.ts`. Branding/SEO derive
@@ -219,10 +215,11 @@ override — note the empty-string guard, since unset CI secrets arrive as `""`)
   rebase-retry loop as `trendblog-bot`. It registers a **union merge driver**
   (`scripts/merge-topic-log.mjs`, mapped in `.gitattributes`) so concurrent
   appends to `content/.topic-log.json` auto-merge instead of conflicting. A
-  `concurrency` group prevents overlapping ticks. Optional
+  `concurrency` group prevents overlapping ticks.
 - **`.github/workflows/newsletter.yml`** runs the weekly digest.
-  **Do not run the pipeline inside a Cloudflare Pages Function** — its ~30s CPU
-  limit is below the pipeline's 30–90s runtime; let the Action generate.
+- **`.github/workflows/nextjs.yml`** typechecks, tests, statically exports, and
+  deploys to GitHub Pages. Its `workflow_run` trigger publishes successful
+  bot-generated content without relying on recursive `GITHUB_TOKEN` pushes.
 
 ## Configuration & secrets
 

@@ -1,8 +1,8 @@
 # Wire and Logic
 
-A self-hosted, zero-cost trend blog. A scheduled job runs every hour, picks the highest-signal story from seven sources, researches it, writes a structured MDX post, and commits it to GitHub. The Next.js site can redeploy from those commits using the host configured for the repository.
+A statically deployed trend blog. A scheduled job runs every hour, picks the highest-signal story from seven sources, researches it, writes a structured MDX post, and commits it to GitHub. The existing Pages workflow publishes successful generation runs.
 
-**Stack:** Next.js 15 · TinaCMS · Groq (free tier) · Brave Search · Pexels · GitHub Contents API · Cloudflare/self-hosted deployment.
+**Stack:** Next.js 15 · TinaCMS · Groq · Brave Search · Pexels · GitHub Contents API · GitHub Actions · GitHub Pages.
 
 **Monthly cost at steady state:** $0 when the selected services remain within their free tiers.
 
@@ -42,11 +42,10 @@ cp .env.example .env.local
 
 | Key | Where | Free tier |
 |---|---|---|
-| `GROQ_API_KEY` | https://console.groq.com/keys | Generous rate limits, ~30 RPM on llama-3.3-70b |
+| `GROQ_API_KEY` | https://console.groq.com/keys | Writer access for `openai/gpt-oss-120b` and the configured fallback |
 | `BRAVE_API_KEY` | https://api.search.brave.com/app/keys | 2,000 queries/month on the free plan |
 | `PEXELS_API_KEY` | https://www.pexels.com/api/new/ | Unlimited for dev use |
 | `GITHUB_TOKEN` | github.com → Settings → Developer settings → Fine-grained PAT | Scope: **Contents: Read/Write** on the blog repo only |
-| `CRON_SECRET` | `openssl rand -hex 32` | n/a |
 
 Fill them into `.env.local` along with `GITHUB_OWNER` / `GITHUB_REPO` / `GITHUB_BRANCH`.
 
@@ -73,25 +72,15 @@ Open http://localhost:3000. The seed post is visible out of the box; new posts s
 
 ### Scheduling: GitHub Actions
 
-The hourly schedule lives in **`.github/workflows/generate.yml`**, which runs at the top of every hour (`cron: '0 * * * *'`), executes the pipeline with `npx tsx scripts/run-local.ts`, and commits any new post straight to the repo. The push can then trigger whichever hosting path is configured for the project.
+The hourly schedule lives in **`.github/workflows/generate.yml`**. It uses two off-peak ticks and a freshness gate to produce at most one post per hour, executes the pipeline with `npx tsx scripts/run-local.ts`, and commits any new post to the repository. A successful run triggers the existing Pages workflow so bot-authored commits reach production.
 
 Add the pipeline secrets (`GROQ_API_KEY`, `BRAVE_API_KEY`, `PEXELS_API_KEY`, `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET`) under **Settings → Secrets and variables → Actions**. The workflow has `contents: write` and a `concurrency` group so a slow run never overlaps the next tick. Use the **Run workflow** button (`workflow_dispatch`) to trigger a one-off run.
 
-Keep scheduling in one place. If you later attach another scheduler to `/api/cron/generate`, disable the GitHub Actions tick first so the pipeline cannot generate duplicate posts.
+Keep scheduling in one place: GitHub Actions is the only production generator.
 
-### Hosting: Cloudflare Pages
+### Hosting: GitHub Pages
 
-If the repository's current Next.js output is compatible with the selected Pages setup, use Cloudflare for the site while leaving content generation in GitHub Actions. Do not move the 30–90 second generation pipeline into an edge function with a shorter CPU budget.
-
-### Self-host
-
-`npm run build && npm start` and point a reverse proxy at port 3000. The GitHub Action still drives generation; to trigger the route manually, use your configured public origin:
-
-```bash
-curl -H "Authorization: Bearer $CRON_SECRET" https://your-domain/api/cron/generate
-```
-
-No production hostname is hard-coded by this repository.
+The approved production path is **`.github/workflows/nextjs.yml`**. It typechecks, tests, exports the Next.js site to `out/`, verifies the custom-domain artifact, and deploys with GitHub Pages. In **Settings → Pages**, set Source to **GitHub Actions** and configure `wireandlogic.com` as the custom domain. Set `NEXT_PUBLIC_NEWSLETTER_SUBSCRIBE_URL` and optional monetization values under **Settings → Secrets and variables → Actions → Variables**.
 
 ---
 
@@ -164,6 +153,26 @@ Dedup uses a sorted-token fingerprint of the title. The topic log (`content/.top
 - **Tune the tone:** edit `SYSTEM_PROMPT` in `generate.ts`. The zod schema catches structurally invalid output.
 - **Change the niche:** adjust `SUBREDDITS` in `reddit.ts`, `BRAVE_QUERIES` in `bravenews.ts`, and `DEFAULT_FEEDS` in `rss.ts`.
 - **Change the cadence:** edit the `cron` in `.github/workflows/generate.yml`.
+
+---
+
+## Server-runtime build
+
+GitHub Pages remains the active production deployment until Human Authority
+selects and configures the replacement server host. The repository can also
+produce a provider-neutral Node.js runtime without changing that production
+boundary:
+
+~~~bash
+npm run build:server
+HOSTNAME=0.0.0.0 PORT=3000 node .next/standalone/server.js
+~~~
+
+The server build uses Next.js standalone output and packages both `public/`
+and `.next/static/`, preventing browser assets from returning 404 after
+deployment. A successful local build is not evidence of a production rollout;
+the approved host, secrets, custom-domain routing, health checks, and live-route
+verification are still required before changing the production claim.
 
 ---
 

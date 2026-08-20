@@ -13,9 +13,8 @@ const MAX_GENERATION_ATTEMPTS = 5;
 
 /**
  * After this many failed attempts on the primary model — regardless of the
- * failure type — switch to the fallback model. It has far more free-tier
- * capacity (30K TPM vs the primary's 8K), so a sustained 503 "overloaded"
- * spike or rate-limit squeeze on the primary doesn't fail the whole run.
+ * failure type — switch to the separately served fallback model so a sustained
+ * provider error or rate-limit squeeze on the primary does not fail the run.
  */
 const FALLBACK_AFTER_ATTEMPT = 3;
 
@@ -24,8 +23,8 @@ const FALLBACK_AFTER_ATTEMPT = 3;
  * tokens-per-minute budget (8K on the free tier for the gpt-oss models); an
  * oversized single request is rejected outright, typically as a 413 "Request
  * too large". Retrying the same request against the same model can never
- * succeed, so this class of error skips straight to the fallback model
- * (which has a 30K TPM budget) instead of burning attempts.
+ * succeed, so this class of error skips straight to the separately provisioned
+ * fallback model instead of burning attempts.
  */
 function isOverBudgetError(message: string): boolean {
   return /too large|request too large|413/i.test(message);
@@ -37,8 +36,8 @@ function isOverBudgetError(message: string): boolean {
  * models spend part of that budget thinking) with a 400 `json_validate_failed`
  * (observed 2026-07-13: five straight rejections killed an hourly run).
  * Retrying the same model with the same cap tends to truncate at the same
- * place, so treat it like the over-budget case: switch to the fallback model,
- * whose 30K-TPM budget affords a much larger completion cap.
+ * place, so treat it like the over-budget case and switch to the configured
+ * fallback model immediately.
  */
 export function isTruncatedJsonError(message: string): boolean {
   return /json_validate_failed|failed to generate json/i.test(message);
@@ -321,9 +320,8 @@ function finalize(validated: z.infer<typeof PostSchema>, bundle: ResearchBundle)
 function buildUserPrompt(bundle: ResearchBundle): string {
   const { winner, articles, transcripts, related } = bundle;
 
-  // Excerpt caps are sized so the whole prompt lands around 3.5-4K tokens —
-  // together with max_tokens (3584) that keeps one request inside Groq's
-  // free-tier 8K TPM admission budget for the primary model.
+  // Excerpt caps keep the prompt bounded so the 3584-token completion request
+  // fits the primary model's configured request envelope.
   const articleBlock = articles
     .map(
       (a, i) => `### Source ${i + 1}: ${a.title}
