@@ -1,7 +1,7 @@
 import { listPosts } from '@/lib/posts';
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '@/lib/structured-data';
 
-export const revalidate = 300;
+export const dynamic = 'force-static';
 
 /** RFC-822 date for RSS; falls back to now on an unparseable frontmatter date
  *  (listPosts keeps bad-date posts, so `Invalid Date` must never reach the feed). */

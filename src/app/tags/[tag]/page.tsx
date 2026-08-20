@@ -1,57 +1,30 @@
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { listPosts } from '@/lib/posts';
 import { paginate } from '@/lib/pagination';
-import { Pagination } from '@/components/Pagination';
+import { TAXONOMY_PAGE_SIZE, TaxonomyListing } from '@/components/TaxonomyListing';
 
-export const revalidate = 300;
-
-const PAGE_SIZE = 40;
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
   const posts = await listPosts();
-  const tags = Array.from(new Set(posts.flatMap((p) => p.frontmatter.tags ?? [])));
+  const tags = Array.from(new Set(posts.flatMap((post) => post.frontmatter.tags ?? [])));
   return tags.map((tag) => ({ tag }));
 }
 
-export default async function TagPage({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ tag: string }>;
-  searchParams: Promise<{ page?: string }>;
-}) {
+export default async function TagPage({ params }: { params: Promise<{ tag: string }> }) {
   const { tag } = await params;
-  const { page } = await searchParams;
-  const all = (await listPosts()).filter((p) => p.frontmatter.tags?.includes(tag));
+  const all = (await listPosts()).filter((post) => post.frontmatter.tags?.includes(tag));
   if (all.length === 0) notFound();
 
-  const { items: posts, currentPage, totalPages } = paginate(all, Number(page), PAGE_SIZE);
-
+  const page = paginate(all, 1, TAXONOMY_PAGE_SIZE);
   return (
-    <div className="mx-auto max-w-4xl px-6 py-16">
-      <div className="mb-12 border-b-2 border-ink pb-6">
-        <div className="text-xs uppercase tracking-[0.3em] text-muted">Tag</div>
-        <h1 className="mt-2 font-display text-5xl font-black sm:text-6xl"><span className="text-accent">#</span><span className="text-gradient">{tag}</span></h1>
-        <p className="mt-2 text-muted">{all.length} {all.length === 1 ? 'post' : 'posts'}</p>
-      </div>
-      <ul className="divide-y divide-ink/20">
-        {posts.map((p) => (
-          <li key={p.slug} className="py-6">
-            <Link href={`/blog/${p.slug}`} className="group block">
-              <h2 className="font-display text-2xl font-semibold group-hover:text-accent transition-colors">
-                {p.frontmatter.title}
-              </h2>
-              <p className="mt-1 text-ink/70">{p.frontmatter.description}</p>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        hrefFor={(p) => (p === 1 ? `/tags/${tag}` : `/tags/${tag}?page=${p}`)}
-      />
-    </div>
+    <TaxonomyListing
+      kind="tag"
+      value={tag}
+      posts={page.items}
+      totalItems={all.length}
+      currentPage={page.currentPage}
+      totalPages={page.totalPages}
+    />
   );
 }
